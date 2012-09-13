@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\Desktop\Duckie Files\Duckie.cpp">
+    <ClCompile Include="Duckie.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Desktop\Duckie Files\DuckieDriver.cpp">
+    <ClCompile Include="DuckieDriver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Desktop\Duckie Files\RailGun.cpp">
+    <ClCompile Include="RailGun.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\Desktop\Duckie Files\Duckie.h">
+    <ClInclude Include="Duckie.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\Desktop\Duckie Files\RailGun.h">
+    <ClInclude Include="RailGun.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
