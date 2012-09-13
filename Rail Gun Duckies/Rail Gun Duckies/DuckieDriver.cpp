@@ -21,7 +21,7 @@ void DrawDuckie() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glTranslated(0, 0, -5);
-
+	glRotated(theta, 0, 1, 0);
 	GLUquadric *q = gluNewQuadric();
 	
 	
@@ -79,13 +79,14 @@ void DisplayFunc() {
 	gluPerspective(50, aspect, 1, 10);
 	glViewport(0, 0, window_width, window_height);
 	
-	
+	//glRotated(theta, 0, 1, 0);
 	//Sphere();
-//	DrawDuckie();
-	Duckie * d = new Duckie();
+	DrawDuckie();
+	//Duckie * d = new Duckie();
 
-	glRotated(theta, 0, 1, 0);
-	d->render();
+	
+	//d->render();
+	
 	theta += .1;
 	delete d; 
 	glutSwapBuffers();
