@@ -32,4 +32,3 @@ private:
 	// vector for position;
 };
 
-static void Render();

@@ -81,7 +81,9 @@ void DuckieDisplayFunc() {
 //	gluPerspective(50, aspect, 1, 10);
 	glViewport(0, 0, window_width, window_height);
 	
-	
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
 	Duckie * d = new Duckie();
 	Duckie * p = new Duckie();
 
@@ -95,9 +97,9 @@ void DuckieDisplayFunc() {
 	glPopMatrix();
 
 	
-glTranslated(0, 0, -5);
+
 	glPushMatrix();
-	
+	glTranslated(0, 0, -5);
 	glTranslated(3, 0, 0);
 	glRotated(elapsed_time * 60, 0, 1, 0);
 

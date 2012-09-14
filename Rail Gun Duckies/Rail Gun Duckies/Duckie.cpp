@@ -12,17 +12,12 @@ Duckie::~Duckie() {
 
 void Duckie::render() {
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
 	GLUquadric *q = gluNewQuadric();
 	
 	
 	// draw the body
 	glPushMatrix();
 	glScaled(1, .7, 1.2);
-	
-//	glRotated(theta, 0, 1, 0);
 	glColor3d(1, 1, 0);
 	gluSphere(q,1,100,100);
 	glPopMatrix();
@@ -74,12 +69,12 @@ void Duckie::render() {
 	gluCylinder(q, 1, 0, 1, 100, 100);
 
 	// draw lines separating beak
-	glColor3d(0, 0, 0);
-	glBegin(GL_LINE);
-	glVertex3d(2, 7.5, .5);
-	glVertex3d(3, 7.5, 1);
-	glEnd();
-	glPopMatrix();
+	//glColor3d(0, 0, 0);
+	//glBegin(GL_LINE);
+	//glVertex3d(2, 7.5, .5);
+	//glVertex3d(3, 7.5, 1);
+	//glEnd();
+	//glPopMatrix();
 
 
 
@@ -97,18 +92,4 @@ double Duckie::getVelocity() const {
 
 double Duckie::getAcceleration() const {
 	return this->acceleration;
-}
-
-static void Render() {
-	GLUquadric *q = gluNewQuadric();
-
-	// set up the inital matricies
-	glMatrixMode(GL_MODELVIEW);
-	
-	glLoadIdentity();
-	// create the body...
-//	glPushMatrix();
-	gluSphere(q, 1, 100, 100);
-	glScaled(1, .75, .75);
-//	glPopMatrix();
 }
