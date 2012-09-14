@@ -1,3 +1,4 @@
+#pragma once
 #include <gl/freeglut.h>
 
 
@@ -16,6 +17,7 @@ public:
 
 	~Duckie();
 	
+	void Initialize();
 	void render();
 
 	double getMass() const;
@@ -26,6 +28,7 @@ private:
 	double mass;
 	double velocity;
 	double acceleration;
+	static bool isInitialized;
 	// vector for position;
 };
 
