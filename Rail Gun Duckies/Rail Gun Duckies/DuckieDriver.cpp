@@ -4,6 +4,7 @@
 #include <GL/freeglut.h>
 #include "Duckie.h"
 
+
 int window_width = 1280;
 int window_height = 720;
 
@@ -15,19 +16,12 @@ double period = 1000/60;
 
 
 void DrawDuckie() {
-	
-	
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glTranslated(0, 0, -5);
-	GLUquadric *q = gluNewQuadric();
+GLUquadric *q = gluNewQuadric();
 	
 	
 	// draw the body
 	glPushMatrix();
-	glScaled(1.3, .7, 1);
-	
-//	glRotated(theta, 0, 1, 0);
+	glScaled(1, .7, 1.2);
 	glColor3d(1, 1, 0);
 	gluSphere(q,1,100,100);
 	glPopMatrix();
@@ -35,27 +29,56 @@ void DrawDuckie() {
 	// draw the head
 	glPushMatrix();
 	glScaled(.4, .4, .4);
-//	glRotated(theta, 0, 1, 0);
-	glTranslated(0, 1.8, 2.3);
+	glTranslated(0, 1.8, 2.2);
 	gluSphere(q,1,100,100);
 	glPopMatrix();
 
 	// draw the wings
 	glPushMatrix();
-	glScaled(.7, .3, .01);
-//	glRotated(theta, 0, 1, 0);
+	glScaled(.3, .4, .75);
 	glColor3d(1, 0, 0);
-	glTranslated(1.5, 0, 0);
+	glTranslated(3, 0, 0);
 	gluSphere(q, 1, 100, 100);
 	glPopMatrix();
 
 	glPushMatrix();
-	glScaled(.7, .3, .01);
-//	glRotated(theta, 0, 1, 0);
+	glScaled(.3, .4, .75);
 	glColor3d(1, 0, 0);
-	glTranslated(-1.5, 0, 0);
+	glTranslated(-3, 0, 0);
 	gluSphere(q, 1, 100, 100);
 	glPopMatrix();
+
+
+	// draw the eyes
+	glPushMatrix();
+	glScaled(.1, .1, .1);
+	glColor3d(1, 1, 1);
+	glTranslated(2, 10, 11.3);
+	gluSphere(q, 1, 100, 100);
+	glPopMatrix();
+
+	glPushMatrix();
+	glScaled(.1, .1, .1);
+	glColor3d(1, 1, 1);
+	glTranslated(-2, 10, 11.3);
+	gluSphere(q, 1, 100, 100);
+	glPopMatrix();
+
+
+	// draw the beak
+	glPushMatrix();
+	glScaled(.25, .1, .5);
+	glColor3d(1, .5, 0);
+	glTranslated(0, 7.5, 2.5);
+	gluCylinder(q, 1, 0, 1, 100, 100);
+
+	// draw lines separating beak
+	//glColor3d(0, 0, 0);
+	//glBegin(GL_LINE);
+	//glVertex3d(2, 7.5, .5);
+	//glVertex3d(3, 7.5, 1);
+	//glEnd();
+	//glPopMatrix();
 
 	gluDeleteQuadric(q);
 }
@@ -89,10 +112,12 @@ void DuckieDisplayFunc() {
 
 	glPushMatrix();
 	glTranslated(0, 0, -5);
-	glTranslated(-3, 0, 0);
+	glTranslated(-2, 0, 0);
 	glRotated(elapsed_time * 60, 0, 1, 0);
 
+//	DrawDuckie();
 	d->render();
+
 	delete d; 
 	glPopMatrix();
 
@@ -125,9 +150,9 @@ void ReshapeFunc(int w, int h) {
 
 void KeyboardFunc(unsigned char c, int x, int y) {
 	switch (c) {
-	case 'n':
+	/*case 'n':
 		glutCreateWindow("new window");
-		break;
+		break;*/
 	case 'w':
 		if (!isWireFrame) {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

@@ -77,8 +77,6 @@ void Duckie::render() {
 	//glPopMatrix();
 
 
-
-
 	gluDeleteQuadric(q);
 }
 
