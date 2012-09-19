@@ -67,7 +67,7 @@ void Duckie::render() {
 	glColor3d(1, .5, 0);
 	glTranslated(0, 7.5, 2.5);
 	gluCylinder(q, 1, 0, 1, 100, 100);
-
+	
 	// draw lines separating beak
 	//glColor3d(0, 0, 0);
 	//glBegin(GL_LINE);
