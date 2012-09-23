@@ -10,11 +10,18 @@ game. Each Duckie has its own intrinsic properties that will be used
 
 
 */
+
+struct Color {
+	GLdouble red;
+	GLdouble green;
+	GLdouble blue;
+};
+
 class Duckie {
 
 public:
 	Duckie();
-
+	Duckie(Color c);
 	~Duckie();
 	
 	void Initialize();
@@ -29,6 +36,7 @@ private:
 	double velocity;
 	double acceleration;
 	static bool isInitialized;
+	Color color;
 	// vector for position;
 };
 

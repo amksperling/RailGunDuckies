@@ -2,8 +2,17 @@
 #include "Duckie.h"
 
 
+
+//Default constructor
 Duckie::Duckie() {
 
+}
+
+//constructor to initialze color
+Duckie::Duckie(Color c) {
+	this->color.red = c.red;
+	this->color.green = c.green;
+	this->color.blue = c.blue;
 }
 
 Duckie::~Duckie() {
@@ -32,15 +41,15 @@ void Duckie::render() {
 	// draw the wings
 	glPushMatrix();
 	glScaled(.3, .4, .75);
-	glColor3d(1, 0, 0);
-	glTranslated(3, 0, 0);
+	glColor3d(1, 1, 0);
+	glTranslated(2.9, 0, 0);
 	gluSphere(q, 1, 100, 100);
 	glPopMatrix();
 
 	glPushMatrix();
 	glScaled(.3, .4, .75);
-	glColor3d(1, 0, 0);
-	glTranslated(-3, 0, 0);
+	glColor3d(1, 1, 0);
+	glTranslated(-2.9, 0, 0);
 	gluSphere(q, 1, 100, 100);
 	glPopMatrix();
 
@@ -60,14 +69,31 @@ void Duckie::render() {
 	gluSphere(q, 1, 100, 100);
 	glPopMatrix();
 
+	//pupils
+	glPushMatrix();
+	glScaled(.05, .05, .05);
+	glColor3d(0, 0, 1);
+	glTranslated(4, 20, 24);
+	gluSphere(q, 1, 100, 100);
+	glPopMatrix();
+
+	glPushMatrix();
+	glScaled(.05, .05, .05);
+	glColor3d(0, 0, 1);
+	glTranslated(-4, 20, 24);
+	gluSphere(q, 1, 100, 100);
+	glPopMatrix();
 
 	// draw the beak
 	glPushMatrix();
 	glScaled(.25, .1, .5);
 	glColor3d(1, .5, 0);
-	glTranslated(0, 7.5, 2.5);
+	glTranslated(0, 7.5, 2.35);
 	gluCylinder(q, 1, 0, 1, 100, 100);
+	glPopMatrix();
+
 	
+
 	// draw lines separating beak
 	//glColor3d(0, 0, 0);
 	//glBegin(GL_LINE);
