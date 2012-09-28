@@ -21,12 +21,18 @@
     <ClCompile Include="DuckieDriver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Prism.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="RailGun.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Duckie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Prism.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RailGun.h">

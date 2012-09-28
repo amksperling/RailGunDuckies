@@ -11,7 +11,7 @@ public:
 	RailGun();
 	~RailGun();
 	
-	void render();
+	void drawRailGun();
 
 	double getRotationAngle() const;
 	double getInclinationAngle() const;

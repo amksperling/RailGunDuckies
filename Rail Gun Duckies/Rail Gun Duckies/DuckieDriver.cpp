@@ -3,6 +3,7 @@
 
 #include <GL/freeglut.h>
 #include "Duckie.h"
+#include "RailGun.h"
 
 
 const int init_width = 1280;
@@ -67,8 +68,10 @@ void DuckieDisplayFunc() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	Duckie * d = new Duckie();
-	Duckie * p = new Duckie();
+	//Duckie * d = new Duckie();
+	//Duckie * p = new Duckie();
+
+	RailGun *basic = new RailGun();
 
 	glPushMatrix();
 	glTranslated(0, 0, -5);
@@ -76,9 +79,10 @@ void DuckieDisplayFunc() {
 	glRotated(elapsed_time * 60, 0, 1, 0);
 
 //	DrawDuckie();
-	d->render();
+//	d->render();
+	basic->drawRailGun();
 
-	delete d; 
+//	delete d; 
 	glPopMatrix();
 
 	
@@ -94,11 +98,11 @@ void DuckieDisplayFunc() {
 		pScale += .001;
 	}
 
-	p->render();
+//	p->render();
+	basic->drawRailGun();
 
-
-	
-	delete p;
+	delete basic;
+//	delete p;
 	glPopMatrix();
 
 	glutSwapBuffers();

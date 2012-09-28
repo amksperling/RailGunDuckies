@@ -13,10 +13,12 @@
   <ItemGroup>
     <ClCompile Include="Duckie.cpp" />
     <ClCompile Include="DuckieDriver.cpp" />
+    <ClCompile Include="Prism.cpp" />
     <ClCompile Include="RailGun.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Duckie.h" />
+    <ClInclude Include="Prism.h" />
     <ClInclude Include="RailGun.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
