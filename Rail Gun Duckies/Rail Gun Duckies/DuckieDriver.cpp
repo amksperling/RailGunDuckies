@@ -4,7 +4,13 @@
 #include <GL/freeglut.h>
 #include "Duckie.h"
 #include "RailGun.h"
+#include <stdio.h>  
+#include <iostream>
+#include <sstream> //Checka
+#include <vector>
+#include <assert.h> //Checkb
 
+using namespace std;
 
 const int init_width = 1280;
 const int init_height = 720;
@@ -23,7 +29,20 @@ double period = 1000/60;
 
 double pScale = .01;
 
+bool CheckGLErrors()
+{
+	bool error_found = false;
+	GLenum  error;
+	const GLubyte *errorString;
+	while ((error = glGetError()) != GL_NO_ERROR)
+	{
+		error_found = true;
+		errorString = gluErrorString(error);
+		cout << errorString;
+	}
 
+	return error_found;
+}
 
 //InitGL function to handle all GL initializations
 // for the main function. Handles lighting and depth so far...
@@ -71,8 +90,6 @@ void DuckieDisplayFunc() {
 	//Duckie * d = new Duckie();
 	//Duckie * p = new Duckie();
 
-	RailGun *basic = new RailGun();
-
 	glPushMatrix();
 	glTranslated(0, 0, -5);
 	glTranslated(-3, 0, 0);
@@ -80,6 +97,7 @@ void DuckieDisplayFunc() {
 
 //	DrawDuckie();
 //	d->render();
+
 	basic->drawRailGun();
 
 //	delete d; 
@@ -137,13 +155,9 @@ void KeyboardFunc(unsigned char c, int x, int y) {
 		break;
 		
 	case 'w':
-		if (!isWireFrame) {
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			isWireFrame = true;
-			break;
-		}
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		isWireFrame = false;
+		isWireFrame = !isWireFrame;
+		if(isWireFrame) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		break;
 
 	case 'p': 
@@ -166,7 +180,7 @@ int main(int argc, char *argv[]) {
 	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(init_width, init_height);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-	glutCreateWindow("Duckie Driver");
+	glutCreateWindow("Driver");
 	
 	initGL();
 

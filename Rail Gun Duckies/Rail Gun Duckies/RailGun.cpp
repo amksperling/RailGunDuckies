@@ -3,7 +3,7 @@
 #include "Prism.h"
 
 RailGun::RailGun() {
-
+	this->railgun_display_list = (GLuint) -1;
 }
 
 RailGun::~RailGun() {
@@ -11,6 +11,10 @@ RailGun::~RailGun() {
 }
 
 void RailGun::drawRailGun() {
+	if (this->railgun_display_list == (GLuint) -1)
+	{
+		this->railgun_display_list = glGenLists(1);
+		glNewList(this->railgun_display_list, GL_COMPILE);
 	//reflective table
 	GLfloat material_ambient[] = {.19225, .19225, 0.19225, 1};
 	GLfloat material_diffuse[] = { .50754, .50754, 0.50754, 1 };
@@ -36,7 +40,11 @@ void RailGun::drawRailGun() {
 	glTranslated(-0.75f, 0.0f, 0.0f);
 	connectorStrutRailGun->drawPrism();
 	delete endRailGun;
-	delete connectorStrutRailGun;;
+	delete connectorStrutRailGun;
+			glEndList();
+	}
+
+	glCallList(this->railgun_display_list);
 }
 
 double RailGun::getRotationAngle() const {

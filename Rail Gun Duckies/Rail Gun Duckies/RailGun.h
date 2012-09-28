@@ -16,6 +16,8 @@ public:
 	double getRotationAngle() const;
 	double getInclinationAngle() const;
 
+	GLuint railgun_display_list;
+
 private:
 	double rotationAngle;
 	double inclinationAngle;
