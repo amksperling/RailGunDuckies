@@ -11,15 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Balloon.cpp" />
     <ClCompile Include="Duckie.cpp" />
     <ClCompile Include="DuckieDriver.cpp" />
     <ClCompile Include="Prism.cpp" />
     <ClCompile Include="RailGun.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Balloon.h" />
     <ClInclude Include="Duckie.h" />
     <ClInclude Include="Prism.h" />
     <ClInclude Include="RailGun.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{99142C9D-A300-4314-ABA9-99B35DE3259E}</ProjectGuid>
@@ -61,7 +65,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\glm-0.9.2.7\glm;C:\Program Files %28x86%29\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

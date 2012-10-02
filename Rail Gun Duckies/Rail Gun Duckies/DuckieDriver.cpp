@@ -87,20 +87,21 @@ void DuckieDisplayFunc() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	//Duckie * d = new Duckie();
-	//Duckie * p = new Duckie();
+	Duckie * d = new Duckie();
+	Duckie * p = new Duckie();
+	//RailGun * basic = new RailGun();
 
 	glPushMatrix();
 	glTranslated(0, 0, -5);
 	glTranslated(-3, 0, 0);
 	glRotated(elapsed_time * 60, 0, 1, 0);
 
-//	DrawDuckie();
-//	d->render();
 
-	basic->drawRailGun();
+	d->render();
 
-//	delete d; 
+	//basic->drawRailGun();
+
+	delete d; 
 	glPopMatrix();
 
 	
@@ -116,11 +117,11 @@ void DuckieDisplayFunc() {
 		pScale += .001;
 	}
 
-//	p->render();
-	basic->drawRailGun();
+	p->render();
+//	basic->drawRailGun();
 
-	delete basic;
-//	delete p;
+//	delete basic;
+	delete p;
 	glPopMatrix();
 
 	glutSwapBuffers();
