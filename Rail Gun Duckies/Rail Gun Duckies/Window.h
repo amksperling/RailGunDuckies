@@ -8,8 +8,9 @@
 
 const int DEFAULT_WIDTH = 1280;
 const int DEFAULT_HEIGHT = 720;
-const int DEFAULT_POS_X, DEFAULT_POS_Y = 0;
-const char * DEFAULT_TITLE = "Rail Gun Duckies";
+const int DEFAULT_POS_X = 0;
+const int DEFAULT_POS_Y = 0;
+//const char * DEFAULT_TITLE = "Rail Gun Duckies";
 
 const enum APP_MODES {
 	DUCK_BEAUTY,
@@ -32,11 +33,14 @@ public:
 	   mode, then it can be used in every mode depending on
 	   the switch. */
 
-	void toggleSceneMode(int defaultMode);
+	void cycleSceneMode(int defaultMode);
 
-	void toggleLightingMode(int defaultLight);
+	void cycleLightingMode(int defaultLight);
+
+	void cycleCameraMode(int defaultCamera);
 
 	void toggleFullScreen();
+	void toggleWireFrame();
 
 private:
 
@@ -47,5 +51,6 @@ private:
 	int w;
 	int h;
 	bool isFullScreen;
+	bool isWireFrame;
 	double aspect;
 };

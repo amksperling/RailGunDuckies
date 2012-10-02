@@ -6,8 +6,9 @@ Window::Window() {
 	glutInitWindowPosition(DEFAULT_POS_X, DEFAULT_POS_Y);
 	glutInitWindowSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-	glutCreateWindow(DEFAULT_TITLE);
+	glutCreateWindow("Rail Gun Duckies");
 	this->isFullScreen = false;
+	this->isWireFrame = false;
 	this->w = DEFAULT_WIDTH;
 	this->h = DEFAULT_HEIGHT;
 }
@@ -25,6 +26,7 @@ Window::Window(int w, int h, int posX, int posY, bool fullScreen, char * title) 
 	}
 	else
 		this->isFullScreen = false;
+	this->isWireFrame = false;
 	this->w = w;
 	this->h = h;
 }
@@ -41,4 +43,17 @@ void Window::toggleFullScreen() {
 		this->isFullScreen = false;
 		return;
 	}
+}
+
+// Toggle Wireframe mode
+void Window::toggleWireFrame() {
+	if (!this->isWireFrame) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		this->isWireFrame = true;
+	}
+	else {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		this->isWireFrame = false;
+	}
+	return;
 }

@@ -16,6 +16,7 @@
     <ClCompile Include="DuckieDriver.cpp" />
     <ClCompile Include="Prism.cpp" />
     <ClCompile Include="RailGun.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -23,6 +24,7 @@
     <ClInclude Include="Duckie.h" />
     <ClInclude Include="Prism.h" />
     <ClInclude Include="RailGun.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

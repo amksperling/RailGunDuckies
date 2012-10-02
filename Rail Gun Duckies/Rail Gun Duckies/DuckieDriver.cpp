@@ -4,6 +4,7 @@
 #include <GL/freeglut.h>
 #include "Duckie.h"
 #include "RailGun.h"
+#include "Window.h"
 #include <stdio.h>  
 #include <iostream>
 #include <sstream> //Checka
@@ -28,6 +29,8 @@ bool duckFullSize = false;
 double period = 1000/60;
 
 double pScale = .01;
+
+Window * w;
 
 bool CheckGLErrors()
 {
@@ -146,19 +149,21 @@ void KeyboardFunc(unsigned char c, int x, int y) {
 	switch (c) {
 	
 	case 'f':
-		if (!isFullScreen) {
+		w->toggleFullScreen();
+		/*if (!isFullScreen) {
 			glutFullScreen();
 			isFullScreen = true;
 			break;
 		}
 		glutReshapeWindow(init_width, init_height);
-		isFullScreen = false;
+		isFullScreen = false;*/
 		break;
 		
 	case 'w':
-		isWireFrame = !isWireFrame;
-		if(isWireFrame) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		w->toggleWireFrame();
+		//isWireFrame = !isWireFrame;
+		//if(isWireFrame) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		//else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		break;
 
 	case 'p': 
@@ -178,11 +183,13 @@ void TimerFunc(int value) {
 }
 int main(int argc, char *argv[]) {
 	glutInit(&argc, argv);
-	glutInitWindowPosition(0, 0);
-	glutInitWindowSize(init_width, init_height);
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-	glutCreateWindow("Driver");
-	
+	/*
+		glutInitWindowPosition(0, 0);
+		glutInitWindowSize(init_width, init_height);
+		glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+		glutCreateWindow("Driver");
+	 */
+	w = new Window();
 	initGL();
 
 	glutDisplayFunc(DuckieDisplayFunc);
