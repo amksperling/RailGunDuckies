@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Balloon.cpp" />
+    <ClCompile Include="ContentManager.cpp" />
     <ClCompile Include="Duckie.cpp" />
     <ClCompile Include="DuckieDriver.cpp" />
     <ClCompile Include="Prism.cpp" />
@@ -21,6 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Balloon.h" />
+    <ClInclude Include="ContentManager.h" />
     <ClInclude Include="Duckie.h" />
     <ClInclude Include="Prism.h" />
     <ClInclude Include="RailGun.h" />

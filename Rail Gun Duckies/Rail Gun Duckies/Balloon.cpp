@@ -2,8 +2,35 @@
 
 #include "Balloon.h"
 
+void drawDiamond()
+{
+	if (this->va_vertices.size() == 0)
+	{
+		this->va_vertices.push_back(glVertex3f(0.0f,2.0f,0.0f));
+		this->va_vertices.push_back(glVertex3f(1.0f,1.0f,.0f));
+		this->va_vertices.push_back(glVertex3f(-1.0f,1.0f,0.0f));
+		this->va_vertices.push_back(glVertex3f(0.0f,1.0f,1.0f));
+		this->va_vertices.push_back(glVertex3f(0.0f,1.0f,-1.0f));
+		this->va_vertices.push_back(glVertex3f(0.0f,0.0f,0.0f));
 
-void Window::VertexArrayMode()
+		this->va_colors.push_back(1);
+		this->va_colors.push_back(0);
+		this->va_colors.push_back(0);
+		this->va_colors.push_back(0);
+		this->va_colors.push_back(1);
+		this->va_colors.push_back(0);
+		this->va_colors.push_back(0);
+		this->va_colors.push_back(0);
+		this->va_colors.push_back(1);
+
+		this->va_indices.push_back(0);
+		this->va_indices.push_back(1);
+		this->va_indices.push_back(2);
+	}
+}
+
+
+/*void Window::VertexArrayMode()
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -53,4 +80,4 @@ void Window::VertexArrayMode()
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	this->DisplayMode("Vertex Arrays");
-}
+} */
