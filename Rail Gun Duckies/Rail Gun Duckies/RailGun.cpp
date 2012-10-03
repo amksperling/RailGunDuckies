@@ -41,7 +41,7 @@ void RailGun::drawRailGun() {
 	connectorStrutRailGun->drawPrism();
 	delete endRailGun;
 	delete connectorStrutRailGun;
-			glEndList();
+	glEndList();
 	}
 
 	glCallList(this->railgun_display_list);

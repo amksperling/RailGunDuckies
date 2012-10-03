@@ -47,6 +47,20 @@ bool CheckGLErrors()
 	return error_found;
 }
 
+void drawOrigin(){
+glBegin(GL_LINES);
+glColor3f(1.0f, 0.0f, 0.0f);
+glVertex3i(0, 0, 0);
+glVertex3i(1, 0, 0);
+glColor3f(0.0f, 1.0f, 0.0f);
+glVertex3i(0, 0, 0);
+glVertex3i(0, 1, 0);
+glColor3f(0.0f, 0.0f, 1.0f);
+glVertex3i(0, 0, 0);
+glVertex3i(0, 0, 1);
+glEnd( );
+}
+
 //InitGL function to handle all GL initializations
 // for the main function. Handles lighting and depth so far...
 void initGL() {
@@ -89,6 +103,11 @@ void DuckieDisplayFunc() {
 	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	glPushMatrix();
+	glTranslated(0, 0, -5);
+	drawOrigin();
+	glPopMatrix();
 
 	Duckie * d = new Duckie();
 	Duckie * p = new Duckie();
@@ -191,7 +210,6 @@ int main(int argc, char *argv[]) {
 	 */
 	w = new Window();
 	initGL();
-
 	glutDisplayFunc(DuckieDisplayFunc);
 	glutReshapeFunc(ReshapeFunc); // what function called if resized window?
 	glutKeyboardFunc(KeyboardFunc); // what function called if keypressed?
