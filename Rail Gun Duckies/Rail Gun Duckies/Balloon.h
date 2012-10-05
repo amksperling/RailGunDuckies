@@ -16,10 +16,11 @@ using namespace glm;
 class Balloon {
 
 public:
-
 	Balloon();
+	~Balloon();
 
 	void render();
+	void drawDiamond();
 	
 private:
 	// Used with vertex arrays.
@@ -27,7 +28,5 @@ private:
 	vector<GLdouble> va_colors;
 	vector<GLuint> va_indices;
 };
-
-void drawDiamond();
 
 static void computeVertices(Balloon b);

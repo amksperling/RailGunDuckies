@@ -2,16 +2,24 @@
 
 #include "Balloon.h"
 
-void drawDiamond()
+Balloon::Balloon() {
+
+}
+
+Balloon::~Balloon() {
+
+}
+
+void Balloon::drawDiamond()
 {
 	if (this->va_vertices.size() == 0)
 	{
-		this->va_vertices.push_back(glVertex3f(0.0f,2.0f,0.0f));
-		this->va_vertices.push_back(glVertex3f(1.0f,1.0f,.0f));
-		this->va_vertices.push_back(glVertex3f(-1.0f,1.0f,0.0f));
-		this->va_vertices.push_back(glVertex3f(0.0f,1.0f,1.0f));
-		this->va_vertices.push_back(glVertex3f(0.0f,1.0f,-1.0f));
-		this->va_vertices.push_back(glVertex3f(0.0f,0.0f,0.0f));
+		this->va_vertices.push_back(glVertex3f(0.0f,2.0f,0.0f)); //0 //glmVec3 //single digits
+		this->va_vertices.push_back(glVertex3f(1.0f,1.0f,.0f)); //1
+		this->va_vertices.push_back(glVertex3f(-1.0f,1.0f,0.0f)); //2
+		this->va_vertices.push_back(glVertex3f(0.0f,1.0f,1.0f)); //3
+		this->va_vertices.push_back(glVertex3f(0.0f,1.0f,-1.0f)); //4
+		this->va_vertices.push_back(glVertex3f(0.0f,0.0f,0.0f)); //5
 
 		this->va_colors.push_back(1);
 		this->va_colors.push_back(0);
@@ -23,9 +31,11 @@ void drawDiamond()
 		this->va_colors.push_back(0);
 		this->va_colors.push_back(1);
 
-		this->va_indices.push_back(0);
-		this->va_indices.push_back(1);
-		this->va_indices.push_back(2);
+		this->va_indices.push_back(glVertex3i(0,3,1)); va_vertices[0] //single input, integer
+		this->va_indices.push_back(glVertex3i(0,1,4));
+		this->va_indices.push_back(glVertex3i(2,0,4));
+		this->va_indices.push_back(glVertex3i(2,3,0));
+	//	this->va_indices.push_back(glVertex3i(0,1,4));
 	}
 }
 
