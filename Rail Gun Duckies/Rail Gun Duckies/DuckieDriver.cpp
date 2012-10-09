@@ -5,6 +5,7 @@
 #include "Duckie.h"
 #include "RailGun.h"
 #include "Window.h"
+#include "Balloon.h"
 #include <stdio.h>  
 #include <iostream>
 #include <sstream> //Checka
@@ -118,8 +119,11 @@ void DuckieDisplayFunc() {
 	glTranslated(-3, 0, 0);
 	glRotated(elapsed_time * 60, 0, 1, 0);
 
+	Balloon *b = new Balloon();
 
-	d->render();
+	//b->drawDiamond();
+
+//	d->render();
 
 	//basic->drawRailGun();
 

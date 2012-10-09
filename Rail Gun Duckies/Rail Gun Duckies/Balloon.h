@@ -6,7 +6,7 @@
 #include <vector>
 #include <assert.h>
 
-#include <gl/glew.h>
+//#include <gl/glew.h>
 #include <GL/freeglut.h>
 #include <glm.hpp>
 
@@ -24,9 +24,9 @@ public:
 	
 private:
 	// Used with vertex arrays.
-	vector<GLdouble> va_vertices;
-	vector<GLdouble> va_colors;
-	vector<GLuint> va_indices;
+	vector<glm::vec3> va_vertices;
+	vector<glm::vec4> va_colors;
+	vector<glm::vec3> va_indices;
 };
 
 static void computeVertices(Balloon b);
