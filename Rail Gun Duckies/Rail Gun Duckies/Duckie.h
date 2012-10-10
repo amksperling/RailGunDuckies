@@ -1,5 +1,5 @@
 #pragma once
-#include <gl/freeglut.h>
+#include <GL/freeglut.h>
 
 
 
@@ -24,8 +24,10 @@ public:
 	Duckie(Color c);
 	~Duckie();
 	
-	void Initialize();
+//	void Initialize();
+	void renderDL();
 	void render();
+	static void initialize();
 
 	double getMass() const;
 	double getVelocity() const;
@@ -35,8 +37,8 @@ private:
 	double mass;
 	double velocity;
 	double acceleration;
-	static bool isInitialized;
 	Color color;
+	GLuint displayListHandle;
 	// vector for position;
 };
 
