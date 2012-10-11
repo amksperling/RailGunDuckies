@@ -4,8 +4,8 @@
 #include <GL/freeglut.h>
 #include "Duckie.h"
 #include "RailGun.h"
-#include "Window.h"
 #include "Balloon.h"
+#include "Window.h"
 #include <stdio.h>  
 #include <iostream>
 #include <sstream> //Checka
@@ -32,7 +32,8 @@ double period = 1000/60;
 double pScale = .01;
 
 Window * w;
-Duckie d;
+Duckie  d;
+Duckie p;
 Balloon b;
 
 bool CheckGLErrors()
@@ -48,20 +49,6 @@ bool CheckGLErrors()
 	}
 
 	return error_found;
-}
-
-void drawOrigin(){
-glBegin(GL_LINES);
-glColor3f(1.0f, 0.0f, 0.0f);
-glVertex3i(0, 0, 0);
-glVertex3i(1, 0, 0);
-glColor3f(0.0f, 1.0f, 0.0f);
-glVertex3i(0, 0, 0);
-glVertex3i(0, 1, 0);
-glColor3f(0.0f, 0.0f, 1.0f);
-glVertex3i(0, 0, 0);
-glVertex3i(0, 0, 1);
-glEnd( );
 }
 
 //InitGL function to handle all GL initializations
@@ -80,7 +67,7 @@ void initGL() {
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE , 0.0);
 	glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER , 1.0);
 
-	//set up light position
+	////set up light position
 	GLfloat light_position[] = { 2 , 2, 1, 0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
@@ -101,29 +88,52 @@ void DuckieDisplayFunc() {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 //	glOrtho(-3 * aspect, 3 * aspect, -3, 3, 1, 10);
-	gluPerspective(60, aspect, 1, 10);
+	gluPerspective(60, aspect, 1, 20);
 	glViewport(0, 0, window_width, window_height);
 	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glTranslated(0, 0, -5);
+	glTranslated(0, 0, -8);
+	glRotated(elapsed_time * 60, 0, 1, 0);
 	glPushMatrix();
 	
-	drawOrigin();
+	b.drawDiamond();
+//	b.Triangle();
 	glPopMatrix();
 
-
-	//RailGun * basic = new RailGun();
+	glPushMatrix();
+	glTranslated(-3, 0, 0);
+	glRotated(elapsed_time * 60, 0, -1, 1);
+	d.renderDL();
+	glPopMatrix();
 
 	glPushMatrix();
+	glTranslated(3, 0, 0);
+	d.renderDL();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(0, 0, 3);
+	d.renderDL();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(0, 0, -3);
+	d.renderDL();
+	glPopMatrix();
+	//RailGun * basic = new RailGun();
+/*
+	glPushMatrix();
+	glTranslated(0, 0, -5);
+	glTranslated(-3, 0, 0);
 	glRotated(elapsed_time * 60, 0, 1, 0);
 
-	b.drawDiamond();
 
-//	d->render();
+	d.render();
 
 	//basic->drawRailGun();
- 
+
+
 	glPopMatrix();
 
 	
@@ -134,13 +144,18 @@ void DuckieDisplayFunc() {
 	glRotated(elapsed_time * 60, 1, 0, 0);
 
 	// grow the duck
+	if (pScale <= 1) {
+		glScaled(pScale, pScale, pScale);
+		pScale += .001;
+	}
 
-
+	p.render();
 //	basic->drawRailGun();
 
 //	delete basic;
 
 	glPopMatrix();
+*/
 
 	glutSwapBuffers();
 	glutPostRedisplay();
@@ -205,7 +220,9 @@ int main(int argc, char *argv[]) {
 		glutCreateWindow("Driver");
 	 */
 	w = new Window();
+
 	initGL();
+
 	glutDisplayFunc(DuckieDisplayFunc);
 	glutReshapeFunc(ReshapeFunc); // what function called if resized window?
 	glutKeyboardFunc(KeyboardFunc); // what function called if keypressed?

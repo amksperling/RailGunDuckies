@@ -8,7 +8,7 @@
 
 //#include <gl/glew.h>
 #include <GL/freeglut.h>
-#include <glm.hpp>
+#include <glm/glm.hpp>
 
 using namespace std;
 using namespace glm;
@@ -21,12 +21,17 @@ public:
 
 	void render();
 	void drawDiamond();
+	void Triangle();
 	
 private:
 	// Used with vertex arrays.
-	vector<glm::vec3> va_vertices;
-	vector<glm::vec4> va_colors;
-	vector<glm::vec3> va_indices;
+	vector<GLdouble> va_v;
+	vector<GLdouble> va_c;
+	vector<GLuint> va_i;
+
+	vector<vec3> va_vertices;
+	vector<vec4> va_colors;
+	vector<ivec3> va_indices;
 };
 
 static void computeVertices(Balloon b);
