@@ -3,6 +3,7 @@
    Not sure if it's totally necessary, but it can make
    our code look nicer in the end. */
 
+#pragma once
 #include <GL/freeglut.h>
 #include <string>
 

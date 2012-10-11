@@ -32,6 +32,8 @@ double period = 1000/60;
 double pScale = .01;
 
 Window * w;
+Duckie d;
+Balloon b;
 
 bool CheckGLErrors()
 {
@@ -104,30 +106,24 @@ void DuckieDisplayFunc() {
 	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
-	glPushMatrix();
 	glTranslated(0, 0, -5);
+	glPushMatrix();
+	
 	drawOrigin();
 	glPopMatrix();
 
-	Duckie * d = new Duckie();
-	Duckie * p = new Duckie();
+
 	//RailGun * basic = new RailGun();
 
 	glPushMatrix();
-	glTranslated(0, 0, -5);
-	glTranslated(-3, 0, 0);
 	glRotated(elapsed_time * 60, 0, 1, 0);
 
-	Balloon *b = new Balloon();
-
-	//b->drawDiamond();
+	b.drawDiamond();
 
 //	d->render();
 
 	//basic->drawRailGun();
-
-	delete d; 
+ 
 	glPopMatrix();
 
 	
@@ -138,16 +134,12 @@ void DuckieDisplayFunc() {
 	glRotated(elapsed_time * 60, 1, 0, 0);
 
 	// grow the duck
-	if (pScale <= 1) {
-		glScaled(pScale, pScale, pScale);
-		pScale += .001;
-	}
 
-	p->render();
+
 //	basic->drawRailGun();
 
 //	delete basic;
-	delete p;
+
 	glPopMatrix();
 
 	glutSwapBuffers();
