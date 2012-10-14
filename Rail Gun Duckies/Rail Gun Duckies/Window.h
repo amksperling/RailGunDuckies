@@ -25,6 +25,8 @@ class Window {
 
 public:
 
+
+
 	Window();
 	Window(int w, int h, int posX, int posY, bool fullScreen, char * title);
 
@@ -43,7 +45,7 @@ public:
 	void toggleFullScreen();
 	void toggleWireFrame();
 
-	inline int getSceneMode();
+	int getSceneMode();
 
 private:
 

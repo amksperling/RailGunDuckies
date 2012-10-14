@@ -35,6 +35,7 @@ Window * w;
 Duckie  d;
 Duckie p;
 Balloon b;
+RailGun r;
 
 bool CheckGLErrors()
 {
@@ -72,6 +73,48 @@ void initGL() {
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
 
+}
+
+void SwitchingDisplayFunc() {
+	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
+	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glClearColor(0, 0, 0, 0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	//set up the world so we can see stuff!
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60, aspect, 1, 20);
+	glViewport(0, 0, window_width, window_height);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslated(0, 0, -8);
+
+	glRotated(elapsed_time * 60, 0, 1, 0);
+	switch (w->getSceneMode()) {
+	case DUCK_BEAUTY:
+		glPushMatrix();
+		d.render();
+		glPopMatrix();
+		break;
+	case RAILGUN_BEAUTY:
+		glPushMatrix();
+		r.drawRailGun();
+		glPopMatrix();
+		break;
+	case BALLOON_BEAUTY:
+		glPushMatrix();
+		b.drawDiamond();
+		glPopMatrix();
+		break;
+	default: break;
+	}
+
+	glutSwapBuffers();
+	glutPostRedisplay();
 }
 void DuckieDisplayFunc() {
 	// use a switch to toggle between modes
@@ -232,7 +275,7 @@ int main(int argc, char *argv[]) {
 
 	initGL();
 
-	glutDisplayFunc(DuckieDisplayFunc);
+	glutDisplayFunc(SwitchingDisplayFunc);
 	glutReshapeFunc(ReshapeFunc); // what function called if resized window?
 	glutKeyboardFunc(KeyboardFunc); // what function called if keypressed?
 	glutTimerFunc(period, TimerFunc, 0);
