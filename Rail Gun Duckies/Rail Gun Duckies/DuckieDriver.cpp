@@ -97,29 +97,30 @@ void DuckieDisplayFunc() {
 	glRotated(elapsed_time * 60, 0, 1, 0);
 	glPushMatrix();
 	
-	b.drawDiamond();
+	b.render();
+//	b.drawDiamond();
 //	b.Triangle();
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslated(-3, 0, 0);
 	glRotated(elapsed_time * 60, 0, -1, 1);
-	d.renderDL();
+	d.render();
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslated(3, 0, 0);
-	d.renderDL();
+	d.render();
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslated(0, 0, 3);
-	d.renderDL();
+	d.render();
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslated(0, 0, -3);
-	d.renderDL();
+	d.render();
 	glPopMatrix();
 	//RailGun * basic = new RailGun();
 /*

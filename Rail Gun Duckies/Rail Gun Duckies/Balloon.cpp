@@ -13,26 +13,20 @@ Balloon::~Balloon() {
 }
 
 void Balloon::render() {
-
-}
-
-void Balloon::drawBalloon()
-{
-	if (this->va_vertices.size() == 0)
-	{	
+	if (this->va_vertices.size() == 0) {	
 		GLfloat height;
 		GLfloat r;
 		GLfloat angle;
 		r = 0;
-		for(height = 1; height >=.8; height -=.1){
+		for(height = 1; height >=.8; height -=.1) {
 			for(angle = 0; angle < 360; angle+=40){
 				this->va_vertices.push_back(glm::vec3((r * cos(angle*PI/180)),height,(r * sin(angle*PI/180))));
 			}
 			r+=0.1;
 		}
-		for(height = .7; height >= 0; height -=.05){
+		for(height = .7; height >= 0; height -=.05) {
 		    r  = cos((height/.7) * (PI/2));
-			for(angle = 0; angle < 360; angle+=40){
+			for(angle = 0; angle < 360; angle+=40) {
 				this->va_vertices.push_back(glm::vec3((r * cos(angle*PI/180)),height,(r * sin(angle*PI/180))));
 			}
 		}
@@ -46,8 +40,8 @@ void Balloon::drawBalloon()
 
 		GLfloat a;
 		GLfloat b;
-		for(a = 0; a < 18; a++){
-			for(b = 0; b < 9; b++){
+		for(a = 0; a < 18; a++) {
+			for(b = 0; b < 9; b++) {
 				this->va_indices.push_back(glm::ivec3(a+b,a+b+91,a+b+90));
 				this->va_indices.push_back(glm::ivec3(a+b,a+b+1,a+b+91));
 			}

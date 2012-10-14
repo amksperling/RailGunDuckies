@@ -1,6 +1,6 @@
 #pragma once
 #include <GL/freeglut.h>
-
+#include <glm/glm.hpp>
 
 
 /*
@@ -11,23 +11,19 @@ game. Each Duckie has its own intrinsic properties that will be used
 
 */
 
-struct Color {
-	GLdouble red;
-	GLdouble green;
-	GLdouble blue;
-};
+using namespace glm;
 
 class Duckie {
 
 public:
 	Duckie();
-	Duckie(Color c);
+	Duckie(vec3 color);
 	~Duckie();
 	
 //	void Initialize();
 	void renderDL();
 	void render();
-	static void initialize();
+//	static void initialize();
 
 	double getMass() const;
 	double getVelocity() const;
@@ -37,7 +33,7 @@ private:
 	double mass;
 	double velocity;
 	double acceleration;
-	Color color;
+	vec3 color;
 	GLuint displayListHandle;
 	// vector for position;
 };

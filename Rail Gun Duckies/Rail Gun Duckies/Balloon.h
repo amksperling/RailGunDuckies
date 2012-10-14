@@ -8,7 +8,7 @@
 
 //#include <gl/glew.h>
 #include <GL/freeglut.h>
-#include <glm.hpp>
+#include <glm/glm.hpp>
 
 using namespace std;
 using namespace glm;
@@ -20,7 +20,6 @@ public:
 	~Balloon();
 
 	void render();
-	void drawBalloon();
 	void drawDiamond();
 	void Triangle();
 	
