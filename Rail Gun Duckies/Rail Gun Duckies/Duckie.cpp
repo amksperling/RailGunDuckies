@@ -44,7 +44,7 @@ void Duckie::render() {
     glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
     glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess);
 
-	if (this->displayListHandle == (GLuint) -1) {
+	if (this->displayListHandle == GLuint(-1)) {
 		this->displayListHandle = glGenLists(1);
 		glNewList(this->displayListHandle, GL_COMPILE);
 

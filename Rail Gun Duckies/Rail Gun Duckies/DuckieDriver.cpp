@@ -81,7 +81,7 @@ void DuckieDisplayFunc() {
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glClearColor(0, 0, 0, 0);
+	glClearColor(1, 1, 1, 0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	//set up the world so we can see stuff!
@@ -208,6 +208,14 @@ void KeyboardFunc(unsigned char c, int x, int y) {
 	glutPostRedisplay();
 }
 
+void SpecialFunc(int key, int x, int y) {
+	switch (key) {
+	case GLUT_KEY_F1:
+		w->cycleSceneMode();
+		break;
+	default: break;
+	}
+}
 void TimerFunc(int value) {
 	glutTimerFunc(period, TimerFunc, value);
 	glutPostRedisplay();
@@ -228,6 +236,7 @@ int main(int argc, char *argv[]) {
 	glutReshapeFunc(ReshapeFunc); // what function called if resized window?
 	glutKeyboardFunc(KeyboardFunc); // what function called if keypressed?
 	glutTimerFunc(period, TimerFunc, 0);
+	glutSpecialFunc(SpecialFunc);
 	glutMainLoop();
 	return 0;
 }

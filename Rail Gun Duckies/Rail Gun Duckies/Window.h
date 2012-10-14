@@ -13,7 +13,7 @@ const int DEFAULT_POS_X = 0;
 const int DEFAULT_POS_Y = 0;
 //const char * DEFAULT_TITLE = "Rail Gun Duckies";
 
-const enum APP_MODES {
+enum APP_MODES {
 	DUCK_BEAUTY,
 	RAILGUN_BEAUTY,
 	BALLOON_BEAUTY,
@@ -34,7 +34,7 @@ public:
 	   mode, then it can be used in every mode depending on
 	   the switch. */
 
-	void cycleSceneMode(int defaultMode);
+	void cycleSceneMode();
 
 	void cycleLightingMode(int defaultLight);
 

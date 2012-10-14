@@ -2,7 +2,8 @@
 
 #include "Balloon.h"
 
-#define PI 3.14159265
+const float PI = 3.14159265f;
+
 
 Balloon::Balloon() {
 
@@ -20,14 +21,14 @@ void Balloon::render() {
 		r = 0;
 		for(height = 1; height >=.8; height -=.1) {
 			for(angle = 0; angle < 360; angle+=40){
-				this->va_vertices.push_back(glm::vec3((r * cos(angle*PI/180)),height,(r * sin(angle*PI/180))));
+				this->va_vertices.push_back(glm::vec3((r * cos(angle*(PI/180))),height,(r * sin(angle*(PI/180)))));
 			}
 			r+=0.1;
 		}
 		for(height = .7; height >= 0; height -=.05) {
 		    r  = cos((height/.7) * (PI/2));
 			for(angle = 0; angle < 360; angle+=40) {
-				this->va_vertices.push_back(glm::vec3((r * cos(angle*PI/180)),height,(r * sin(angle*PI/180))));
+				this->va_vertices.push_back(glm::vec3((r * cos(angle*(PI/180))),height,(r * sin(angle*(PI/180)))));
 			}
 		}
 
@@ -58,6 +59,7 @@ void Balloon::render() {
 
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
+
 }
 
 
