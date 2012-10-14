@@ -16,10 +16,10 @@ void RailGun::drawRailGun() {
 		this->railgun_display_list = glGenLists(1);
 		glNewList(this->railgun_display_list, GL_COMPILE);
 	//reflective table
-	GLfloat material_ambient[] = {.19225, .19225, 0.19225, 1};
-	GLfloat material_diffuse[] = { .50754, .50754, 0.50754, 1 };
-    GLfloat material_specular[] = { .502873, .502873, .508273, 1 };
-    GLfloat material_shininess[] = { .4 * 128 };
+	GLfloat material_ambient[] = {(GLfloat).192, (GLfloat).192, (GLfloat)0.192, (GLfloat)1};
+	GLfloat material_diffuse[] = { (GLfloat).508, (GLfloat).508, (GLfloat)0.508, (GLfloat)1 };
+    GLfloat material_specular[] = { (GLfloat).503, (GLfloat).503, (GLfloat).503, (GLfloat)1 };
+    GLfloat material_shininess[] = { (GLfloat).4 * (GLfloat)128 };
 
 	glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
