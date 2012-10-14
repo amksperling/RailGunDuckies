@@ -36,12 +36,14 @@ public:
 
 	void cycleSceneMode();
 
-	void cycleLightingMode(int defaultLight);
+	void cycleLightingMode();
 
-	void cycleCameraMode(int defaultCamera);
+	void cycleCameraMode();
 
 	void toggleFullScreen();
 	void toggleWireFrame();
+
+	inline int getSceneMode();
 
 private:
 
@@ -54,4 +56,7 @@ private:
 	bool isFullScreen;
 	bool isWireFrame;
 	double aspect;
+	int sceneMode;
+	int cameraMode;
+	int Lightmode;
 };

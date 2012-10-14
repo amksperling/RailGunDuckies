@@ -10,6 +10,7 @@ Window::Window() {
 	this->isWireFrame = false;
 	this->w = DEFAULT_WIDTH;
 	this->h = DEFAULT_HEIGHT;
+	this->sceneMode = APP_MODES::DUCK_BEAUTY;
 }
 
 
@@ -38,4 +39,28 @@ void Window::toggleWireFrame() {
 	if (!this->isWireFrame) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	this->isWireFrame = !this->isWireFrame;
+}
+
+void Window::cycleSceneMode() {
+	switch (this->sceneMode) {
+	case APP_MODES::DUCK_BEAUTY:
+		this->sceneMode = APP_MODES::RAILGUN_BEAUTY;
+		break;
+	case APP_MODES::RAILGUN_BEAUTY:
+		this->sceneMode = APP_MODES::BALLOON_BEAUTY;
+		break;
+	case APP_MODES::BALLOON_BEAUTY:
+		this->sceneMode = APP_MODES::GAME;
+		break;
+	case APP_MODES::GAME:
+		this->sceneMode = APP_MODES::GAME_FOREVER;
+		break;
+	case APP_MODES::GAME_FOREVER:
+		this->sceneMode = APP_MODES::DUCK_BEAUTY;
+		break;
+	}
+}
+
+int Window::getSceneMode() {
+	return this->sceneMode;
 }
