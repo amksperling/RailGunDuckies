@@ -107,7 +107,7 @@ void SwitchingDisplayFunc() {
 		break;
 	case BALLOON_BEAUTY:
 		glPushMatrix();
-	//	glScalef(5, 5, 5);
+		glScalef(2, 2, 2);
 		b.render();
 		glPopMatrix();
 		break;

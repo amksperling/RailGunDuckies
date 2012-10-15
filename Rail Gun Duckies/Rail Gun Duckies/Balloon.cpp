@@ -15,7 +15,7 @@ Balloon::~Balloon() {
 
 void Balloon::render() {
 	//Not set to balloon material yet
-	/*GLfloat material_ambient[] = {.00, .00, 0, 1};
+	GLfloat material_ambient[] = {.00, .00, 0, 1};
 	GLfloat material_diffuse[] = { .5, .5, 0, 1 };
     GLfloat material_specular[] = { .6, .6, .5, 1 };
     GLfloat material_shininess[] = { .25 * 128 };
@@ -23,7 +23,7 @@ void Balloon::render() {
 	glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess); */
+    glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess); 
 
 	if (this->va_vertices.size() == 0) {	
 /*		GLfloat height;
@@ -62,21 +62,65 @@ void Balloon::render() {
 
 	r = 1;
 
-	for(o = (GLfloat)0; o <=(GLfloat)180; o +=(GLfloat)36) {
-		for(p = (GLfloat)0; p <=(GLfloat) 360; p +=(GLfloat)72) {
+	GLfloat omegaPoints = 21;
+	GLfloat omegaIncrement = 180/(omegaPoints-1);
+
+	GLfloat phiPoints = 20;
+	GLfloat phiIncrement = 360/phiPoints;
+
+	for(o = (GLfloat)0; o <=(GLfloat)180; o +=omegaIncrement) {
+		for(p = (GLfloat)0; p <(GLfloat) 360; p +=phiIncrement) {
+			
+			if(o < 117) r = 1;
+			else if(o == 117) r = ((o+2)/117);
+			else if(o == 126) r = ((o+5)/126);
+			else if(o == 135) r = ((o)/126);
+			else r = ((o-3)/126);
+			
 			this->va_vertices.push_back(glm::vec3((r * sin(o*(PI/180))* cos(p*(PI/180))), (r * cos(o*(PI/180))), (r * sin(o*(PI/180))* sin(p*(PI/180)))));
 			this->va_colors.push_back(glm::vec4(1.0f,0.0f,0.0f,1.0f));
 		}
 	}
+	
+	GLfloat height;
+	GLfloat angle;
+	r = 0;
+	GLfloat heightPoints = 6;
+	GLfloat heightIncrement  = 0.1/(heightPoints-1);
+	GLfloat anglePoints = 18;
+	GLfloat angleIncrement = 360/anglePoints;
+
+	for(height = (GLfloat)-1.4; height >=(GLfloat)-1.5; height -=heightIncrement) {
+		for(angle = 0; angle < 360; angle+=angleIncrement){
+			this->va_vertices.push_back(glm::vec3((r * cos(angle*(PI/180))), height, (r * sin(angle*(PI/180)))));
+			this->va_colors.push_back(glm::vec4(1.0f,0.0f,0.0f,1.0f));
+		}
+		r+=(GLfloat)0.02;
+	}
+	
 	GLfloat a;
-	for(a = 0; a < 30; a++) {
-		if(((int)a % 6) !=5){
-		this->va_indices.push_back(glm::ivec3(a,a+7,a+6));
-		this->va_indices.push_back(glm::ivec3(a,a + 1,a+7));
+	GLfloat aMax = (omegaPoints - 1) * phiPoints;
+	for(a = 0; a < aMax; a++) {
+		if(((int)a % (int)phiPoints) != ((int)phiPoints-1)){
+		this->va_indices.push_back(glm::ivec3(a,a+phiPoints+1,a+phiPoints));
+		this->va_indices.push_back(glm::ivec3(a,a + 1,a+phiPoints+1));
 		}
 		else{
-		this->va_indices.push_back(glm::ivec3(a,a+1,a+6));
-		this->va_indices.push_back(glm::ivec3(a,a-5,a+1));
+		this->va_indices.push_back(glm::ivec3(a,a+1,a+phiPoints));
+		this->va_indices.push_back(glm::ivec3(a,a-phiPoints+1,a+1));
+		}
+	} 
+
+	GLfloat b = omegaPoints * phiPoints;
+	GLfloat bMax = b + (heightPoints - 1) * anglePoints;
+	for(b = omegaPoints * phiPoints; b < bMax; b++) {
+		if(((int)(b-(omegaPoints*phiPoints)) % (int)anglePoints) != ((int)anglePoints-1)){
+		this->va_indices.push_back(glm::ivec3(b,b+anglePoints+1,b+anglePoints));
+		this->va_indices.push_back(glm::ivec3(b,b + 1,b+anglePoints+1));
+		}
+		else{
+		this->va_indices.push_back(glm::ivec3(b,b+1,b+anglePoints));
+		this->va_indices.push_back(glm::ivec3(b,b-anglePoints+1,b+1));
 		}
 	}
 	}
