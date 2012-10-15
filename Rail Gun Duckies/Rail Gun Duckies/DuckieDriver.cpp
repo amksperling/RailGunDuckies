@@ -86,7 +86,7 @@ void SwitchingDisplayFunc() {
 	//set up the world so we can see stuff!
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60, aspect, 1, 20);
+	gluPerspective(60, aspect, 1, 50);
 	glViewport(0, 0, window_width, window_height);
 
 	glMatrixMode(GL_MODELVIEW);
@@ -107,7 +107,8 @@ void SwitchingDisplayFunc() {
 		break;
 	case BALLOON_BEAUTY:
 		glPushMatrix();
-		b.drawDiamond();
+	//	glScalef(5, 5, 5);
+		b.render();
 		glPopMatrix();
 		break;
 	default: break;

@@ -14,30 +14,37 @@ Balloon::~Balloon() {
 }
 
 void Balloon::render() {
+	//Not set to balloon material yet
+	/*GLfloat material_ambient[] = {.00, .00, 0, 1};
+	GLfloat material_diffuse[] = { .5, .5, 0, 1 };
+    GLfloat material_specular[] = { .6, .6, .5, 1 };
+    GLfloat material_shininess[] = { .25 * 128 };
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess); */
+
 	if (this->va_vertices.size() == 0) {	
-		GLfloat height;
+/*		GLfloat height;
 		GLfloat r;
 		GLfloat angle;
 		r = 0;
-		for(height = 1; height >=.8; height -=.1) {
-			for(angle = 0; angle < 360; angle+=40){
-				this->va_vertices.push_back(glm::vec3((r * cos(angle*(PI/180))),height,(r * sin(angle*(PI/180)))));
-			}
-			r+=0.1;
-		}
-		for(height = .7; height >= 0; height -=.05) {
-		    r  = cos((height/.7) * (PI/2));
-			for(angle = 0; angle < 360; angle+=40) {
-				this->va_vertices.push_back(glm::vec3((r * cos(angle*(PI/180))),height,(r * sin(angle*(PI/180)))));
-			}
-		}
 
-		this->va_colors.push_back(glm::vec4(1.0f,0.0f,0.0f,1.0f));
-		this->va_colors.push_back(glm::vec4(0.0f,1.0f,0.0f,1.0f));
-		this->va_colors.push_back(glm::vec4(0.0f,0.0f,1.0f,1.0f));
-		this->va_colors.push_back(glm::vec4(1.0f,1.0f,1.0f,1.0f));
-		this->va_colors.push_back(glm::vec4(1.0f,0.0f,0.0f,1.0f));
-		this->va_colors.push_back(glm::vec4(1.0f,0.0f,0.0f,1.0f));
+		for(height = (GLfloat)1; height >=(GLfloat).8; height -=(GLfloat).1) {
+			for(angle = 0; angle < 360; angle+=40){
+				this->va_vertices.push_back(glm::vec3((r * cos(angle*(PI/180))), height, (r * sin(angle*(PI/180)))));
+			    this->va_colors.push_back(glm::vec4(1.0f,0.0f,0.0f,1.0f));
+			}
+			r+=(GLfloat)0.1;
+		}
+		for(height = (GLfloat).7; height >= (GLfloat)0; height -=(GLfloat).05) {
+		    r  = (GLfloat)(cos((height/.7) * (PI/2)));
+			for(angle = 0; angle < 360; angle+=40) {
+				this->va_vertices.push_back(glm::vec3((r * cos(angle*(PI/180))), height, (r * sin(angle*(PI/180)))));
+				this->va_colors.push_back(glm::vec4(1.0f,0.0f,0.0f,1.0f));
+			}
+		}
 
 		GLfloat a;
 		GLfloat b;
@@ -47,6 +54,31 @@ void Balloon::render() {
 				this->va_indices.push_back(glm::ivec3(a+b,a+b+1,a+b+91));
 			}
 		}
+	} */
+
+	GLfloat r;
+	GLfloat o;
+	GLfloat p;
+
+	r = 1;
+
+	for(o = (GLfloat)0; o <=(GLfloat)180; o +=(GLfloat)36) {
+		for(p = (GLfloat)0; p <=(GLfloat) 360; p +=(GLfloat)72) {
+			this->va_vertices.push_back(glm::vec3((r * sin(o*(PI/180))* cos(p*(PI/180))), (r * cos(o*(PI/180))), (r * sin(o*(PI/180))* sin(p*(PI/180)))));
+			this->va_colors.push_back(glm::vec4(1.0f,0.0f,0.0f,1.0f));
+		}
+	}
+	GLfloat a;
+	for(a = 0; a < 30; a++) {
+		if(((int)a % 6) !=5){
+		this->va_indices.push_back(glm::ivec3(a,a+7,a+6));
+		this->va_indices.push_back(glm::ivec3(a,a + 1,a+7));
+		}
+		else{
+		this->va_indices.push_back(glm::ivec3(a,a+1,a+6));
+		this->va_indices.push_back(glm::ivec3(a,a-5,a+1));
+		}
+	}
 	}
 
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -64,8 +96,7 @@ void Balloon::render() {
 
 
 
-void Balloon::drawDiamond()
-{
+void Balloon::drawDiamond() {
 	if (this->va_vertices.size() == 0)
 	{
 		this->va_vertices.push_back(glm::vec3(0.0f,2.0f,0.0f)); //0 //glmVec3 //single digits
