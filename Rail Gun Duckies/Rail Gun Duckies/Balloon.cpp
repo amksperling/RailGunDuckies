@@ -26,40 +26,10 @@ void Balloon::render() {
     glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess); 
 
 	if (this->va_vertices.size() == 0) {	
-/*		GLfloat height;
-		GLfloat r;
-		GLfloat angle;
-		r = 0;
-
-		for(height = (GLfloat)1; height >=(GLfloat).8; height -=(GLfloat).1) {
-			for(angle = 0; angle < 360; angle+=40){
-				this->va_vertices.push_back(glm::vec3((r * cos(angle*(PI/180))), height, (r * sin(angle*(PI/180)))));
-			    this->va_colors.push_back(glm::vec4(1.0f,0.0f,0.0f,1.0f));
-			}
-			r+=(GLfloat)0.1;
-		}
-		for(height = (GLfloat).7; height >= (GLfloat)0; height -=(GLfloat).05) {
-		    r  = (GLfloat)(cos((height/.7) * (PI/2)));
-			for(angle = 0; angle < 360; angle+=40) {
-				this->va_vertices.push_back(glm::vec3((r * cos(angle*(PI/180))), height, (r * sin(angle*(PI/180)))));
-				this->va_colors.push_back(glm::vec4(1.0f,0.0f,0.0f,1.0f));
-			}
-		}
-
-		GLfloat a;
-		GLfloat b;
-		for(a = 0; a < 18; a++) {
-			for(b = 0; b < 9; b++) {
-				this->va_indices.push_back(glm::ivec3(a+b,a+b+91,a+b+90));
-				this->va_indices.push_back(glm::ivec3(a+b,a+b+1,a+b+91));
-			}
-		}
-	} */
 
 	GLfloat r;
 	GLfloat o;
 	GLfloat p;
-
 	r = 1;
 
 	GLfloat omegaPoints = 21;
@@ -98,6 +68,8 @@ void Balloon::render() {
 		r+=(GLfloat)0.02;
 	}
 	
+	r-=0.02;
+
 	GLfloat a;
 	GLfloat aMax = (omegaPoints - 1) * phiPoints;
 	for(a = 0; a < aMax; a++) {
@@ -109,12 +81,59 @@ void Balloon::render() {
 		this->va_indices.push_back(glm::ivec3(a,a+1,a+phiPoints));
 		this->va_indices.push_back(glm::ivec3(a,a-phiPoints+1,a+1));
 		}
+		if(a < phiPoints){
+			this->va_normals.push_back(glm::vec3(0,1,0));
+		}
+		else{
+			glm::vec3 one;
+			glm::vec3 two;
+			glm::vec3 three;
+			glm::vec3 four;
+			glm::vec3 five;
+			glm::vec3 six;
+
+			//get all points starting at point directly above and going clockwise
+			one = va_vertices[a-phiPoints];
+			if(((int)a % (int)phiPoints) != ((int)phiPoints-1)){
+				two = va_vertices[a+1];
+				three = va_vertices[a+phiPoints +1];
+			}
+			else{
+				two = va_vertices[a- phiPoints + 1];
+				three = va_vertices[a+1];
+			}
+			four = va_vertices[a+phiPoints];
+			if(((int)a % (int)phiPoints) != 0){
+				five = va_vertices[a-1];
+				six = va_vertices[a-phiPoints -1];
+			}
+			else{
+				five = va_vertices[a + phiPoints - 1];
+				six = va_vertices[a-1];
+			}
+			glm::vec3 sum = glm::cross(one - va_vertices[a], two - va_vertices[a]);
+			sum += glm::cross(two - va_vertices[a], three - va_vertices[a]);
+			sum += glm::cross(three - va_vertices[a], four - va_vertices[a]);
+			sum += glm::cross(four - va_vertices[a], five - va_vertices[a]);
+			sum += glm::cross(five - va_vertices[a], six - va_vertices[a]);
+			sum += glm::cross(six - va_vertices[a], one - va_vertices[a]);
+			this->va_normals.push_back(glm::normalize(sum));
+		}
 	} 
 
-	GLfloat b = omegaPoints * phiPoints;
+	for(a = 0; a < phiPoints; ++a){
+		this->va_normals.push_back(glm::vec3(0,-1,0));
+	}
+
+	for(a = 0; a < anglePoints; ++a){
+		this->va_normals.push_back(glm::vec3(0,1,0));
+	}
+
+	GLfloat initial = omegaPoints * phiPoints;
+	GLfloat b = initial;
 	GLfloat bMax = b + (heightPoints - 1) * anglePoints;
 	for(b = omegaPoints * phiPoints; b < bMax; b++) {
-		if(((int)(b-(omegaPoints*phiPoints)) % (int)anglePoints) != ((int)anglePoints-1)){
+		if(((int)(b-initial) % (int)anglePoints) != ((int)anglePoints-1)){
 		this->va_indices.push_back(glm::ivec3(b,b+anglePoints+1,b+anglePoints));
 		this->va_indices.push_back(glm::ivec3(b,b + 1,b+anglePoints+1));
 		}
@@ -122,22 +141,75 @@ void Balloon::render() {
 		this->va_indices.push_back(glm::ivec3(b,b+1,b+anglePoints));
 		this->va_indices.push_back(glm::ivec3(b,b-anglePoints+1,b+1));
 		}
+		if(b < initial + anglePoints){
+			this->va_normals.push_back(glm::vec3(0,1,0));
+		}
+		else{
+			glm::vec3 one;
+			glm::vec3 two;
+			glm::vec3 three;
+			glm::vec3 four;
+			glm::vec3 five;
+			glm::vec3 six;
+
+			//get all points starting at point directly above and going clockwise
+			one = va_vertices[b-anglePoints];
+			if(((int)(b-initial) % (int)anglePoints) != ((int)anglePoints-1)){
+				two = va_vertices[b+1];
+				three = va_vertices[b+anglePoints +1];
+			}
+			else{
+				two = va_vertices[b- anglePoints + 1];
+				three = va_vertices[b+1];
+			}
+			four = va_vertices[b+anglePoints];
+			if(((int)(b-initial) % (int)anglePoints) != 0){
+				five = va_vertices[b-1];
+				six = va_vertices[b-anglePoints -1];
+			}
+			else{
+				five = va_vertices[b + anglePoints - 1];
+				six = va_vertices[b-1];
+			}
+			glm::vec3 sum = glm::cross(one - va_vertices[b], two - va_vertices[b]);
+			sum += glm::cross(two - va_vertices[b], three - va_vertices[b]);
+			sum += glm::cross(three - va_vertices[b], four - va_vertices[b]);
+			sum += glm::cross(four - va_vertices[b], five - va_vertices[b]);
+			sum += glm::cross(five - va_vertices[b], six - va_vertices[b]);
+			sum += glm::cross(six - va_vertices[b], one - va_vertices[b]);
+			this->va_normals.push_back(glm::normalize(sum));
+		}
 	}
+
+	for(a = 0; a < anglePoints; ++a){
+		for(angle = 0; angle < 360; angle+=angleIncrement){
+			this->va_normals.push_back(glm::normalize(glm::vec3(r*cos(angle *(PI/180)),0,r*sin(angle *(PI/180)))));
+		}
+	}
+
 	}
 
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
 
 	glVertexPointer(3 , GL_FLOAT , 0 , &this->va_vertices[0]);
 	glColorPointer(4, GL_FLOAT, 0, &this->va_colors[0]);
+	glNormalPointer(GL_FLOAT, 0, &this->va_normals[0]);
 
 	glDrawElements(GL_TRIANGLES , 3 * this->va_indices.size() , GL_UNSIGNED_INT , &this->va_indices[0]);
 
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
 
+	glPushMatrix();
+	glTranslated(0, -1.50, 0);
+	glRotated(90, 1, 0, 0);
+	glColor3d(1, 0, 0);
+	glutSolidTorus((GLdouble) 0.018, (GLdouble) 0.12, (GLint) 20, (GLint) 20);
+	glPopMatrix();
 }
-
 
 
 void Balloon::drawDiamond() {

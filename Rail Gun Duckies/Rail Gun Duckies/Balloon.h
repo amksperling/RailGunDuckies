@@ -28,10 +28,12 @@ private:
 	vector<GLdouble> va_v;
 	vector<GLdouble> va_c;
 	vector<GLuint> va_i;
+	vector<GLdouble> va_n;
 
 	vector<vec3> va_vertices;
 	vector<vec4> va_colors;
 	vector<ivec3> va_indices;
+	vector<vec3> va_normals;
 };
 
 static void computeVertices(Balloon b);
