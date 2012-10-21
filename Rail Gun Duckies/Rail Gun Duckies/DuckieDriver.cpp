@@ -39,7 +39,7 @@ Duckie  d;
 Duckie p;
 Balloon b;
 RailGun r;
-GreyDuck g;
+//GreyDuck g;
 Scene s;
 
 
@@ -143,12 +143,14 @@ void SwitchingDisplayFunc() {
 		break;
 
 	case GAME:
-		glPushMatrix();
-//		s.renderWorld();
-		glPopMatrix();
+	//	s.runGameMode(false);
+	/*	glPushMatrix();
+		s.renderWorld();
+		glPopMatrix();*/
 		break;
 
 	case GAME_FOREVER:
+	//	s.runGameMode(true);
 		break;
 
 	default: break;

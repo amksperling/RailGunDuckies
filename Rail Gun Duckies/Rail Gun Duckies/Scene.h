@@ -20,7 +20,7 @@ public:
 
 	//use these functions to switch between app modes
 	void runBeautyMode(int beautyMode);
-	void runGameMode(bool forever);
+	void runGameMode(bool runForever);
 
 //	void duckBeauty();
 //	void railGunBeauty();

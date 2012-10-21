@@ -191,11 +191,13 @@ void Scene::runBeautyMode(int beautyMode) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	//set up camera at (0, 2, 0)
 	gluLookAt(0, 2, 0, 0, 0, 10, 0, 1, 0);
 	glPushMatrix();
-	renderWorld();
+	renderWorld(); // draw the background world
 	glPopMatrix();
 
+	//draw the objects based on the input
 	switch (beautyMode) {
 	case DUCK_BEAUTY:
 		glPushMatrix();

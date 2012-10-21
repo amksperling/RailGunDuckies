@@ -29,10 +29,10 @@ void Duckie::render() {
 	//numbers from http://devernay.free.fr/cours/opengl/materials.html
 	//
 	//yellow plastic
-	GLfloat material_ambient[] = {.00, .00, 0, 1};
-	GLfloat material_diffuse[] = { .5, .5, 0, 1 };
-    GLfloat material_specular[] = { .6, .6, .5, 1 };
-    GLfloat material_shininess[] = { .25 * 128 };
+	GLfloat material_ambient[] = { 0.0f, 0.0f, 0.0f, 1.0f};
+	GLfloat material_diffuse[] = { .5f, .5f, 0.0f, 1.0f };
+    GLfloat material_specular[] = { .6f, .6f, .5f, 1.0f };
+    GLfloat material_shininess[] = { .25f * 128.0f };
 
 	//yellow rubber
 	//GLfloat material_ambient[] = {.05, .05, 0, 1};
