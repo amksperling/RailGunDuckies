@@ -4,7 +4,7 @@
 
 Scene::Scene() : displayListHandle(-1) { }
 
-void Scene::render() {
+void Scene::renderWorld() {
 	if (this->displayListHandle == GLuint(-1)) {
 		this->displayListHandle = glGenLists(1);
 		glNewList(this->displayListHandle, GL_COMPILE);
@@ -13,68 +13,72 @@ void Scene::render() {
 		skyBox();
 		// draw the ground
 		ground();
-		placeGun();
-		placeDuck();
 		glEndList();
 	}
 	glCallList(this->displayListHandle);
 }
 
 
-void Scene::background() {
+void Scene::skySide() {
+	glDisable(GL_LIGHTING);
 	glPushMatrix();
 	glBegin(GL_QUADS);
 
 	glNormal3f(0, 1, 0);
-	glColor3d(1, 1, 1);
+	glColor3ub(255, 255, 255);
 	glVertex2d(-100, 100);
 	glVertex2d(100, 100);
-	glColor3d(0, 0, 1);
+	glColor3ub(0, 0, 150);
 	glVertex2d(100, 0);
 	glVertex2d(-100, 0);
 	
 	glEnd();
 	glPopMatrix();
+	glEnable(GL_LIGHTING);
 }
 
 void Scene::ground() {
+	glDisable(GL_LIGHTING);
 	glPushMatrix();
 	glBegin(GL_QUADS);
-
+	glTranslated(0, 0, -100);
 	glRotated(90, 1, 0, 0);
-	glColor3d(0, 1, 0);
+	glColor3ub(0, 100, 0);
 	glNormal3f(0, 1, 0);
-	glVertex2d(-200, 200);
-	glVertex2d(200, 200);
-	glVertex2d(200, -200);
-	glVertex2d(-200, -200);
+	glVertex2d(-100, 0);
+	glColor3ub(0, 40, 0);
+	glVertex2d(-100, 200);
+	glVertex2d(100, 200);
+	glColor3ub(0, 100, 0);
+	glVertex2d(100, 0);
 
 	glEnd();
 	glPopMatrix();
+	glEnable(GL_LIGHTING);
 }
 
 void Scene::skyBox() {
 	glPushMatrix();
 	glTranslated(0, 0, 100);
-	background();
+	skySide();
 	glPopMatrix();
 	glRotated(90, 0 , 1, 0);
 
 	glPushMatrix();
 	glTranslated(0, 0, 100);
-	background();
+	skySide();
 	glPopMatrix();
 	glRotated(90, 0 , 1, 0);
 
 	glPushMatrix();
 	glTranslated(0, 0, 100);
-	background();
+	skySide();
 	glPopMatrix();
 	glRotated(90, 0 , 1, 0);
 
 	glPushMatrix();
 	glTranslated(0, 0, 100);
-	background();
+	skySide();
 	glPopMatrix();
 	glRotated(90, 0 , 1, 0);
 
@@ -83,31 +87,144 @@ void Scene::skyBox() {
 
 }
 
-// pla
-void Scene::placeGun() {
-	Balloon a;
+//// pla
+//void Scene::placeGun() {
+//	Balloon a;
+//
+//	glPushMatrix();
+//	glTranslated(0, .5, 0);
+////	this->theGun.drawRailGun();
+//	glTranslated(0, 10, 20);
+//	this->balloons.push_back(a);
+//	this->balloons.at(0).render();
+//	glTranslated(-5, 0 ,0);
+//	this->balloons.at(0).render();
+//	glTranslated(10, 0 ,0);
+//	this->balloons.at(0).render();
+//
+//	glPopMatrix();
+//
+//}
+//
+//
+//void Scene::placeDuck() {
+//	glPushMatrix();
+//
+//	glTranslated(0, 1, 0);
+//	this->theDuck.render();
+//	glPopMatrix();
+//
+//}
 
-	glPushMatrix();
-	glTranslated(0, .5, 0);
+////Display the properly lit duck
+////Duck beauty mode
+//void Scene::duckBeauty() {
+//	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
+//
+//	glPushMatrix();
+//	glMatrixMode(GL_MODELVIEW);
+//	glLoadIdentity();
+//
+//	gluLookAt(0, 2, 0, 0, 0, 10, 0, 1, 0);
+//	glPushMatrix();
+//	renderWorld();
+//	glPopMatrix();
+//
+//	glPushMatrix();
+//	glTranslated(0, 1, 7);
+//	glScaled(2, 2, 2);
+//	glRotated(elapsed_time * 30, 0, 1, 0);
+//	this->theDuck.render();
+//	glPopMatrix();
+//
+//	glPopMatrix();
+//}
+//
+////Rail Gun beauty mode
+//void Scene::railGunBeauty() {
+//	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
+//
+//	glPushMatrix();
+//	glMatrixMode(GL_MODELVIEW);
+//	glLoadIdentity();
+//
+//	gluLookAt(0, 2, 0, 0, 0, 10, 0, 1, 0);
+//	glPushMatrix();
+//	renderWorld();
+//	glPopMatrix();
+//
+//	glPushMatrix();
+//	glTranslated(0, 1, 7);
+//	glRotated(elapsed_time * 30, 0, 1, 0);
 //	this->theGun.drawRailGun();
-	glTranslated(0, 10, 20);
-	this->balloons.push_back(a);
-	this->balloons.at(0).render();
-	glTranslated(-5, 0 ,0);
-	this->balloons.at(0).render();
-	glTranslated(10, 0 ,0);
-	this->balloons.at(0).render();
+//	glPopMatrix();
+//
+//	glPopMatrix();
+//}
+//
+////Balloon beauty mode
+//void Scene::balloonBeauty() {
+//	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
+//
+//	glPushMatrix();
+//	glMatrixMode(GL_MODELVIEW);
+//	glLoadIdentity();
+//
+//	gluLookAt(0, 2, 0, 0, 0, 10, 0, 1, 0);
+//	glPushMatrix();
+//	renderWorld();
+//	glPopMatrix();
+//
+//	glPushMatrix();
+//	glTranslated(0, 3, 5);
+//	glRotated(elapsed_time * 30, 0, 1, 0);
+//	this->aBalloon.render();
+//	glPopMatrix();
+//
+//	glPopMatrix();
+//}
 
-	glPopMatrix();
+void Scene::runBeautyMode(int beautyMode) {
+	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
 
-}
-
-
-void Scene::placeDuck() {
 	glPushMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 
-	glTranslated(0, 1, 0);
-	this->theDuck.render();
+	gluLookAt(0, 2, 0, 0, 0, 10, 0, 1, 0);
+	glPushMatrix();
+	renderWorld();
 	glPopMatrix();
 
+	switch (beautyMode) {
+	case DUCK_BEAUTY:
+		glPushMatrix();
+		glTranslated(0, 1.25, 7);
+		glScaled(2, 2, 2);
+		glRotated(elapsed_time * 30, 0, 1, 0);
+		this->theDuck.render();
+		glPopMatrix();
+		break;
+
+	case RAILGUN_BEAUTY:
+		glPushMatrix();
+		glTranslated(0, 1, 7);
+		glRotated(elapsed_time * 30, 0, 1, 0);
+		this->theGun.drawRailGun();
+		glPopMatrix();
+		break;
+
+	case BALLOON_BEAUTY:
+		glPushMatrix();
+		glTranslated(0, 2, 4);
+		glRotated(elapsed_time * 30, 0, 1, 0);
+		this->aBalloon.render();
+		glPopMatrix();
+		break;
+
+	default:
+		break;
+	}//end switch
+
+	glPopMatrix();
 }

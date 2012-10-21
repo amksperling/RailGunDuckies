@@ -5,13 +5,17 @@
 
 #pragma once
 #include <GL/freeglut.h>
+#include <ft2build.h>
 #include <string>
+
+using namespace std;
+
 
 const int DEFAULT_WIDTH = 1280;
 const int DEFAULT_HEIGHT = 720;
 const int DEFAULT_POS_X = 0;
 const int DEFAULT_POS_Y = 0;
-//const char * DEFAULT_TITLE = "Rail Gun Duckies";
+const string DEFAULT_TITLE = "Rail Gun Duckies";
 
 enum APP_MODES {
 	DUCK_BEAUTY,
@@ -21,6 +25,14 @@ enum APP_MODES {
 	GAME_FOREVER
 };
 
+enum LIGHT_MODES {
+	OFF,
+	BASIC,
+	SPOTLIGHT,
+	DAY_NIGHT,
+	OTHER
+};
+
 class Window {
 
 public:
@@ -28,7 +40,7 @@ public:
 
 
 	Window();
-	Window(int w, int h, int posX, int posY, bool fullScreen, char * title);
+	Window(int w, int h, int posX, int posY, bool fullScreen, string title);
 
 
 	/* These functions will toggle between the various modes
@@ -44,8 +56,11 @@ public:
 
 	void toggleFullScreen();
 	void toggleWireFrame();
+	void toggleLights();
 
-	int getSceneMode();
+	inline int getSceneMode() const { return sceneMode; }
+	inline int getCameraMode() const { return cameraMode; }
+	inline int getLightMode() const { return lightMode; }
 
 private:
 
@@ -60,5 +75,10 @@ private:
 	double aspect;
 	int sceneMode;
 	int cameraMode;
-	int Lightmode;
+	int lightMode;
+
+	void setBasicLights();
+	void setSpotLights();
+	void setDayNight();
+	void setOtherLights();
 };

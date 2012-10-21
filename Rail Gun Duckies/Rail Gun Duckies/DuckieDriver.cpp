@@ -6,6 +6,8 @@
 #include "RailGun.h"
 #include "Balloon.h"
 #include "Window.h"
+#include "GreyDuck.h"
+#include "Scene.h"
 #include <stdio.h>  
 #include <iostream>
 #include <sstream> //Checka
@@ -31,19 +33,33 @@ double period = 1000/60;
 
 double pScale = .01;
 
+//the test subjets:
 Window * w;
 Duckie  d;
 Duckie p;
 Balloon b;
 RailGun r;
+GreyDuck g;
+Scene s;
 
-bool CheckGLErrors()
-{
+
+//angle of rotation for camera
+float xpos = 0, ypos = 0, zpos = 0, xrot = 0, yrot = 0, zrot = 0.0, angle=0.0;
+void camera (void) {
+    glRotatef(xrot,1.0,0.0,0.0);  //rotate our camera on teh 
+									//x-axis (left and right)
+    glRotatef(yrot,0.0,1.0,0.0);  //rotate our camera on the 
+									//	y-axis (up and down)
+	glRotatef(zrot, 0, 0, 1);
+    glTranslated(-xpos,-ypos,-zpos); //translate the screen
+									// to the position of our camera
+}
+
+bool CheckGLErrors() {
 	bool error_found = false;
 	GLenum  error;
 	const GLubyte *errorString;
-	while ((error = glGetError()) != GL_NO_ERROR)
-	{
+	while ((error = glGetError()) != GL_NO_ERROR) {
 		error_found = true;
 		errorString = gluErrorString(error);
 		cout << errorString;
@@ -65,10 +81,10 @@ void initGL() {
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE , 0.0);
-	glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER , 1.0);
+	//glLightModelf(GL_LIGHT_MODEL_TWO_SIDE , 0.0);
+	//glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER , 1.0);
 
-	////set up light position
+	//////set up light position
 	GLfloat light_position[] = { 2 , 2, 1, 0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
@@ -86,32 +102,57 @@ void SwitchingDisplayFunc() {
 	//set up the world so we can see stuff!
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60, aspect, 1, 50);
+	gluPerspective(75, aspect, 1, 200);
 	glViewport(0, 0, window_width, window_height);
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glTranslated(0, 0, -8);
-
-	glRotated(elapsed_time * 60, 0, 1, 0);
+//	glMatrixMode(GL_MODELVIEW);
+//	glLoadIdentity();
+	//glTranslated(0, 0, -5);
+//	gluLookAt(0, 5, -5, 0, 0, 0, 0, 1, 0);
+//	camera();
+//	glRotated(elapsed_time * 60, 0, 1, 0);
 	switch (w->getSceneMode()) {
+
 	case DUCK_BEAUTY:
+		s.runBeautyMode(DUCK_BEAUTY);
+	//	s.duckBeauty();
+		/*glPushMatrix();
+		glTranslated(-3, 0, 0);
+		g.render();
+		glPopMatrix();
 		glPushMatrix();
+		glTranslated(3, 0, 0);
 		d.render();
-		glPopMatrix();
+		glPopMatrix();*/
 		break;
+
 	case RAILGUN_BEAUTY:
-		glPushMatrix();
-		r.drawRailGun();
-		glPopMatrix();
+		s.runBeautyMode(RAILGUN_BEAUTY);
+	//	s.railGunBeauty();
+		//glPushMatrix();
+		//r.drawRailGun();
+		//glPopMatrix();
 		break;
+
 	case BALLOON_BEAUTY:
+		s.runBeautyMode(BALLOON_BEAUTY);
+	//	s.balloonBeauty();
+		//glPushMatrix();
+		//b.render();
+		//glPopMatrix();
+		break;
+
+	case GAME:
 		glPushMatrix();
-		glScalef(2, 2, 2);
-		b.render();
+//		s.renderWorld();
 		glPopMatrix();
 		break;
+
+	case GAME_FOREVER:
+		break;
+
 	default: break;
+
 	}
 
 	glutSwapBuffers();
@@ -138,7 +179,8 @@ void DuckieDisplayFunc() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glTranslated(0, 0, -8);
-	glRotated(elapsed_time * 60, 0, 1, 0);
+	camera();
+//	glRotated(elapsed_time * 60, 0, 1, 0);
 	glPushMatrix();
 	
 	b.render();
@@ -148,7 +190,7 @@ void DuckieDisplayFunc() {
 
 	glPushMatrix();
 	glTranslated(-3, 0, 0);
-	glRotated(elapsed_time * 60, 0, -1, 1);
+//	glRotated(elapsed_time * 60, 0, -1, 1);
 	d.render();
 	glPopMatrix();
 
@@ -166,6 +208,7 @@ void DuckieDisplayFunc() {
 	glTranslated(0, 0, -3);
 	d.render();
 	glPopMatrix();
+
 	//RailGun * basic = new RailGun();
 /*
 	glPushMatrix();
@@ -216,8 +259,6 @@ void ReshapeFunc(int w, int h) {
 
 
 	aspect = double(w) / double(h); // remember to guard against div/0
-	glutPostRedisplay();
-
 }
 
 void KeyboardFunc(unsigned char c, int x, int y) {
@@ -225,20 +266,14 @@ void KeyboardFunc(unsigned char c, int x, int y) {
 	
 	case 'f':
 		w->toggleFullScreen();
-		/*if (!isFullScreen) {
-			glutFullScreen();
-			isFullScreen = true;
-			break;
-		}
-		glutReshapeWindow(init_width, init_height);
-		isFullScreen = false;*/
 		break;
 		
 	case 'w':
 		w->toggleWireFrame();
-		//isWireFrame = !isWireFrame;
-		//if(isWireFrame) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		//else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		break;
+
+	case 'l':
+		w->toggleLights();
 		break;
 
 	case 'p': 
@@ -249,7 +284,6 @@ void KeyboardFunc(unsigned char c, int x, int y) {
 	case 27: glutLeaveMainLoop();
 		return;
 	}
-	glutPostRedisplay();
 }
 
 void SpecialFunc(int key, int x, int y) {
@@ -257,11 +291,37 @@ void SpecialFunc(int key, int x, int y) {
 	case GLUT_KEY_F1:
 		w->cycleSceneMode();
 		break;
+
+	case GLUT_KEY_F2:
+		w->cycleLightingMode();
+		break;
+
+	//useing arrow keys to control camera for now
+	case GLUT_KEY_LEFT:
+		yrot -= 1;
+		if (yrot < -360) yrot += 360;
+		break;
+
+	case GLUT_KEY_RIGHT: 
+		yrot += 1;
+		if (yrot < -360) yrot -= 360;
+		break;
+
+	case GLUT_KEY_UP:
+		xrot += 1;
+		if (xrot < -360) xrot -= 360;
+		break;
+
+	case GLUT_KEY_DOWN:
+		xrot -= 1;
+		if (xrot < -360) xrot -= 360;
+		break;
+	
 	default: break;
 	}
 }
 void TimerFunc(int value) {
-	glutTimerFunc(period, TimerFunc, value);
+	glutTimerFunc(GLuint(period), TimerFunc, value);
 	glutPostRedisplay();
 }
 int main(int argc, char *argv[]) {
@@ -279,7 +339,7 @@ int main(int argc, char *argv[]) {
 	glutDisplayFunc(SwitchingDisplayFunc);
 	glutReshapeFunc(ReshapeFunc); // what function called if resized window?
 	glutKeyboardFunc(KeyboardFunc); // what function called if keypressed?
-	glutTimerFunc(period, TimerFunc, 0);
+	glutTimerFunc(GLuint(period), TimerFunc, 0);
 	glutSpecialFunc(SpecialFunc);
 	glutMainLoop();
 	return 0;
