@@ -22,6 +22,8 @@ public:
 	void runBeautyMode(int beautyMode);
 	void runGameMode(bool runForever);
 
+	void moveRailGun(int x, int y);
+
 //	void duckBeauty();
 //	void railGunBeauty();
 //	void balloonBeauty();

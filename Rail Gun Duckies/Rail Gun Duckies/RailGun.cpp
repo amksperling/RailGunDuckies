@@ -53,3 +53,11 @@ double RailGun::getRotationAngle() const {
 double RailGun::getInclinationAngle() const {
 	return this->inclinationAngle;
 }
+
+void RailGun::setRotationAngle(double a) {
+	this->rotationAngle = a;
+}
+
+void RailGun::setInclinationAngle(double a) {
+	this->inclinationAngle = a;
+}

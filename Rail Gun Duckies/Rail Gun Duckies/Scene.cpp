@@ -230,3 +230,8 @@ void Scene::runBeautyMode(int beautyMode) {
 
 	glPopMatrix();
 }
+
+void Scene::moveRailGun(int x, int y){
+	this->theGun.setRotationAngle(x);
+	this->theGun.setInclinationAngle(y);
+}

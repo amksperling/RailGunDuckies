@@ -108,7 +108,7 @@ void SwitchingDisplayFunc() {
 //	glLoadIdentity();
 	//glTranslated(0, 0, -5);
 //	gluLookAt(0, 5, -5, 0, 0, 0, 0, 1, 0);
-	camera();
+//	camera();
 //	glRotated(elapsed_time * 60, 0, 1, 0);
 	switch (w->getSceneMode()) {
 
@@ -326,6 +326,12 @@ void TimerFunc(int value) {
 	glutTimerFunc(GLuint(period), TimerFunc, value);
 	glutPostRedisplay();
 }
+
+void MouseMovement (int x, int y) {
+	s.moveRailGun(x,y);
+}
+
+
 int main(int argc, char *argv[]) {
 	glutInit(&argc, argv);
 	/*
@@ -340,6 +346,7 @@ int main(int argc, char *argv[]) {
 
 	glutDisplayFunc(SwitchingDisplayFunc);
 	glutReshapeFunc(ReshapeFunc); // what function called if resized window?
+	glutPassiveMotionFunc(MouseMovement);
 	glutKeyboardFunc(KeyboardFunc); // what function called if keypressed?
 	glutTimerFunc(GLuint(period), TimerFunc, 0);
 	glutSpecialFunc(SpecialFunc);
