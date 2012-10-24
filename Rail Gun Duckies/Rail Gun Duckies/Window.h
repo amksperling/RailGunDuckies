@@ -5,7 +5,7 @@
 
 #pragma once
 #include <GL/freeglut.h>
-#include <ft2build.h>
+//#include <ft2build.h>
 #include <string>
 
 using namespace std;

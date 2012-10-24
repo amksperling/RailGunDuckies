@@ -32,20 +32,17 @@ void Balloon::render() {
 		GLfloat p;
 		r = 1;
 
-		GLfloat omegaPoints = 21.0f;
+		GLfloat omegaPoints = 91.0f;
 		GLfloat omegaIncrement = 180/(omegaPoints-1);
 
-		GLfloat phiPoints = 20.0f;
+		GLfloat phiPoints = 120.0f;
 		GLfloat phiIncrement = 360/phiPoints;
 
 		for(o = (GLfloat)0; o <=(GLfloat)180; o +=omegaIncrement) {
 			for(p = (GLfloat)0; p <(GLfloat) 360; p +=phiIncrement) {
 			
-				if(o < 117) r = 1;
-				else if(o == 117) r = ((o+2)/117);
-				else if(o == 126) r = ((o+5)/126);
-				else if(o == 135) r = ((o)/126);
-				else r = ((o-3)/126);
+				if(o < .5 * 180) r = 1;
+				else r = 1+ (1-cos((o-90)*(PI/180)))/2;
 			
 				this->va_vertices.push_back(glm::vec3((r * sin(o*(PI/180))* cos(p*(PI/180))), 
 					(r * cos(o*(PI/180))), (r * sin(o*(PI/180))* sin(p*(PI/180)))));
@@ -61,7 +58,7 @@ void Balloon::render() {
 		GLfloat anglePoints = 18;
 		GLfloat angleIncrement = 360/anglePoints;
 
-		for(height = (GLfloat)-1.4f; height >=(GLfloat)-1.5f; height -=heightIncrement) {
+		for(height = (GLfloat)-1.45f; height >=(GLfloat)-1.55f; height -=heightIncrement) {
 			for(angle = 0; angle < 360; angle+=angleIncrement){
 				this->va_vertices.push_back(glm::vec3((r * cos(angle*(PI/180))), height, (r * sin(angle*(PI/180)))));
 				this->va_colors.push_back(glm::vec4(1.0f,0.0f,0.0f,1.0f));
@@ -209,7 +206,7 @@ void Balloon::render() {
 	glDisableClientState(GL_NORMAL_ARRAY);
 
 	glPushMatrix();
-	glTranslated(0, -1.50, 0);
+	glTranslated(0, -1.55, 0);
 	glRotated(90, 1, 0, 0);
 	glColor3d(1, 0, 0);
 	glutSolidTorus((GLdouble) 0.018, (GLdouble) 0.12, (GLint) 20, (GLint) 20);
