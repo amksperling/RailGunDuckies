@@ -12,19 +12,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Balloon.cpp" />
-    <ClCompile Include="ContentManager.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Duckie.cpp" />
-    <ClCompile Include="DuckieDriver.cpp" />
-    <ClCompile Include="Prism.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="RailGun.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Balloon.h" />
-    <ClInclude Include="ContentManager.h" />
+    <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Duckie.h" />
-    <ClInclude Include="Prism.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="RailGun.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Window.h" />

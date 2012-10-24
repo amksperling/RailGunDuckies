@@ -1,5 +1,4 @@
-/* The DuckieDriver file is a testing file for the Duckie class
-   and its functions. */ 
+/* The Main file runs all functions. */ 
 
 #include <GL/freeglut.h>
 #include "Duckie.h"
@@ -45,9 +44,9 @@ RailGun r;
 //GreyDuck g;
 Scene s;
 
-
 //angle of rotation for camera
 float xpos = 0, ypos = 0, zpos = 0, xrot = 0, yrot = 0, zrot = 0.0, angle=0.0;
+
 void camera (void) {
     glRotatef(xrot,1.0,0.0,0.0);  //rotate our camera on teh 
 									//x-axis (left and right)
@@ -67,7 +66,6 @@ bool CheckGLErrors() {
 		errorString = gluErrorString(error);
 		cout << errorString;
 	}
-
 	return error_found;
 }
 
@@ -90,8 +88,6 @@ void initGL() {
 	//////set up light position
 	GLfloat light_position[] = { 2 , 2, 1, 0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
-
 }
 
 void SwitchingDisplayFunc() {

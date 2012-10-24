@@ -1,4 +1,3 @@
-/* We've officially started on the balloon. */
 #pragma once
 #include <stdio.h>
 #include <iostream>

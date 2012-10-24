@@ -41,8 +41,8 @@ void Balloon::render() {
 		for(o = (GLfloat)0; o <=(GLfloat)180; o +=omegaIncrement) {
 			for(p = (GLfloat)0; p <(GLfloat) 360; p +=phiIncrement) {
 			
-				if(o < .5 * 180) r = 1;
-				else r = 1+ (1-cos((o-90)*(PI/180)))/2;
+				if(o < .5 * 180) r = (GLfloat) 1;
+				else r = (GLfloat) (1+ (1-cos((o-90)*(PI/180)))/2);
 			
 				this->va_vertices.push_back(glm::vec3((r * sin(o*(PI/180))* cos(p*(PI/180))), 
 					(r * cos(o*(PI/180))), (r * sin(o*(PI/180))* sin(p*(PI/180)))));

@@ -1,12 +1,13 @@
 #pragma once
 #include <gl/freeglut.h>
+#include "Object.h"
 
 /*
 The RailGun class represents one RailGun object used in the Rail Gun Duckies
 game.
 */
 
-class RailGun {
+class RailGun : public Object {
 
 public:
 	RailGun();
