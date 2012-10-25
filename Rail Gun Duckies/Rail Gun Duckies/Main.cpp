@@ -371,6 +371,12 @@ void TimerFunc(int value) {
 	glutTimerFunc(GLuint(period), TimerFunc, value);
 	glutPostRedisplay();
 }
+
+
+void MouseMovement(int x, int y) {
+	s.moveRailGun(x, y);
+}
+
 int main(int argc, char *argv[]) {
 	glutInit(&argc, argv);
 	/*
@@ -387,6 +393,7 @@ int main(int argc, char *argv[]) {
 	glutReshapeFunc(ReshapeFunc); // what function called if resized window?
 	glutKeyboardFunc(KeyboardFunc); // what function called if keypressed?
 	glutTimerFunc(GLuint(period), TimerFunc, 0);
+	glutPassiveMotionFunc(MouseMovement);
 	glutSpecialFunc(SpecialFunc);
 	glutMainLoop();
 	return 0;
