@@ -6,6 +6,7 @@
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
 #include <vector>
+#include <string>
 
 using namespace std;
 using namespace glm;
@@ -20,7 +21,10 @@ public:
 
 	//use these functions to switch between app modes
 	void runBeautyMode(int beautyMode);
-	void runGameMode(bool runForever);
+	void runGameMode(bool runForever, double & elapsed_time);
+
+	void fire();
+	void updateGame(float inTime);
 
 //	void duckBeauty();
 //	void railGunBeauty();

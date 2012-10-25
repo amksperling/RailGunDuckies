@@ -121,3 +121,16 @@ void Window::setBasicLights() {
 	GLfloat light_position[] = { 2 , 2, 1, 0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 }
+
+void Window::reshape(int w, int h) {
+	if (h <= 0) {
+		return;
+	}
+
+	this->w = w;
+	this->h = h;
+
+
+	this->aspect = double(w) / double(h); // remember to guard against div/0
+
+}

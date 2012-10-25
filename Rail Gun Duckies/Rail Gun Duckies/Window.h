@@ -5,7 +5,6 @@
 
 #pragma once
 #include <GL/freeglut.h>
-//#include <ft2build.h>
 #include <string>
 
 using namespace std;
@@ -58,9 +57,15 @@ public:
 	void toggleWireFrame();
 	void toggleLights();
 
+	void reshape(int w, int h);
+
 	inline int getSceneMode() const { return sceneMode; }
 	inline int getCameraMode() const { return cameraMode; }
 	inline int getLightMode() const { return lightMode; }
+
+	inline double getAspect() const { return this->aspect; }
+	inline int getWidth() const { return this->w; }
+	inline int getHeight() const { return this->h; }
 
 private:
 

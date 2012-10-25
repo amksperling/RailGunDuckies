@@ -1,16 +1,19 @@
-#include <GL/freeglut.h>
-#include "Duckie.h"
-#include <cstdio>
 
-static GLuint duckList;
+#include "Duckie.h"
+
+//gravitational constant
+const double g = -9.8;
 
 static GLUquadric *q = gluNewQuadric();
 
 //Default constructor
-Duckie::Duckie() {
-	this->displayListHandle = (GLuint) -1;
-
-}
+Duckie::Duckie() : 
+	displayListHandle(GLuint(-1)), 
+	position(0, 0, 0),
+	velocity(0, 0),
+	acceleration(0, 0),
+	color(1, 1, 0)
+{ }
 
 //constructor to initialze color
 Duckie::Duckie(vec3 color) {
@@ -44,16 +47,19 @@ void Duckie::render() {
     glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
     glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess);
 
+
+	
 	if (this->displayListHandle == GLuint(-1)) {
 		this->displayListHandle = glGenLists(1);
 		glNewList(this->displayListHandle, GL_COMPILE);
 
+		glPushMatrix();
 		if (q) {
 			// draw the body
 
 			glPushMatrix();
 			glScaled(1, .7, 1.2);
-			glColor3d(1, 1, 0);
+			glColor3d(this->color.r, this->color.g, this->color.b);
 			gluSphere(q,1,100,100);
 			glPopMatrix();
 
@@ -67,14 +73,12 @@ void Duckie::render() {
 			// draw the wings
 			glPushMatrix();
 			glScaled(.3, .4, .75);
-			glColor3d(1, 1, 0);
 			glTranslated(2.9, 0, 0);
 			gluSphere(q, 1, 100, 100);
 			glPopMatrix();
 
 			glPushMatrix();
 			glScaled(.3, .4, .75);
-			glColor3d(1, 1, 0);
 			glTranslated(-2.9, 0, 0);
 			gluSphere(q, 1, 100, 100);
 			glPopMatrix();
@@ -117,6 +121,8 @@ void Duckie::render() {
 			glTranslated(0, 7.5, 2.35);
 			gluCylinder(q, 1, 0, 1, 100, 100);
 			glPopMatrix();
+
+			glPopMatrix();
 		} //end if q
 		
 		else {
@@ -126,19 +132,33 @@ void Duckie::render() {
 		
 		glEndList();
 	} // end if displayList == -1
+
+
 	glCallList(this->displayListHandle);
 
 }
 
 
-double Duckie::getMass() const {
-	return this->mass;
+void Duckie::setColor(vec3 color) {
+	this->color.r = color.r;
+	this->color.g = color.g;
+	this->color.b = color.b;
 }
 
-double Duckie::getVelocity() const {
-	return this->velocity;
+//update the current position of the duck
+//based on its current velocity and acceleration
+void Duckie::updatePosition(vec3 currentPosition, float timeStep) {
+	this->position.z = this->velocity.x * timeStep + this->position.z;
+	this->position.y = .5 * g * timeStep * timeStep + this->velocity.y * timeStep + this->position.y;
+	if( this->position.y <= 0) {
+		this->position.y = 0; // don't go under the world!
+	}
+	if (this->position.z == 200)
+		this->position.z = 199;
 }
 
-double Duckie::getAcceleration() const {
-	return this->acceleration;
+void Duckie::setInitVelocity(double velocity, double inclinationAngle) {
+	this->velocity.x = velocity * cos(inclinationAngle);
+	this->velocity.y = velocity * sin(inclinationAngle);
+	this->launched = true;
 }

@@ -59,10 +59,6 @@ void Scene::ground() {
 
 void Scene::skyBox() {
 	glPushMatrix();
-	glTranslated(0, 0, 100);
-	skySide();
-	glPopMatrix();
-	glRotated(90, 0 , 1, 0);
 
 	glPushMatrix();
 	glTranslated(0, 0, 100);
@@ -81,9 +77,25 @@ void Scene::skyBox() {
 	skySide();
 	glPopMatrix();
 	glRotated(90, 0 , 1, 0);
+
+	glPushMatrix();
+	glTranslated(0, 0, 100);
+	skySide();
+	glPopMatrix();
+	glRotated(90, 0 , 1, 0);
+
 
 	// need something for the top
+	glPushMatrix();
+	glScaled(1, 1, 2);
+	glTranslated(0, 100, -50);
+	glRotated(-90, 1, 0, 0);
+	glRotated(180, 0, 0, 1);
+	
+	skySide();
+	glPopMatrix();
 
+	glPopMatrix();
 
 }
 
@@ -93,7 +105,7 @@ void Scene::skyBox() {
 //
 //	glPushMatrix();
 //	glTranslated(0, .5, 0);
-////	this->theGun.drawRailGun();
+////	this->theGun.render();
 //	glTranslated(0, 10, 20);
 //	this->balloons.push_back(a);
 //	this->balloons.at(0).render();
@@ -156,7 +168,7 @@ void Scene::skyBox() {
 //	glPushMatrix();
 //	glTranslated(0, 1, 7);
 //	glRotated(elapsed_time * 30, 0, 1, 0);
-//	this->theGun.drawRailGun();
+//	this->theGun.render();
 //	glPopMatrix();
 //
 //	glPopMatrix();
@@ -187,8 +199,16 @@ void Scene::skyBox() {
 void Scene::runBeautyMode(int beautyMode) {
 	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
 
+	string word = "duckies";
+	unsigned char * string = (unsigned char *)word[0];
+		
+
+	
+
+
 	glPushMatrix();
 	glMatrixMode(GL_MODELVIEW);
+	
 	glLoadIdentity();
 
 	//set up camera at (0, 2, 0)
@@ -200,6 +220,7 @@ void Scene::runBeautyMode(int beautyMode) {
 	//draw the objects based on the input
 	switch (beautyMode) {
 	case DUCK_BEAUTY:
+		
 		glPushMatrix();
 		glTranslated(0, 1.25, 7);
 		glScaled(2, 2, 2);
@@ -229,4 +250,67 @@ void Scene::runBeautyMode(int beautyMode) {
 	}//end switch
 
 	glPopMatrix();
+
+	//glPushMatrix();
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+	//glOrtho(0, 1280, 0, 720, 1, 10);
+	//glLoadIdentity();
+	//glutStrokeString(GLUT_STROKE_MONO_ROMAN, string);
+	glPopMatrix();
+}
+
+
+void Scene::runGameMode(bool runForever, double & elapsed_time) {
+	double startTime = elapsed_time;
+
+
+	glPushMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	
+	glLoadIdentity();
+
+	//set up camera at (0, 2, 0)
+	gluLookAt(0, 5, -100, 0, 0, 50, 0, 1, 0);
+	glPushMatrix();
+	renderWorld(); // draw the background world
+	glPopMatrix();
+
+	//draw the rail gun and the duck on top
+	//push for gun
+	glPushMatrix();
+	glTranslated(0, .5, -94);
+	glRotated(180, 0, 1, 0);
+	this->theGun.drawRailGun();
+	glPopMatrix();
+
+	//push for duck
+	//set its initial position
+	if (!this->theDuck.isMoving()) {
+		glPushMatrix();
+		glTranslated(0, 2.5, -95);
+		glScaled(.5, .5, .5);
+		this->theDuck.render();
+		glPopMatrix();
+	}
+	else {
+		glPushMatrix();
+		theDuck.updatePosition(theDuck.getPosition(), elapsed_time);
+		glTranslated(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z);
+		glScaled(.5, .5, .5);
+		theDuck.render();
+		glPopMatrix();
+	}
+	
+
+	glPopMatrix();
+}
+
+void Scene::fire() {
+	this->theDuck.setInitVelocity(.01, theGun.getInclinationAngle());
+}
+
+void Scene::moveRailGun(int x, int y) {
+	this->theGun.setRotationAngle(x);
+	this->theGun.setInclinationAngle(y);
 }
