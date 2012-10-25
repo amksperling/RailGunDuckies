@@ -18,12 +18,6 @@
     <ClCompile Include="Duckie.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DuckieDriver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Prism.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RailGun.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -36,15 +30,18 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ContentManager.cpp">
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Duckie.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Prism.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RailGun.h">
@@ -59,7 +56,10 @@
     <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ContentManager.h">
+    <ClInclude Include="Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
