@@ -1,11 +1,11 @@
-/* The Main file runs all functions. */ 
+/* The DuckieDriver file is a testing file for the Duckie class
+   and its functions. */ 
 
 #include <GL/freeglut.h>
 #include "Duckie.h"
 #include "RailGun.h"
 #include "Balloon.h"
 #include "Window.h"
-#include "GreyDuck.h"
 #include "Scene.h"
 #include <stdio.h>  
 #include <iostream>
@@ -32,8 +32,6 @@ double period = 1000/60;
 
 double pScale = .01;
 
-unsigned long int pausedTime = 0;
-
 //the test subjets:
 Window * w;
 Duckie  d;
@@ -41,12 +39,11 @@ Duckie p;
 Balloon b;
 RailGun r;
 
-//GreyDuck g;
 Scene s;
+
 
 //angle of rotation for camera
 float xpos = 0, ypos = 0, zpos = 0, xrot = 0, yrot = 0, zrot = 0.0, angle=0.0;
-
 void camera (void) {
     glRotatef(xrot,1.0,0.0,0.0);  //rotate our camera on teh 
 									//x-axis (left and right)
@@ -57,6 +54,32 @@ void camera (void) {
 									// to the position of our camera
 }
 
+//function for displaying informational text in an
+// orthographic projection. 
+void displayText(string text) {
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, window_width, 0, window_height, 1, 10); // set ortho projection based on window size
+	glViewport(0, 0, window_width, window_height);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	//starting from the bottom left corner, translate text 10 units
+	// up and step back to see it. Scale to desired size
+	glTranslatef(0, 10, -1);
+	glScalef(0.25f, 0.25f, 1.0f);
+	glDisable(GL_LIGHTING); //make sure to disable lighting!
+	glColor3f(1, 1, 1);
+
+	//freeglut uses c style strings, so we need to get that.
+	const char * c = text.c_str();
+	//and actually print the string:
+	glutStrokeString(GLUT_STROKE_MONO_ROMAN, (unsigned char *)c);
+
+	glEnable(GL_LIGHTING); //enable lighting since we're done
+}
+
+
 bool CheckGLErrors() {
 	bool error_found = false;
 	GLenum  error;
@@ -66,6 +89,7 @@ bool CheckGLErrors() {
 		errorString = gluErrorString(error);
 		cout << errorString;
 	}
+
 	return error_found;
 }
 
@@ -88,10 +112,12 @@ void initGL() {
 	//////set up light position
 	GLfloat light_position[] = { 2 , 2, 1, 0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+
 }
 
 void SwitchingDisplayFunc() {
-	double elapsed_time = double((glutGet(GLUT_ELAPSED_TIME)-pausedTime) / 1000.0);
+	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -101,19 +127,26 @@ void SwitchingDisplayFunc() {
 	//set up the world so we can see stuff!
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(75, aspect, 1, 200);
-	glViewport(0, 0, window_width, window_height);
-
+	gluPerspective(75, w->getAspect(), 1, 250);
+	glViewport(0, 0, w->getWidth(), w->getHeight());
+	//glPushMatrix();
+	//glScaled(.01, .01, .01);
+	//glTranslated(0, 0, -500);
+	//glRotated(0, 0, 1, 0);
+	//glutStrokeString(GLUT_STROKE_MONO_ROMAN, (unsigned char *)"Adam Sperling");
+	//glPopMatrix();
 //	glMatrixMode(GL_MODELVIEW);
 //	glLoadIdentity();
 	//glTranslated(0, 0, -5);
 //	gluLookAt(0, 5, -5, 0, 0, 0, 0, 1, 0);
 //	camera();
 //	glRotated(elapsed_time * 60, 0, 1, 0);
+
 	switch (w->getSceneMode()) {
 
 	case DUCK_BEAUTY:
 		s.runBeautyMode(DUCK_BEAUTY);
+		displayText("Duck Beauty Mode");
 	//	s.duckBeauty();
 		/*glPushMatrix();
 		glTranslated(-3, 0, 0);
@@ -127,14 +160,16 @@ void SwitchingDisplayFunc() {
 
 	case RAILGUN_BEAUTY:
 		s.runBeautyMode(RAILGUN_BEAUTY);
+		displayText("RailGun Beauty Mode");
 	//	s.railGunBeauty();
 		//glPushMatrix();
-		//r.drawRailGun();
+		//r.render();
 		//glPopMatrix();
 		break;
 
 	case BALLOON_BEAUTY:
 		s.runBeautyMode(BALLOON_BEAUTY);
+		displayText("Balloon Beauty Mode");
 	//	s.balloonBeauty();
 		//glPushMatrix();
 		//b.render();
@@ -142,7 +177,8 @@ void SwitchingDisplayFunc() {
 		break;
 
 	case GAME:
-	//	s.runGameMode(false);
+
+		s.runGameMode(false, elapsed_time);
 	/*	glPushMatrix();
 		s.renderWorld();
 		glPopMatrix();*/
@@ -159,112 +195,113 @@ void SwitchingDisplayFunc() {
 	glutSwapBuffers();
 	glutPostRedisplay();
 }
-void DuckieDisplayFunc() {
-	// use a switch to toggle between modes
-	// each mode has a separate function
-
-	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
-
-	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glClearColor(1, 1, 1, 0);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	//set up the world so we can see stuff!
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-//	glOrtho(-3 * aspect, 3 * aspect, -3, 3, 1, 10);
-	gluPerspective(60, aspect, 1, 20);
-	glViewport(0, 0, window_width, window_height);
-	
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glTranslated(0, 0, -8);
-	camera();
+//void DuckieDisplayFunc() {
+//	// use a switch to toggle between modes
+//	// each mode has a separate function
+//
+//	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
+//	
+//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//
+//	glClearColor(1, 1, 1, 0);
+//	glClear(GL_COLOR_BUFFER_BIT);
+//
+//	//set up the world so we can see stuff!
+//	glMatrixMode(GL_PROJECTION);
+//	glLoadIdentity();
+////	glOrtho(-3 * aspect, 3 * aspect, -3, 3, 1, 10);
+//	gluPerspective(60, aspect, 1, 20);
+//	glViewport(0, 0, window_width, window_height);
+//	
+//	glMatrixMode(GL_MODELVIEW);
+//	glLoadIdentity();
+//	glTranslated(0, 0, -8);
+//	camera();
+////	glRotated(elapsed_time * 60, 0, 1, 0);
+//	glPushMatrix();
+//	
+//	b.render();
+////	b.drawDiamond();
+////	b.Triangle();
+//	glPopMatrix();
+//
+//	glPushMatrix();
+//	glTranslated(-3, 0, 0);
+////	glRotated(elapsed_time * 60, 0, -1, 1);
+//	d.render();
+//	glPopMatrix();
+//
+//	glPushMatrix();
+//	glTranslated(3, 0, 0);
+//	d.render();
+//	glPopMatrix();
+//
+//	glPushMatrix();
+//	glTranslated(0, 0, 3);
+//	d.render();
+//	glPopMatrix();
+//
+//	glPushMatrix();
+//	glTranslated(0, 0, -3);
+//	d.render();
+//	glPopMatrix();
+//
+//	//RailGun * basic = new RailGun();
+///*
+//	glPushMatrix();
+//	glTranslated(0, 0, -5);
+//	glTranslated(-3, 0, 0);
 //	glRotated(elapsed_time * 60, 0, 1, 0);
-	glPushMatrix();
+//
+//
+//	d.render();
+//
+//	//basic->render();
+//
+//
+//	glPopMatrix();
+//
+//	
+//
+//	glPushMatrix();
+//	glTranslated(0, 0, -5);
+//	glTranslated(3, 0, 0);
+//	glRotated(elapsed_time * 60, 1, 0, 0);
+//
+//	// grow the duck
+//	if (pScale <= 1) {
+//		glScaled(pScale, pScale, pScale);
+//		pScale += .001;
+//	}
+//
+//	p.render();
+////	basic->render();
+//
+////	delete basic;
+//
+//	glPopMatrix();
+//*/
+//	
+//	glutSwapBuffers();
+//	glutPostRedisplay();
+//}
+
+void ReshapeFunc(int width, int height) {
 	
-	b.render();
-//	b.drawDiamond();
-//	b.Triangle();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslated(-3, 0, 0);
-//	glRotated(elapsed_time * 60, 0, -1, 1);
-	d.render();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslated(3, 0, 0);
-	d.render();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslated(0, 0, 3);
-	d.render();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslated(0, 0, -3);
-	d.render();
-	glPopMatrix();
-
-	//RailGun * basic = new RailGun();
-/*
-	glPushMatrix();
-	glTranslated(0, 0, -5);
-	glTranslated(-3, 0, 0);
-	glRotated(elapsed_time * 60, 0, 1, 0);
-
-
-	d.render();
-
-	//basic->drawRailGun();
-
-
-	glPopMatrix();
-
-	
-
-	glPushMatrix();
-	glTranslated(0, 0, -5);
-	glTranslated(3, 0, 0);
-	glRotated(elapsed_time * 60, 1, 0, 0);
-
-	// grow the duck
-	if (pScale <= 1) {
-		glScaled(pScale, pScale, pScale);
-		pScale += .001;
-	}
-
-	p.render();
-//	basic->drawRailGun();
-
-//	delete basic;
-
-	glPopMatrix();
-*/
-
-	glutSwapBuffers();
-	glutPostRedisplay();
-}
-
-void ReshapeFunc(int w, int h) {
-	if (h <= 0) {
+	w->reshape(width, height);
+	/*if (height <= 0) {
 		return;
 	}
 
-	window_width = w;
-	window_height = h;
+	window_width = width;
+	window_height = height;
 
 
-	aspect = double(w) / double(h); // remember to guard against div/0
+	aspect = double(width) / double(height);*/ // remember to guard against div/0
 }
 
-void KeyboardFunc(unsigned char c, int x, int y) {
-	switch (c) {
+void KeyboardFunc(unsigned char key, int x, int y) {
+	switch (key) {
 	
 	case 'f':
 		w->toggleFullScreen();
@@ -282,8 +319,16 @@ void KeyboardFunc(unsigned char c, int x, int y) {
 		paused = !paused;
 		break;
 		// need to keep track of elapsed time while pasued and subtract from total time
+
+	case 32: //spacebar
+		if (w->getSceneMode() == GAME || w->getSceneMode() == GAME_FOREVER)
+			s.fire();
+	break;
+
 	case 'x':
-	case 27: glutLeaveMainLoop();
+	case 27: 
+		glutLeaveMainLoop();
+		delete w;
 		return;
 	}
 }
@@ -326,12 +371,6 @@ void TimerFunc(int value) {
 	glutTimerFunc(GLuint(period), TimerFunc, value);
 	glutPostRedisplay();
 }
-
-void MouseMovement (int x, int y) {
-	s.moveRailGun(x,y);
-}
-
-
 int main(int argc, char *argv[]) {
 	glutInit(&argc, argv);
 	/*
@@ -346,7 +385,6 @@ int main(int argc, char *argv[]) {
 
 	glutDisplayFunc(SwitchingDisplayFunc);
 	glutReshapeFunc(ReshapeFunc); // what function called if resized window?
-	glutPassiveMotionFunc(MouseMovement);
 	glutKeyboardFunc(KeyboardFunc); // what function called if keypressed?
 	glutTimerFunc(GLuint(period), TimerFunc, 0);
 	glutSpecialFunc(SpecialFunc);

@@ -24,9 +24,8 @@ public:
 	void runGameMode(bool runForever, double & elapsed_time);
 
 	void fire();
-	void updateGame(float inTime);
-
 	void moveRailGun(int x, int y);
+
 //	void duckBeauty();
 //	void railGunBeauty();
 //	void balloonBeauty();

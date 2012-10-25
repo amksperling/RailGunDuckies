@@ -87,11 +87,9 @@ void Scene::skyBox() {
 
 	// need something for the top
 	glPushMatrix();
-	glScaled(1, 1, 2);
-	glTranslated(0, 100, -50);
+	glTranslated(0, 100, 0);
 	glRotated(-90, 1, 0, 0);
 	glRotated(180, 0, 0, 1);
-	
 	skySide();
 	glPopMatrix();
 
@@ -250,7 +248,6 @@ void Scene::runBeautyMode(int beautyMode) {
 	}//end switch
 
 	glPopMatrix();
-<<<<<<< HEAD
 
 	//glPushMatrix();
 	//glMatrixMode(GL_PROJECTION);
@@ -312,11 +309,6 @@ void Scene::fire() {
 }
 
 void Scene::moveRailGun(int x, int y) {
-=======
-}
-
-void Scene::moveRailGun(int x, int y){
->>>>>>> 90e1b0ddedf4d8c42b8b0d8c87e4726166a2ec5e
-	this->theGun.setRotationAngle(x);
 	this->theGun.setInclinationAngle(y);
+	this->theGun.setRotationAngle(x);
 }

@@ -32,8 +32,6 @@ double period = 1000/60;
 
 double pScale = .01;
 
-unsigned long int pausedTime = 0;
-
 //the test subjets:
 Window * w;
 Duckie  d;
@@ -41,10 +39,6 @@ Duckie p;
 Balloon b;
 RailGun r;
 
-<<<<<<< HEAD
-=======
-//GreyDuck g;
->>>>>>> 90e1b0ddedf4d8c42b8b0d8c87e4726166a2ec5e
 Scene s;
 
 
@@ -123,7 +117,7 @@ void initGL() {
 }
 
 void SwitchingDisplayFunc() {
-	double elapsed_time = double((glutGet(GLUT_ELAPSED_TIME)-pausedTime) / 1000.0);
+	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -145,7 +139,7 @@ void SwitchingDisplayFunc() {
 //	glLoadIdentity();
 	//glTranslated(0, 0, -5);
 //	gluLookAt(0, 5, -5, 0, 0, 0, 0, 1, 0);
-	camera();
+//	camera();
 //	glRotated(elapsed_time * 60, 0, 1, 0);
 
 	switch (w->getSceneMode()) {
@@ -201,7 +195,6 @@ void SwitchingDisplayFunc() {
 	glutSwapBuffers();
 	glutPostRedisplay();
 }
-<<<<<<< HEAD
 //void DuckieDisplayFunc() {
 //	// use a switch to toggle between modes
 //	// each mode has a separate function
@@ -258,31 +251,6 @@ void SwitchingDisplayFunc() {
 //	glPushMatrix();
 //	glTranslated(0, 0, -5);
 //	glTranslated(-3, 0, 0);
-=======
-void DuckieDisplayFunc() {
-	// use a switch to toggle between modes
-	// each mode has a separate function
-
-	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
-
-	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glClearColor(1, 1, 1, 0);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	//set up the world so we can see stuff!
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-//	glOrtho(-3 * aspect, 3 * aspect, -3, 3, 1, 10);
-	gluPerspective(60, aspect, 1, 20);
-	glViewport(0, 0, window_width, window_height);
-	
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glTranslated(0, 0, -8);
-	camera();
->>>>>>> 90e1b0ddedf4d8c42b8b0d8c87e4726166a2ec5e
 //	glRotated(elapsed_time * 60, 0, 1, 0);
 //
 //
@@ -399,16 +367,6 @@ void SpecialFunc(int key, int x, int y) {
 	default: break;
 	}
 }
-
-
-
-
-void MouseMovement (int x, int y) {
-	s.moveRailGun(x,y);
-}
-
-
-
 void TimerFunc(int value) {
 	glutTimerFunc(GLuint(period), TimerFunc, value);
 	glutPostRedisplay();
@@ -430,7 +388,6 @@ int main(int argc, char *argv[]) {
 	glutKeyboardFunc(KeyboardFunc); // what function called if keypressed?
 	glutTimerFunc(GLuint(period), TimerFunc, 0);
 	glutSpecialFunc(SpecialFunc);
-	glutPassiveMotionFunc(MouseMovement);
 	glutMainLoop();
 	return 0;
 }
