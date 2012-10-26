@@ -27,16 +27,17 @@ public:
 
 	inline vec3 getPosition() const {return this->position; }
 	inline double getMass() const { return this->mass; }
-	inline vec2 getVelocity() const { return this->velocity; }
-	inline vec2 getAcceleration() const { return this->acceleration; }
+	inline vec3 getVelocity() const { return this->velocity; }
+	inline vec3 getAcceleration() const { return this->acceleration; }
 
 	inline void setPosition(vec3 position) { this->position = position; }
-	inline void setVelocity(vec2 velocity) { this->velocity = velocity; }
-	inline void setAcceleration(vec2 acceleration) { this->acceleration = acceleration; }
+	inline void setVelocity(vec3 velocity) { this->velocity = velocity; }
+	inline void setAcceleration(vec3 acceleration) { this->acceleration = acceleration; }
 	
 	//set initial velocity based on railgun angles
 	void setInitVelocity(double velocity, double inclinationAngle);
 	void updatePosition(vec3 currentPosition, float timeStep);
+	void updatePosition(double elapsed_time, float gravity);
 
 	inline bool isMoving() { return this->launched; }
 
@@ -48,8 +49,8 @@ private:
 
 	double mass;
 
-	vec2 velocity;
-	vec2 acceleration;
+	vec3 velocity;
+	vec3 acceleration;
 	vec3 color;
 
 	vec3 position;

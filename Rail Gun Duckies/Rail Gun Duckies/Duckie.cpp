@@ -10,17 +10,14 @@ static GLUquadric *q = gluNewQuadric();
 Duckie::Duckie() : 
 	displayListHandle(GLuint(-1)), 
 	position(0, 0, 0),
-	velocity(0, 0),
-	acceleration(0, 0),
+	velocity(0, 0, 0),
+	acceleration(0, 0, 0),
 	color(1, 1, 0)
 { }
 
 //constructor to initialze color
-Duckie::Duckie(vec3 color) {
-	this->color.r = color.r;
-	this->color.g = color.g;
-	this->color.b = color.b;
-}
+Duckie::Duckie(vec3 color) : color(color)
+{ }
 
 Duckie::~Duckie() {
 
@@ -161,4 +158,13 @@ void Duckie::setInitVelocity(double velocity, double inclinationAngle) {
 	this->velocity.x = velocity * cos(inclinationAngle);
 	this->velocity.y = velocity * sin(inclinationAngle);
 	this->launched = true;
+}
+
+void Duckie::updatePosition(double elapsed_time, float gravity) {
+	position.x += velocity.x * elapsed_time;
+	position.y += velocity.y * elapsed_time;
+	position.z += velocity.z * elapsed_time;
+
+	// apply gravity
+	velocity.y += gravity;
 }

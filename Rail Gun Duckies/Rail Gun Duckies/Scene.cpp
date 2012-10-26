@@ -1,6 +1,8 @@
 #include "Scene.h"
 
-
+static float launchSpeed = 30;
+static double old_time;
+static double new_time;
 
 Scene::Scene() : displayListHandle(-1) { }
 
@@ -277,6 +279,8 @@ void Scene::runGameMode(bool runForever, double & elapsed_time) {
 	glPushMatrix();
 	glTranslated(0, .5, -94);
 	glRotated(180, 0, 1, 0);
+	glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
+	glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 	this->theGun.drawRailGun();
 	glPopMatrix();
 
@@ -284,7 +288,9 @@ void Scene::runGameMode(bool runForever, double & elapsed_time) {
 	//set its initial position
 	if (!this->theDuck.isMoving()) {
 		glPushMatrix();
-		glTranslated(0, 2.5, -95);
+		glTranslated(0, 1.5, -95);
+		glRotated(theGun.getInclinationAngle(), 1, 0, 0);
+		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glScaled(.5, .5, .5);
 		this->theDuck.render();
 		glPopMatrix();
@@ -303,7 +309,16 @@ void Scene::runGameMode(bool runForever, double & elapsed_time) {
 }
 
 void Scene::fire() {
-	this->theDuck.setInitVelocity(.01, theGun.getInclinationAngle());
+
+	vec3 velocity = vec3(
+		-sin(theGun.getRotationAngle()) * launchSpeed,
+		sin(theGun.getInclinationAngle()) * launchSpeed,
+		cos(theGun.getInclinationAngle()) * launchSpeed
+		);
+
+	this->theDuck.setVelocity(velocity);
+
+	//this->theDuck.setInitVelocity(.01, theGun.getInclinationAngle());
 }
 
 void Scene::moveRailGun(int x, int y) {
