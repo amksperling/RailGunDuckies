@@ -288,7 +288,7 @@ void Scene::runGameMode(bool runForever, double & elapsed_time) {
 	//set its initial position
 	if (!this->theDuck.isMoving()) {
 		glPushMatrix();
-		glTranslated(0, 1.5, -95);
+		glTranslated(0, 2, -95);
 		glRotated(theGun.getInclinationAngle(), 1, 0, 0);
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glScaled(.5, .5, .5);
@@ -321,7 +321,12 @@ void Scene::fire() {
 	//this->theDuck.setInitVelocity(.01, theGun.getInclinationAngle());
 }
 
-void Scene::moveRailGun(int x, int y) {
-	this->theGun.setInclinationAngle(y);
-	this->theGun.setRotationAngle(x);
+void Scene::moveRailGun(int x, int y, Window & w) {
+
+	if (y <= w.getHeight() && 
+		y >= w.getHeight() - 90  ) {
+		this->theGun.setInclinationAngle(y);
+		this->theGun.setRotationAngle(x);
+
+	}
 }

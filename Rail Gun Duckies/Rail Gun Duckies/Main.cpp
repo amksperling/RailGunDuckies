@@ -374,7 +374,8 @@ void TimerFunc(int value) {
 
 
 void MouseMovement(int x, int y) {
-	s.moveRailGun(x, y);
+	
+		s.moveRailGun(x, y, *w);
 }
 
 int main(int argc, char *argv[]) {
