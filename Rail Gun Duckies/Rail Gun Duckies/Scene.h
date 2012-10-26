@@ -2,6 +2,7 @@
 #include "Duckie.h"
 #include "RailGun.h"
 #include "Balloon.h"
+#include "World.h"
 #include "Window.h"
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
@@ -43,7 +44,7 @@ private:
 	Balloon aBalloon;
 	RailGun theGun;
 	Duckie theDuck;
-
+	World theWorld;
 
 	bool gameWon;
 	bool gameOver;

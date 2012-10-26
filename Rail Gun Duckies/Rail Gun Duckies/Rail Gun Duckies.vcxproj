@@ -19,6 +19,7 @@
     <ClCompile Include="RailGun.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Window.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Balloon.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="RailGun.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{99142C9D-A300-4314-ABA9-99B35DE3259E}</ProjectGuid>

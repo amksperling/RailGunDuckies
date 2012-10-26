@@ -196,10 +196,7 @@ void Scene::skyBox() {
 
 void Scene::runBeautyMode(int beautyMode) {
 	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
-
-	string word = "duckies";
-	unsigned char * string = (unsigned char *)word[0];
-		
+	
 
 	
 
@@ -212,7 +209,8 @@ void Scene::runBeautyMode(int beautyMode) {
 	//set up camera at (0, 2, 0)
 	gluLookAt(0, 2, 0, 0, 0, 10, 0, 1, 0);
 	glPushMatrix();
-	renderWorld(); // draw the background world
+	this->theWorld.render();
+	//renderWorld(); // draw the background world
 	glPopMatrix();
 
 	//draw the objects based on the input
