@@ -374,7 +374,10 @@ void TimerFunc(int value) {
 
 
 void MouseMovement(int x, int y) {
-	
+	//should probably find a way to convert pixels to degrees
+	// pass in the reference to the window in order to access current
+	// height and width
+	if (w)
 		s.moveRailGun(x, y, *w);
 }
 

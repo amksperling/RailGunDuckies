@@ -316,9 +316,11 @@ void Scene::fire() {
 		cos(theGun.getInclinationAngle()) * launchSpeed
 		);
 
-	this->theDuck.setVelocity(velocity);
-
-	//this->theDuck.setInitVelocity(.01, theGun.getInclinationAngle());
+	//this->theDuck.setVelocity(velocity);
+	if (!theDuck.isMoving())
+		this->theDuck.setInitVelocity(.01, theGun.getInclinationAngle());
+	//else
+		//reset duck
 }
 
 void Scene::moveRailGun(int x, int y, Window & w) {
