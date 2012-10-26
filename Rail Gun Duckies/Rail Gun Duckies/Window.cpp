@@ -12,6 +12,7 @@ Window::Window() {
 	this->h = DEFAULT_HEIGHT;
 	this->sceneMode = DUCK_BEAUTY;
 	this->lightMode = BASIC;
+	this->cameraMode = MAIN;
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE , 0.0);
@@ -100,6 +101,22 @@ void Window::cycleLightingMode() {
 	case OTHER:
 		toggleLights();
 		this->lightMode = OFF;
+	}
+}
+
+void Window::cycleCameraMode() {
+	switch (this->cameraMode) {
+	case MAIN:
+		this->cameraMode = FLIGHT_FOLLOWER;
+		break;
+
+	case FLIGHT_FOLLOWER:
+		this->cameraMode = FIRST_PERSON;
+		break;
+
+	case FIRST_PERSON:
+		this->cameraMode = MAIN;
+		break;
 	}
 }
 

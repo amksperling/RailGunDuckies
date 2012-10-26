@@ -199,10 +199,6 @@ void Scene::skyBox() {
 void Scene::runBeautyMode(int beautyMode) {
 	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
 	
-
-	
-
-
 	glPushMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	
@@ -259,7 +255,7 @@ void Scene::runBeautyMode(int beautyMode) {
 }
 
 
-void Scene::runGameMode(bool runForever, double & elapsed_time) {
+void Scene::runGameMode(bool runForever, double & elapsed_time, Window & w) {
 	double startTime = elapsed_time;
 
 
@@ -269,9 +265,24 @@ void Scene::runGameMode(bool runForever, double & elapsed_time) {
 	glLoadIdentity();
 
 	//set up camera at (0, 2, 0)
-	gluLookAt(0, 5, -100, 0, 0, 50, 0, 1, 0);
+
+	switch (w.getCameraMode()) {
+	case MAIN:
+		gluLookAt(0, 5, -100, 0, 0, 50, 0, 1, 0);
+		break;
+
+	case FLIGHT_FOLLOWER:
+		gluLookAt(0, 5, -100, 0, theDuck.getPosition().y, 50, 0, 1, 0);
+		break;
+
+	case FIRST_PERSON:
+		gluLookAt(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 50, 100, 0, 1, 0);
+		break;
+	}
+
+	//gluLookAt(0, 5, -100, 0, 0, 50, 0, 1, 0);
 	glPushMatrix();
-	renderWorld(); // draw the background world
+	this->theWorld.render(); // draw the background world
 	glPopMatrix();
 
 	//draw the rail gun and the duck on top

@@ -178,14 +178,14 @@ void SwitchingDisplayFunc() {
 
 	case GAME:
 
-		s.runGameMode(false, elapsed_time);
+		s.runGameMode(false, elapsed_time, *w);
 	/*	glPushMatrix();
 		s.renderWorld();
 		glPopMatrix();*/
 		break;
 
 	case GAME_FOREVER:
-	//	s.runGameMode(true);
+	//	s.runGameMode(true, elapsed_time, *w);
 		break;
 
 	default: break;
@@ -313,6 +313,10 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 
 	case 'l':
 		w->toggleLights();
+		break;
+
+	case 'c':
+		w->cycleCameraMode();
 		break;
 
 	case 'p': 

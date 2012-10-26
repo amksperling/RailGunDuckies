@@ -32,6 +32,12 @@ enum LIGHT_MODES {
 	OTHER
 };
 
+enum CAMERA_MODES {
+	MAIN,
+	FLIGHT_FOLLOWER,
+	FIRST_PERSON
+};
+
 class Window {
 
 public:

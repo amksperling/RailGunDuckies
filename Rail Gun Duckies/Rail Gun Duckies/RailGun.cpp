@@ -25,6 +25,7 @@ void RailGun::drawRailGun() {
     glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
     glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess);
 
+	glTranslated(0, 0, 2.75);
 	//Prism *endRailGun = new Prism(1.0f,1.0f,0.5f,0.511f,0.535f,0.586f);
 	Object::drawRect(1.0f,1.0f,0.5f,0.511f,0.535f,0.586f);
 	glTranslated(0, 0, -5.5); 
