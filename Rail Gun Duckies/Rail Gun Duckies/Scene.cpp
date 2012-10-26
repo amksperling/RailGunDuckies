@@ -279,7 +279,7 @@ void Scene::runGameMode(bool runForever, double & elapsed_time) {
 	glPushMatrix();
 	glTranslated(0, .5, -94);
 	glRotated(180, 0, 1, 0);
-	glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
+	glRotated(theGun.getInclinationAngle(), 1, 0, 0);
 	glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 	this->theGun.drawRailGun();
 	glPopMatrix();
@@ -288,8 +288,8 @@ void Scene::runGameMode(bool runForever, double & elapsed_time) {
 	//set its initial position
 	if (!this->theDuck.isMoving()) {
 		glPushMatrix();
-		glTranslated(0, 2, -95);
-		glRotated(theGun.getInclinationAngle(), 1, 0, 0);
+		glTranslated(0, 2, -96);
+		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glScaled(.5, .5, .5);
 		this->theDuck.render();
@@ -325,10 +325,14 @@ void Scene::fire() {
 
 void Scene::moveRailGun(int x, int y, Window & w) {
 
-	if (y <= w.getHeight() && 
-		y >= w.getHeight() - 90  ) {
-		this->theGun.setInclinationAngle(y);
-		this->theGun.setRotationAngle(x);
+	double futureXAngle;
+	double futureYAngle;
 
-	}
+	if((double)x < ((double)w.getWidth())/2) futureXAngle = ((double)w.getWidth()/2 - (double)x)/((double)w.getWidth()/2) * -90;
+	else futureXAngle = (((double)x - ((double)w.getWidth()/2))/((double)w.getWidth()/2)) * 90;
+
+	futureYAngle = ((double)w.getHeight() - (double)y)/((double)w.getHeight()) * 90;
+	
+	this->theGun.setRotationAngle(futureXAngle);
+	this->theGun.setInclinationAngle(futureYAngle);
 }
