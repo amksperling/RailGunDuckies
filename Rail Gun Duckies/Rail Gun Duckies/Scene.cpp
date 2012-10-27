@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include <random>
+#include <ctime>
 
 static float launchSpeed = 30;
 static double old_time;
@@ -358,13 +359,13 @@ void Scene::resetDuck() {
 
 	double lower_bound = 0;
 	double upper_bound = 1;
-	
+//	theDuck.setDLH();
 	std::uniform_real_distribution<double> unif(lower_bound,upper_bound);
 	std::default_random_engine re;
-	
-	double newRed = randomnumgen(0,1);//unif(re);
-	double newGreen = randomnumgen(0,1);//unif(re);
-	double newBlue = randomnumgen(0,1);//unif(re);
+	srand(time(0));
+	double newRed = rand() * 1 / double(RAND_MAX) + 0 ;//unif(re);
+	double newGreen = rand() * 1 / double(RAND_MAX) + 0;//unif(re);
+	double newBlue = rand() * 1 / double(RAND_MAX) + 0;//unif(re);
 
 //	this->theDuck.setDLH();
 	vec3 newColor = vec3(newRed, newGreen, newBlue);
