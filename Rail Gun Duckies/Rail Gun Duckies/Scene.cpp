@@ -270,7 +270,7 @@ void Scene::runGameMode(bool runForever, double & elapsed_time, Window & w) {
 		break;
 
 	case FLIGHT_FOLLOWER:
-		gluLookAt(0, 5, -100, 0, theDuck.getPosition().y, 50, 0, 1, 0);
+		gluLookAt(0, 5, -100, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 1, 0);
 		break;
 
 	case FIRST_PERSON:

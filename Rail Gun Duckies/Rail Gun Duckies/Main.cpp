@@ -84,9 +84,9 @@ bool CheckGLErrors(string location) {
 	bool error_found = false;
 	GLenum  error;
 	const GLubyte *errorString;
-	cout <<"\n";
-	cout <<location; 
 	while ((error = glGetError()) != GL_NO_ERROR) {
+		cout <<"\n";
+		cout <<location; 
 		error_found = true;
 		errorString = gluErrorString(error);
 		cout << errorString;
