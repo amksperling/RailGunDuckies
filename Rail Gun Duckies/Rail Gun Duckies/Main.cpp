@@ -338,6 +338,13 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 			s.fire();
 	break;
 
+	case ']':
+		s.increaseGunPower(1);
+		break;
+	case '[':
+		s.decreaseGunPower(1);
+		break;
+
 	case 'x':
 	case 27: 
 		glutLeaveMainLoop();

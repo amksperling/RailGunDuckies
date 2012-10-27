@@ -26,6 +26,8 @@ public:
 
 	void fire();
 	void moveRailGun(int x, int y, const Window & w);
+	void increaseGunPower(double higher);
+	void decreaseGunPower(double lower);
 
 //	void duckBeauty();
 //	void railGunBeauty();
@@ -37,6 +39,8 @@ public:
 	inline int getScore() { return this->score; }
 	inline int getDucksRemainging() { return this->ducksRemaining; }
 	inline int getBalloonsRemaining() { return this->balloonsRemaining; }
+
+	//inline RailGun getGun() { return this->theGun; }
 
 private:
 

@@ -2,7 +2,7 @@
 #include <random>
 #include <ctime>
 
-static float launchSpeed = 30;
+static float launchSpeed = 50;
 static double old_time;
 static double new_time;
 static double gravity = -.1;
@@ -306,7 +306,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	//set its initial position
 	if (!this->theDuck.isMoving()) {
 		glPushMatrix();
-		glTranslated(0, 1.5, -95);
+		glTranslated(initialDuckPosition.x, initialDuckPosition.y, initialDuckPosition.z);
 		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glScaled(.5, .5, .5);
@@ -340,9 +340,9 @@ void Scene::fire() {
 
 	if(!this->theDuck.isMoving()) {
 		vec3 velocity = vec3(
-			-sin(theGun.getRotationAngle() * piOver180) * launchSpeed,
-			sin(theGun.getInclinationAngle() * piOver180) * launchSpeed,
-			-cos(theGun.getInclinationAngle() * piOver180) * launchSpeed
+			-sin(theGun.getRotationAngle() * piOver180) * this->theGun.getGunPower(),
+			sin(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower(),
+			-cos(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower()
 			);
 
 		cout << "Inclincation: " << theGun.getInclinationAngle() << "Rotation: " << theGun.getRotationAngle() << endl;
@@ -396,4 +396,12 @@ double randomnumgen(double low, double high)
   double range=(high-low);
   double num = fmod(rand(),range)+low;
   return(num);
+}
+
+void Scene::increaseGunPower(double higher) {
+	this->theGun.increaseGunPower(higher);
+}
+
+void Scene::decreaseGunPower(double lower) {
+	this->theGun.decreaseGunPower(lower);
 }
