@@ -7,6 +7,7 @@ static double old_time;
 static double new_time;
 static double gravity = -.1;
 static double piOver180 = 0.01745329251;
+static vec3 initialDuckPosition = vec3(0, 1.5, -95);
 
 Scene::Scene() : displayListHandle(-1) { }
 
@@ -268,14 +269,18 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	//set up camera at (0, 2, 0)
 
 	switch (w.getCameraMode()) {
+
+	//basic fixed camera position
 	case MAIN:
 		gluLookAt(0, 5, -100, 0, 0, 50, 0, 1, 0);
 		break;
 
+	// camera stays in one position but looks at the position of the duck
 	case FLIGHT_FOLLOWER:
 		gluLookAt(0, 5, -100, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 1, 0);
 		break;
 
+	// camera is always at the position of the duck and looks foward "through the duck's eyes"
 	case FIRST_PERSON:
 		gluLookAt(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z + 10, 0, 1, 0);
 		break;
@@ -289,7 +294,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	//draw the rail gun and the duck on top
 	//push for gun
 	glPushMatrix();
-	glTranslated(0, .5, -94);
+	glTranslated(0, .5, -93);
 	glRotated(180, 0, 1, 0);
 	glRotated(theGun.getInclinationAngle(), 1, 0, 0);
 	glRotated(-theGun.getRotationAngle(), 0, 1, 0);
@@ -301,7 +306,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	//set its initial position
 	if (!this->theDuck.isMoving()) {
 		glPushMatrix();
-		glTranslated(0, 2, -96);
+		glTranslated(0, 1.5, -95);
 		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glScaled(.5, .5, .5);
@@ -312,6 +317,16 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		glPushMatrix();
 		theDuck.updatePosition(timeStep, gravity);
 		glTranslated(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z);
+		//GLfloat angleX = -glm::asin(theDuck.getVelocity().x / launchSpeed) / piOver180;
+		//GLfloat angleY = glm::asin(theDuck.getVelocity().y / launchSpeed) / piOver180;
+		//GLfloat angleZ = -glm::acos(duckyVelocity.z / launchSpeed) / radianConversion;
+
+		//glRotatef(angleX, 0, 1, 0);
+		//glRotatef(angleY, 0, 0, 1);
+		if (this->theDuck.hitTheGround()) {
+			this->theDuck.setVelocity(vec3(0));
+		}
+		cout << this->theDuck.getPosition().x << ", " << this->theDuck.getPosition().y << ", " << this->theDuck.getPosition().z << endl;
 		glScaled(.5, .5, .5);
 		theDuck.render();
 		glPopMatrix();
@@ -339,7 +354,7 @@ void Scene::fire() {
 	}
 }
 
-void Scene::moveRailGun(int x, int y, Window & w) {
+void Scene::moveRailGun(int x, int y, const Window & w) {
 
 	double futureXAngle;
 	double futureYAngle;
@@ -356,7 +371,7 @@ void Scene::moveRailGun(int x, int y, Window & w) {
 double randomnumgen(double low, double high);
 
 void Scene::resetDuck() {
-	this->theDuck.setPosition(vec3(0, 2, -96));
+	this->theDuck.setPosition(initialDuckPosition);
 	this->theDuck.setVelocity(vec3(0, 0, 0));
 	this->theDuck.setLaunched(false);
 

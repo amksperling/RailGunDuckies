@@ -9,7 +9,7 @@ static GLUquadric *q = gluNewQuadric();
 //Default constructor
 Duckie::Duckie() : 
 	displayListHandle(GLuint(-1)), 
-	position(0, 2, -96),
+	position(0, 1.5, -95),
 	velocity(0, 0, 0),
 	acceleration(0, 0, 0),
 	color(1, 1, 0)

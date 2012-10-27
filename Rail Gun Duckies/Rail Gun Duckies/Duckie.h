@@ -42,12 +42,15 @@ public:
 	
 	inline bool isMoving() { return this->launched; }
 
+	inline bool hitTheGround() { return this->getPosition().y == .5; }
+
 	inline void setColor(vec3 color) { this->color = color; }
 	inline void setDLH() { this->displayListHandle = -1; }
 
 private:
 
 	bool launched;
+
 
 	double mass;
 

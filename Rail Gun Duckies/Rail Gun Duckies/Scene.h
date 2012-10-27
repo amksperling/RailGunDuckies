@@ -25,7 +25,7 @@ public:
 	void runGameMode(bool runForever, double timeStep, Window & w);
 
 	void fire();
-	void moveRailGun(int x, int y, Window & w);
+	void moveRailGun(int x, int y, const Window & w);
 
 //	void duckBeauty();
 //	void railGunBeauty();
