@@ -34,5 +34,3 @@ private:
 	vector<ivec3> va_indices;
 	vector<vec3> va_normals;
 };
-
-static void computeVertices(Balloon b);

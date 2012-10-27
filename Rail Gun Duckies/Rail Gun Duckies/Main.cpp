@@ -80,10 +80,12 @@ void displayText(string text) {
 }
 
 
-bool CheckGLErrors() {
+bool CheckGLErrors(string location) {
 	bool error_found = false;
 	GLenum  error;
 	const GLubyte *errorString;
+	cout <<"\n";
+	cout <<location; 
 	while ((error = glGetError()) != GL_NO_ERROR) {
 		error_found = true;
 		errorString = gluErrorString(error);
@@ -117,6 +119,8 @@ void initGL() {
 }
 
 void SwitchingDisplayFunc() {
+	CheckGLErrors("Beginning of Display Function:");
+
 	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -194,6 +198,8 @@ void SwitchingDisplayFunc() {
 
 	glutSwapBuffers();
 	glutPostRedisplay();
+
+	CheckGLErrors("End of Display Function:");
 }
 //void DuckieDisplayFunc() {
 //	// use a switch to toggle between modes

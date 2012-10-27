@@ -259,6 +259,7 @@ void Scene::runGameMode(bool runForever, double & elapsed_time, Window & w) {
 	double startTime = elapsed_time;
 
 
+
 	glPushMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	
@@ -276,7 +277,7 @@ void Scene::runGameMode(bool runForever, double & elapsed_time, Window & w) {
 		break;
 
 	case FIRST_PERSON:
-		gluLookAt(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 50, 100, 0, 1, 0);
+		gluLookAt(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z + 10, 0, 1, 0);
 		break;
 	}
 
