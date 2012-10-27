@@ -167,8 +167,8 @@ void Duckie::updatePosition(double timeStep, float gravity) {
 
 	// apply gravity
 	velocity.y += gravity;
-	if( this->position.y <= 0) {
-		this->position.y = 0; // don't go under the world!
+	if( this->position.y <= .5) {
+		this->position.y = .5; // don't go under the world!
 		//this->launched = false;
 	}
 	

@@ -6,6 +6,7 @@ static float launchSpeed = 30;
 static double old_time;
 static double new_time;
 static double gravity = -.1;
+static double piOver180 = 0.01745329251;
 
 Scene::Scene() : displayListHandle(-1) { }
 
@@ -219,6 +220,7 @@ void Scene::runBeautyMode(int beautyMode) {
 		glTranslated(0, 1.25, 7);
 		glScaled(2, 2, 2);
 		glRotated(elapsed_time * 30, 0, 1, 0);
+		this->theDuck.setColor(vec3(1, 1, 0));
 		this->theDuck.render();
 		glPopMatrix();
 		break;
@@ -292,7 +294,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	glRotated(theGun.getInclinationAngle(), 1, 0, 0);
 	glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 	this->theGun.drawRailGun();
-	cout << "Inclincation: " << theGun.getInclinationAngle() << "Rotation: " << theGun.getRotationAngle() << endl;
+	
 	glPopMatrix();
 
 	//push for duck
@@ -306,7 +308,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		this->theDuck.render();
 		glPopMatrix();
 	}
-	else {
+	else { // the duck is fired
 		glPushMatrix();
 		theDuck.updatePosition(timeStep, gravity);
 		glTranslated(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z);
@@ -323,11 +325,12 @@ void Scene::fire() {
 
 	if(!this->theDuck.isMoving()) {
 		vec3 velocity = vec3(
-			-sin(abs(theGun.getRotationAngle())) * launchSpeed,
-			sin(theGun.getInclinationAngle()) * launchSpeed,
-			cos(theGun.getInclinationAngle()) * launchSpeed
+			-sin(theGun.getRotationAngle() * piOver180) * launchSpeed,
+			sin(theGun.getInclinationAngle() * piOver180) * launchSpeed,
+			-cos(theGun.getInclinationAngle() * piOver180) * launchSpeed
 			);
 
+		cout << "Inclincation: " << theGun.getInclinationAngle() << "Rotation: " << theGun.getRotationAngle() << endl;
 		this->theDuck.setVelocity(velocity);
 		this->theDuck.setLaunched(true);
 	}
