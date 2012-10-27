@@ -42,10 +42,13 @@ void World::skySide() {
 // draw the ground from -100 to 100
 void World::ground() {
 	glDisable(GL_LIGHTING);
+
 	glPushMatrix();
-	glBegin(GL_QUADS);
 	glTranslated(0, 0, -100);
 	glRotated(90, 1, 0, 0);
+	glBegin(GL_QUADS);
+	
+
 	glColor3ub(0, 100, 0);
 	glNormal3f(0, 1, 0);
 	glVertex2d(-100, 0);
@@ -54,8 +57,9 @@ void World::ground() {
 	glVertex2d(100, 200);
 	glColor3ub(0, 100, 0);
 	glVertex2d(100, 0);
-
+	
 	glEnd();
+
 	glPopMatrix();
 	glEnable(GL_LIGHTING);
 

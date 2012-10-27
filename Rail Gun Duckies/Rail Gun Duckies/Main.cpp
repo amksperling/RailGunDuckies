@@ -154,8 +154,10 @@ void SwitchingDisplayFunc() {
 		break;
 
 	case RAILGUN_BEAUTY:
+		CheckGLErrors("begin railgun beauty:");
 		s.runBeautyMode(RAILGUN_BEAUTY);
 		displayText("RailGun Beauty Mode");
+		CheckGLErrors("end gun beauty:");
 	//	s.railGunBeauty();
 		//glPushMatrix();
 		//r.render();
@@ -163,8 +165,10 @@ void SwitchingDisplayFunc() {
 		break;
 
 	case BALLOON_BEAUTY:
+		CheckGLErrors("begin balloon beauty:");
 		s.runBeautyMode(BALLOON_BEAUTY);
 		displayText("Balloon Beauty Mode");
+		CheckGLErrors("end balloon beauty:");
 	//	s.balloonBeauty();
 		//glPushMatrix();
 		//b.render();
@@ -172,8 +176,9 @@ void SwitchingDisplayFunc() {
 		break;
 
 	case GAME:
-
+		CheckGLErrors("begin game:");
 		s.runGameMode(false, elapsed_time, *w);
+		CheckGLErrors("end game:");
 	/*	glPushMatrix();
 		s.renderWorld();
 		glPopMatrix();*/

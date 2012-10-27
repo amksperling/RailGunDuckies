@@ -204,9 +204,9 @@ void Scene::runBeautyMode(int beautyMode) {
 
 	//set up camera at (0, 2, 0)
 	gluLookAt(0, 2, 0, 0, 0, 10, 0, 1, 0);
-	glPushMatrix();
+//	glPushMatrix();
 	this->theWorld.render(); // draw the background world		
-	glPopMatrix();
+	//glPopMatrix();
 
 	//draw the objects based on the input
 	switch (beautyMode) {
