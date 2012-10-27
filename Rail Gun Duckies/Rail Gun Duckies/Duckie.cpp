@@ -45,7 +45,7 @@ void Duckie::render() {
     glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess);
 
 
-	
+	glColor3d(this->color.r, this->color.g, this->color.b);
 	if (this->displayListHandle == GLuint(-1)) {
 		this->displayListHandle = glGenLists(1);
 		glNewList(this->displayListHandle, GL_COMPILE);
@@ -56,7 +56,7 @@ void Duckie::render() {
 
 			glPushMatrix();
 			glScaled(1, .7, 1.2);
-			glColor3d(this->color.r, this->color.g, this->color.b);
+			
 			gluSphere(q,1,100,100);
 			glPopMatrix();
 
@@ -123,7 +123,7 @@ void Duckie::render() {
 		} //end if q
 		
 		else {
-			fprintf(stderr, "Couldn't initialize quadric");
+			fprintf(stderr, "Couldn't initialize quadric"); //impossible else
 			exit(1);
 		}
 		

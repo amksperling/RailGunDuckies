@@ -262,15 +262,6 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	glLoadIdentity();
 
 
-	std::uniform_real_distribution<double> unif(0,1);
-	std::default_random_engine re;
-	double newRed = unif(re);
-	double newGreen = unif(re);
-	double newBlue = unif(re);
-
-	vec3 newColor = vec3(newRed, newGreen, newBlue);
-	this->theDuck.setColor(newColor);
-
 	//set up camera at (0, 2, 0)
 
 	switch (w.getCameraMode()) {
@@ -358,6 +349,8 @@ void Scene::moveRailGun(int x, int y, Window & w) {
 	this->theGun.setInclinationAngle(futureYAngle);
 }
 
+double randomnumgen(double low, double high);
+
 void Scene::resetDuck() {
 	this->theDuck.setPosition(vec3(0, 2, -96));
 	this->theDuck.setVelocity(vec3(0, 0, 0));
@@ -365,13 +358,23 @@ void Scene::resetDuck() {
 
 	double lower_bound = 0;
 	double upper_bound = 1;
-
+	
 	std::uniform_real_distribution<double> unif(lower_bound,upper_bound);
 	std::default_random_engine re;
-	double newRed = unif(re);
-	double newGreen = unif(re);
-	double newBlue = unif(re);
+	
+	double newRed = randomnumgen(0,1);//unif(re);
+	double newGreen = randomnumgen(0,1);//unif(re);
+	double newBlue = randomnumgen(0,1);//unif(re);
 
+//	this->theDuck.setDLH();
 	vec3 newColor = vec3(newRed, newGreen, newBlue);
 	this->theDuck.setColor(newColor);
+	
+}
+
+double randomnumgen(double low, double high)
+{
+  double range=(high-low);
+  double num = fmod(rand(),range)+low;
+  return(num);
 }

@@ -39,10 +39,11 @@ public:
 	void setInitVelocity(double velocity, double inclinationAngle);
 	virtual void updatePosition(vec3 currentPosition, float timeStep);
 	virtual void updatePosition(double elapsed_time, float gravity);
-
+	
 	inline bool isMoving() { return this->launched; }
 
 	inline void setColor(vec3 color) { this->color = color; }
+	inline void setDLH() { this->displayListHandle = -1; }
 
 private:
 
