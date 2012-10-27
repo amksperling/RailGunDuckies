@@ -3,6 +3,7 @@
 static float launchSpeed = 30;
 static double old_time;
 static double new_time;
+static double gravity = -.1;
 
 Scene::Scene() : displayListHandle(-1) { }
 
@@ -306,7 +307,7 @@ void Scene::runGameMode(bool runForever, double & elapsed_time, Window & w) {
 	}
 	else {
 		glPushMatrix();
-		theDuck.updatePosition(theDuck.getPosition(), elapsed_time);
+		theDuck.updatePosition(elapsed_time, gravity);
 		glTranslated(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z);
 		glScaled(.5, .5, .5);
 		theDuck.render();
