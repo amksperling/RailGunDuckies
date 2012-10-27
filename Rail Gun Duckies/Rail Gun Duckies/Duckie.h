@@ -42,7 +42,7 @@ public:
 
 	inline bool isMoving() { return this->launched; }
 
-	void setColor(vec3 color);
+	inline void setColor(vec3 color) { this->color = color; }
 
 private:
 

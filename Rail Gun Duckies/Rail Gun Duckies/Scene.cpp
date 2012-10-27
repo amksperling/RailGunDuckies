@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include <random>
 
 static float launchSpeed = 30;
 static double old_time;
@@ -253,15 +254,22 @@ void Scene::runBeautyMode(int beautyMode) {
 }
 
 
-void Scene::runGameMode(bool runForever, double & elapsed_time, Window & w) {
-	double startTime = elapsed_time;
-
-
+void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 
 	//glPushMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	
 	glLoadIdentity();
+
+
+	std::uniform_real_distribution<double> unif(0,1);
+	std::default_random_engine re;
+	double newRed = unif(re);
+	double newGreen = unif(re);
+	double newBlue = unif(re);
+
+	vec3 newColor = vec3(newRed, newGreen, newBlue);
+	this->theDuck.setColor(newColor);
 
 	//set up camera at (0, 2, 0)
 
@@ -292,6 +300,7 @@ void Scene::runGameMode(bool runForever, double & elapsed_time, Window & w) {
 	glRotated(theGun.getInclinationAngle(), 1, 0, 0);
 	glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 	this->theGun.drawRailGun();
+	cout << "Inclincation: " << theGun.getInclinationAngle() << "Rotation: " << theGun.getRotationAngle() << endl;
 	glPopMatrix();
 
 	//push for duck
@@ -307,7 +316,7 @@ void Scene::runGameMode(bool runForever, double & elapsed_time, Window & w) {
 	}
 	else {
 		glPushMatrix();
-		theDuck.updatePosition(elapsed_time, gravity);
+		theDuck.updatePosition(timeStep, gravity);
 		glTranslated(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z);
 		glScaled(.5, .5, .5);
 		theDuck.render();
@@ -320,18 +329,19 @@ void Scene::runGameMode(bool runForever, double & elapsed_time, Window & w) {
 
 void Scene::fire() {
 
-	vec3 velocity = vec3(
-		-sin(theGun.getRotationAngle()) * launchSpeed,
-		sin(theGun.getInclinationAngle()) * launchSpeed,
-		cos(theGun.getInclinationAngle()) * launchSpeed
-		);
+	if(!this->theDuck.isMoving()) {
+		vec3 velocity = vec3(
+			-sin(abs(theGun.getRotationAngle())) * launchSpeed,
+			sin(theGun.getInclinationAngle()) * launchSpeed,
+			cos(theGun.getInclinationAngle()) * launchSpeed
+			);
 
-	this->theDuck.setVelocity(velocity);
-	this->theDuck.setLaunched(true);
-	//if (!theDuck.isMoving())
-		//this->theDuck.setInitVelocity(10, theGun.getInclinationAngle());
-	//else
-		//reset duck
+		this->theDuck.setVelocity(velocity);
+		this->theDuck.setLaunched(true);
+	}
+	else {
+		resetDuck();
+	}
 }
 
 void Scene::moveRailGun(int x, int y, Window & w) {
@@ -346,4 +356,22 @@ void Scene::moveRailGun(int x, int y, Window & w) {
 	
 	this->theGun.setRotationAngle(futureXAngle);
 	this->theGun.setInclinationAngle(futureYAngle);
+}
+
+void Scene::resetDuck() {
+	this->theDuck.setPosition(vec3(0, 2, -96));
+	this->theDuck.setVelocity(vec3(0, 0, 0));
+	this->theDuck.setLaunched(false);
+
+	double lower_bound = 0;
+	double upper_bound = 1;
+
+	std::uniform_real_distribution<double> unif(lower_bound,upper_bound);
+	std::default_random_engine re;
+	double newRed = unif(re);
+	double newGreen = unif(re);
+	double newBlue = unif(re);
+
+	vec3 newColor = vec3(newRed, newGreen, newBlue);
+	this->theDuck.setColor(newColor);
 }

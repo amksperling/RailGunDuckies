@@ -32,8 +32,9 @@ double period = 1000/60;
 
 double pScale = .01;
 
-static double elapsed_time;
-static double last_frame_time = 0.0;
+static double timeSinceStart = 0.0;
+static double timeStep = 0.0;
+static double oldTimeSinceStart = 0.0;
 
 //the test subjets:
 Window * w;
@@ -124,12 +125,10 @@ void initGL() {
 void SwitchingDisplayFunc() {
 	CheckGLErrors("Beginning of Display Function:");
 
-	elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
+	timeSinceStart = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
 	
-
-	double now = elapsed_time;
-	elapsed_time -= last_frame_time;
-	
+	timeStep = timeSinceStart - oldTimeSinceStart;
+	oldTimeSinceStart = timeSinceStart;
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -185,7 +184,7 @@ void SwitchingDisplayFunc() {
 
 	case GAME:
 		CheckGLErrors("begin game:");
-		s.runGameMode(false, last_frame_time, *w);
+		s.runGameMode(false, timeStep, *w);
 		CheckGLErrors("end game:");
 	/*	glPushMatrix();
 		s.renderWorld();
