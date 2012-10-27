@@ -257,7 +257,7 @@ void Scene::runGameMode(bool runForever, double & elapsed_time, Window & w) {
 
 
 
-	glPushMatrix();
+	//glPushMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	
 	glLoadIdentity();
@@ -314,7 +314,7 @@ void Scene::runGameMode(bool runForever, double & elapsed_time, Window & w) {
 	}
 	
 
-	glPopMatrix();
+	//glPopMatrix();
 }
 
 void Scene::fire() {
