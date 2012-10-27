@@ -133,23 +133,14 @@ void SwitchingDisplayFunc() {
 	glLoadIdentity();
 	gluPerspective(75, w->getAspect(), 1, 250);
 	glViewport(0, 0, w->getWidth(), w->getHeight());
-	//glPushMatrix();
-	//glScaled(.01, .01, .01);
-	//glTranslated(0, 0, -500);
-	//glRotated(0, 0, 1, 0);
-	//glutStrokeString(GLUT_STROKE_MONO_ROMAN, (unsigned char *)"Adam Sperling");
-	//glPopMatrix();
-//	glMatrixMode(GL_MODELVIEW);
-//	glLoadIdentity();
-	//glTranslated(0, 0, -5);
-//	gluLookAt(0, 5, -5, 0, 0, 0, 0, 1, 0);
-//	camera();
-//	glRotated(elapsed_time * 60, 0, 1, 0);
-
+//	glPushMatrix(); // push projection matrix	
+	CheckGLErrors("push projection ");
 	switch (w->getSceneMode()) {
 
 	case DUCK_BEAUTY:
+		CheckGLErrors("begin duck beauty:");
 		s.runBeautyMode(DUCK_BEAUTY);
+		CheckGLErrors("end duck beauty: ");
 		displayText("Duck Beauty Mode");
 	//	s.duckBeauty();
 		/*glPushMatrix();

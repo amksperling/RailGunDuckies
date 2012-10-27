@@ -199,16 +199,13 @@ void Scene::skyBox() {
 void Scene::runBeautyMode(int beautyMode) {
 	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
 	
-	glPushMatrix();
 	glMatrixMode(GL_MODELVIEW);
-	
 	glLoadIdentity();
 
 	//set up camera at (0, 2, 0)
 	gluLookAt(0, 2, 0, 0, 0, 10, 0, 1, 0);
 	glPushMatrix();
-	this->theWorld.render();
-	//renderWorld(); // draw the background world
+	this->theWorld.render(); // draw the background world		
 	glPopMatrix();
 
 	//draw the objects based on the input
@@ -243,7 +240,7 @@ void Scene::runBeautyMode(int beautyMode) {
 		break;
 	}//end switch
 
-	glPopMatrix();
+	//glPopMatrix();
 
 	//glPushMatrix();
 	//glMatrixMode(GL_PROJECTION);
@@ -251,7 +248,7 @@ void Scene::runBeautyMode(int beautyMode) {
 	//glOrtho(0, 1280, 0, 720, 1, 10);
 	//glLoadIdentity();
 	//glutStrokeString(GLUT_STROKE_MONO_ROMAN, string);
-	glPopMatrix();
+	//glPopMatrix();
 }
 
 
