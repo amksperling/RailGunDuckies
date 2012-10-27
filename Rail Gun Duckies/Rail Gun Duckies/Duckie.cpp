@@ -150,8 +150,8 @@ void Duckie::updatePosition(vec3 currentPosition, float timeStep) {
 	if( this->position.y <= 0) {
 		this->position.y = 0; // don't go under the world!
 	}
-	if (this->position.z == 200)
-		this->position.z = 199;
+	if (this->position.z == -200)
+		this->position.z = -199;
 }
 
 void Duckie::setInitVelocity(double velocity, double inclinationAngle) {
@@ -167,4 +167,9 @@ void Duckie::updatePosition(double elapsed_time, float gravity) {
 
 	// apply gravity
 	velocity.y += gravity;
+	if( this->position.y <= 0) {
+		this->position.y = 0; // don't go under the world!
+	}
+	if (this->position.z == 200)
+		this->position.z = 199;
 }

@@ -325,9 +325,10 @@ void Scene::fire() {
 		cos(theGun.getInclinationAngle()) * launchSpeed
 		);
 
-	//this->theDuck.setVelocity(velocity);
-	if (!theDuck.isMoving())
-		this->theDuck.setInitVelocity(.01, theGun.getInclinationAngle());
+	this->theDuck.setVelocity(velocity);
+	this->theDuck.setLaunched(true);
+	//if (!theDuck.isMoving())
+		//this->theDuck.setInitVelocity(10, theGun.getInclinationAngle());
 	//else
 		//reset duck
 }

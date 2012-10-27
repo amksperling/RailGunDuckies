@@ -33,11 +33,12 @@ public:
 	inline void setPosition(vec3 position) { this->position = position; }
 	inline void setVelocity(vec3 velocity) { this->velocity = velocity; }
 	inline void setAcceleration(vec3 acceleration) { this->acceleration = acceleration; }
-	
+	inline void setLaunched(bool launched) { this->launched = launched; }
+
 	//set initial velocity based on railgun angles
 	void setInitVelocity(double velocity, double inclinationAngle);
-	void updatePosition(vec3 currentPosition, float timeStep);
-	void updatePosition(double elapsed_time, float gravity);
+	virtual void updatePosition(vec3 currentPosition, float timeStep);
+	virtual void updatePosition(double elapsed_time, float gravity);
 
 	inline bool isMoving() { return this->launched; }
 
