@@ -99,7 +99,7 @@ bool CheckGLErrors(string location) {
 // for the main function. Handles lighting and depth so far...
 void initGL() {
 
-	glClearColor (0.0, 0.0, 0.0, 0.0);
+	glClearColor (1.0, 0.0, 0.0, 1.0);
 	glShadeModel (GL_SMOOTH);
 
 	glEnable(GL_LIGHTING);
@@ -107,7 +107,7 @@ void initGL() {
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 	//glLightModelf(GL_LIGHT_MODEL_TWO_SIDE , 0.0);
 	//glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER , 1.0);
 
@@ -125,7 +125,7 @@ void SwitchingDisplayFunc() {
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glClearColor(0, 0, 0, 0);
+	glClearColor(1, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	//set up the world so we can see stuff!
@@ -133,6 +133,7 @@ void SwitchingDisplayFunc() {
 	glLoadIdentity();
 	gluPerspective(75, w->getAspect(), 1, 250);
 	glViewport(0, 0, w->getWidth(), w->getHeight());
+	camera();
 //	glPushMatrix(); // push projection matrix	
 	CheckGLErrors("push projection ");
 	switch (w->getSceneMode()) {
