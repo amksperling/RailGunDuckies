@@ -126,12 +126,12 @@ void World::renderSky() {
 		r = 1;
 
 		GLfloat omegaPoints = 91.0f;
-		GLfloat omegaIncrement = 180/(omegaPoints-1);
+		GLfloat omegaIncrement = 90/(omegaPoints-1);
 
 		GLfloat phiPoints = 120.0f;
 		GLfloat phiIncrement = 360/phiPoints;
 
-		for(o = (GLfloat)0; o <=(GLfloat)180; o +=omegaIncrement) {
+		for(o = (GLfloat)0; o <=(GLfloat)90; o +=omegaIncrement) {
 			for(p = (GLfloat)0; p <(GLfloat) 360; p +=phiIncrement) {
 			
 				if(o < .5 * 180) r = (GLfloat) 1;

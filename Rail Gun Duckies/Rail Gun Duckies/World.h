@@ -18,6 +18,7 @@ public:
 	World();
 
 	void render();
+	void renderSky(); // for future use with a sky dome
 	inline GLuint getDisplayListHandle() { return this->displayListHandle; }
 
 
@@ -27,7 +28,6 @@ private:
 	void skyBox();
 
 	GLuint displayListHandle;
-	void renderSky(); // for future use with a sky dome
 
 	// Used with vertex arrays.
 	vector<GLdouble> va_v;
