@@ -2,12 +2,19 @@
 #include <random>
 #include <ctime>
 
-const double MAX_GUN_POWER = 50;
+const double MAX_GUN_POWER = 100;
 const double MIN_GUN_POWER = 0;
+const int MAX_BALLOONS = 10;
 
-static double gravity = -.1;
+int Scene::score = 0;
+int Scene::ducksRemaining = 3;
+int Scene::balloonsRemaining = MAX_BALLOONS;
+bool Scene::balloonsPlaced = false;
+
+static double gravity = -32.0;
 static double piOver180 = 0.01745329251;
 static vec3 initialDuckPosition = vec3(0, 1.5, -95);
+
 
 Scene::Scene() : displayListHandle(-1) { }
 
@@ -79,7 +86,10 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	glLoadIdentity();
 
 
-	//set up camera at (0, 2, 0)
+	//set up camera based on the camera mode selected:
+	// --basic fixed
+	// --follow duck flight
+	// --first person view
 
 	switch (w.getCameraMode()) {
 
@@ -104,6 +114,22 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	this->theWorld.render(); // draw the background world
 	glPopMatrix();
 
+	//draw the balloons, from the vector of balloons
+	//glPushMatrix();
+	if (!balloonsPlaced)
+		this->placeBalloons();
+	//glTranslated(balloons[0].getPosition().x,balloons[0].getPosition().y, balloons[0].getPosition().z);
+//	balloons[0].render();
+
+	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
+		glPushMatrix();
+		glTranslated(iter->getPosition().x,iter->getPosition().y, iter->getPosition().z);
+		if(!iter->isHit())
+			iter->render();
+		glPopMatrix();
+	}
+
+	//glPopMatrix();
 	//draw the rail gun and the duck on top
 	//push for gun
 	glPushMatrix();
@@ -114,7 +140,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	this->theGun.drawRailGun();
 	
 	glPopMatrix();
-
+	
 	//push for duck
 	//set its initial position
 	if (!this->theDuck.isMoving()) {
@@ -123,25 +149,26 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glScaled(.5, .5, .5);
-		this->theDuck.render();
+		if (w.getCameraMode() != FIRST_PERSON) // dont render the duck in first person!
+			this->theDuck.render();
 		glPopMatrix();
 	}
 	else { // the duck is fired
 		glPushMatrix();
+
+		//update the position and actually move the duck to that position
 		theDuck.updatePosition(timeStep, gravity);
 		glTranslated(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z);
-		//GLfloat angleX = -glm::asin(theDuck.getVelocity().x / launchSpeed) / piOver180;
-		//GLfloat angleY = glm::asin(theDuck.getVelocity().y / launchSpeed) / piOver180;
-		//GLfloat angleZ = -glm::acos(duckyVelocity.z / launchSpeed) / radianConversion;
+		
 
-		//glRotatef(angleX, 0, 1, 0);
-		//glRotatef(angleY, 0, 0, 1);
+		//make the duck stop when it hits the ground
 		if (this->theDuck.hitTheGround()) {
 			this->theDuck.setVelocity(vec3(0));
 		}
-		cout << this->theDuck.getPosition().x << ", " << this->theDuck.getPosition().y << ", " << this->theDuck.getPosition().z << endl;
+		//cout << this->theDuck.getPosition().x << ", " << this->theDuck.getPosition().y << ", " << this->theDuck.getPosition().z << endl;
 		glScaled(.5, .5, .5);
-		theDuck.render();
+		if (w.getCameraMode() != FIRST_PERSON) // dont render the duck in first person!
+			theDuck.render();
 		glPopMatrix();
 	}
 	
@@ -155,10 +182,10 @@ void Scene::fire() {
 		vec3 velocity = vec3(
 			-sin(theGun.getRotationAngle() * piOver180) * this->theGun.getGunPower(),
 			sin(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower(),
-			-cos(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower()
+			cos(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower()
 			);
 
-		cout << "Inclincation: " << theGun.getInclinationAngle() << "Rotation: " << theGun.getRotationAngle() << endl;
+	//	cout << "Inclincation: " << theGun.getInclinationAngle() << "Rotation: " << theGun.getRotationAngle() << endl;
 		this->theDuck.setVelocity(velocity);
 		this->theDuck.setLaunched(true);
 	}
@@ -181,36 +208,32 @@ void Scene::moveRailGun(int x, int y, const Window & w) {
 	this->theGun.setInclinationAngle(futureYAngle);
 }
 
-double randomnumgen(double low, double high);
+
+
+//uniform_real_distribution<double> unif;
+
 
 void Scene::resetDuck() {
 	this->theDuck.setPosition(initialDuckPosition);
 	this->theDuck.setVelocity(vec3(0, 0, 0));
 	this->theDuck.setLaunched(false);
 
-	double lower_bound = 0;
-	double upper_bound = 1;
-//	theDuck.setDLH();
-	std::uniform_real_distribution<double> unif(lower_bound,upper_bound);
-	std::default_random_engine re;
-	srand(time(0));
-	double newRed = rand() * 1 / double(RAND_MAX) + 0 ;//unif(re);
-	double newGreen = rand() * 1 / double(RAND_MAX) + 0;//unif(re);
-	double newBlue = rand() * 1 / double(RAND_MAX) + 0;//unif(re);
+	//generate random values between 0 and 1 for a new color
+	// uses C++11 unifrom distribution engine and not c-style rand()
+	// adapted from C++ Primer
+	// see genRandomDouble()
+	double newRed = genRandomDouble(0,1);
+	double newGreen = genRandomDouble(0,1);
+	double newBlue = genRandomDouble(0,1);
 
-//	this->theDuck.setDLH();
+	//set the new color
 	vec3 newColor = vec3(newRed, newGreen, newBlue);
 	this->theDuck.setColor(newColor);
 	
 }
 
-double randomnumgen(double low, double high)
-{
-  double range=(high-low);
-  double num = fmod(rand(),range)+low;
-  return(num);
-}
 
+// functions for changing the power of the gun from 0 to 50
 void Scene::increaseGunPower(double higher) {
 	if (this->theGun.getGunPower() < MAX_GUN_POWER)
 		this->theGun.increaseGunPower(higher);
@@ -219,4 +242,54 @@ void Scene::increaseGunPower(double higher) {
 void Scene::decreaseGunPower(double lower) {
 	if (this->theGun.getGunPower() > MIN_GUN_POWER)
 		this->theGun.decreaseGunPower(lower);
+}
+
+
+//function for placing balloons at semi random
+// yet hittable places
+void Scene::placeBalloons() {
+
+	int xPosition, yPosition, zPosition;
+	Balloon b;
+	/* for each balloon wanted, generate a random position
+		and assign that position to the balloon after it is constructed.
+		Then add it to the balloon vector. */
+
+	for (int i = 0; i < MAX_BALLOONS; ++i) {
+
+		//x (horizontal) position should be within -50 to 50
+		xPosition = genRandomInt(-10, 10);
+		/*if (balloons.size() > 0 && xPosition == balloons.at(i-1).getPosition().x)
+			xPosition = genRandomInt(0, 00);*/
+		//y (vertical) position is from 10 to 75
+		yPosition = genRandomInt(0, 30);
+		/*if (balloons.size() > 0 && yPosition == balloons.at(i-1).getPosition().y)
+			yPosition = genRandomInt(0, 30);*/
+		//z (depth) position shoul be between -80 and 80
+		zPosition = genRandomInt(-80, -60);
+		/*if (balloons.size() > 0 && zPosition == balloons.at(i-1).getPosition().y)
+			zPosition = genRandomInt(-80, -80);*/
+
+		b.setPosition(vec3(xPosition, yPosition, zPosition));
+
+		this->balloons.push_back(b);
+	}
+	balloonsPlaced = true;
+}
+
+
+//generates a random double between 'low' and 'high'
+// uses C++11 standard random distribution and random engine
+// from C++ primer 5th ed.
+default_random_engine randomEngine; 
+
+
+double genRandomDouble(double low, double high) {
+	uniform_real_distribution<double> unif(low, high);
+	return unif(randomEngine);
+}
+
+int genRandomInt(int low, int high) {
+	uniform_int_distribution<int> unif(low, high);
+	return unif(randomEngine);
 }

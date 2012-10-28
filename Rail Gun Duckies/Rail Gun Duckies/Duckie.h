@@ -37,8 +37,9 @@ public:
 
 	//set initial velocity based on railgun angles
 	void setInitVelocity(double velocity, double inclinationAngle);
-	virtual void updatePosition(vec3 currentPosition, float timeStep);
-	virtual void updatePosition(double elapsed_time, float gravity);
+	
+	
+	void updatePosition(double elapsed_time, double gravity);
 	
 	inline bool isMoving() { return this->launched; }
 

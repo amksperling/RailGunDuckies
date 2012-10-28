@@ -12,6 +12,7 @@
 #include <sstream> //Checka
 #include <vector>
 #include <assert.h> //Checkb
+#include <ctime>
 
 using namespace std;
 
@@ -56,6 +57,14 @@ void camera (void) {
 	glRotatef(zrot, 0, 0, 1);
     glTranslated(-xpos,-ypos,-zpos); //translate the screen
 									// to the position of our camera
+}
+
+
+double getTimeSinceLastFrame() {
+    clock_t currentTime = clock();
+    double ret = (double)(currentTime - oldTimeSinceStart) / (double)CLOCKS_PER_SEC;
+    oldTimeSinceStart = currentTime;
+    return ret;
 }
 
 //function for displaying informational text in an
@@ -118,7 +127,6 @@ void initGL() {
 	//////set up light position
 	GLfloat light_position[] = { 2 , 2, 1, 0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
 
 }
 
@@ -185,6 +193,7 @@ void SwitchingDisplayFunc() {
 
 	case GAME:
 		CheckGLErrors("begin game:");
+		
 		s.runGameMode(false, timeStep, *w);
 		CheckGLErrors("end game:");
 	/*	glPushMatrix();
@@ -417,7 +426,7 @@ int main(int argc, char *argv[]) {
 	glutDisplayFunc(SwitchingDisplayFunc);
 	glutReshapeFunc(ReshapeFunc); // what function called if resized window?
 	glutKeyboardFunc(KeyboardFunc); // what function called if keypressed?
-	glutTimerFunc(GLuint(period), TimerFunc, 0);
+	//glutTimerFunc(GLuint(period), TimerFunc, 0);
 	glutPassiveMotionFunc(MouseMovement);
 	glutSpecialFunc(SpecialFunc);
 	glutMainLoop();

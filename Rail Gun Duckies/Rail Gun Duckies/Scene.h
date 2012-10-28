@@ -39,7 +39,7 @@ public:
 	inline int getScore() { return this->score; }
 	inline int getDucksRemainging() { return this->ducksRemaining; }
 	inline int getBalloonsRemaining() { return this->balloonsRemaining; }
-
+	void placeBalloons();
 	//inline RailGun getGun() { return this->theGun; }
 
 private:
@@ -62,15 +62,17 @@ private:
 	void skyBox();
 //	void placeGun();
 //	void placeDuck();
-	void placeBalloons();
+	
 	void resetDuck();
 
-	int score;
-	int ducksRemaining;
-	int balloonsRemaining;
+	static int score;
+	static int ducksRemaining;
+	static int balloonsRemaining;
+	static bool balloonsPlaced;
 
 	GLuint displayListHandle;
 	
 };
 
-
+double genRandomDouble(double low, double high);
+int genRandomInt(int low, int high);
