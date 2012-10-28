@@ -302,11 +302,12 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	glPopMatrix();
 
 	//draw the balloons, from the vector of balloons
-	glPushMatrix();
+	//glPushMatrix();
 	if (!balloonsPlaced)
 		this->placeBalloons();
 	//glTranslated(balloons[0].getPosition().x,balloons[0].getPosition().y, balloons[0].getPosition().z);
 //	balloons[0].render();
+
 	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
 		glPushMatrix();
 		glTranslated(iter->getPosition().x,iter->getPosition().y, iter->getPosition().z);
@@ -314,7 +315,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		glPopMatrix();
 	}
 
-	glPopMatrix();
+	//glPopMatrix();
 	//draw the rail gun and the duck on top
 	//push for gun
 	glPushMatrix();
@@ -349,7 +350,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		if (this->theDuck.hitTheGround()) {
 			this->theDuck.setVelocity(vec3(0));
 		}
-		cout << this->theDuck.getPosition().x << ", " << this->theDuck.getPosition().y << ", " << this->theDuck.getPosition().z << endl;
+		//cout << this->theDuck.getPosition().x << ", " << this->theDuck.getPosition().y << ", " << this->theDuck.getPosition().z << endl;
 		glScaled(.5, .5, .5);
 		theDuck.render();
 		glPopMatrix();
@@ -368,7 +369,7 @@ void Scene::fire() {
 			-cos(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower()
 			);
 
-		cout << "Inclincation: " << theGun.getInclinationAngle() << "Rotation: " << theGun.getRotationAngle() << endl;
+	//	cout << "Inclincation: " << theGun.getInclinationAngle() << "Rotation: " << theGun.getRotationAngle() << endl;
 		this->theDuck.setVelocity(velocity);
 		this->theDuck.setLaunched(true);
 	}
@@ -444,7 +445,7 @@ void Scene::placeBalloons() {
 		xPosition = genRandomDouble(-5, 5);
 
 		//y (vertical) position is from 10 to 75
-		yPosition = genRandomDouble(10, 20);
+		yPosition = genRandomDouble(5, 25);
 
 		//z (depth) position shoul be between -80 and 80
 		zPosition = genRandomDouble(-90, -80);
