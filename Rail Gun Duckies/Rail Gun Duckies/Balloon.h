@@ -21,6 +21,8 @@ public:
 	void render();
 	void drawDiamond();
 	void Triangle();
+
+	inline void setPosition(vec3 position) { this->position = position; }
 	
 private:
 	// Used with vertex arrays.
@@ -33,4 +35,6 @@ private:
 	vector<vec4> va_colors;
 	vector<ivec3> va_indices;
 	vector<vec3> va_normals;
+
+	vec3 position;
 };

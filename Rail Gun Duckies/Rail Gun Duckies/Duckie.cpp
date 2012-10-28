@@ -144,15 +144,15 @@ void Duckie::render() {
 
 //update the current position of the duck
 //based on its current velocity and acceleration
-void Duckie::updatePosition(vec3 currentPosition, float timeStep) {
-	this->position.z = this->velocity.x * timeStep + this->position.z;
-	this->position.y = .5 * g * timeStep * timeStep + this->velocity.y * timeStep + this->position.y;
-	if( this->position.y <= 0) {
-		this->position.y = 0; // don't go under the world!
-	}
-	if (this->position.z == -200)
-		this->position.z = -199;
-}
+//void Duckie::updatePosition(vec3 currentPosition, float timeStep) {
+//	this->position.z = this->velocity.x * timeStep + this->position.z;
+//	this->position.y = .5 * g * timeStep * timeStep + this->velocity.y * timeStep + this->position.y;
+//	if( this->position.y <= 0) {
+//		this->position.y = 0; // don't go under the world!
+//	}
+//	if (this->position.z == -200)
+//		this->position.z = -199;
+//}
 
 void Duckie::setInitVelocity(double velocity, double inclinationAngle) {
 	this->velocity.x = velocity * cos(inclinationAngle);
@@ -160,7 +160,7 @@ void Duckie::setInitVelocity(double velocity, double inclinationAngle) {
 	this->launched = true;
 }
 
-void Duckie::updatePosition(double timeStep, float gravity) {
+void Duckie::updatePosition(double timeStep, double gravity) {
 	position.x += velocity.x * timeStep;
 	position.y += velocity.y * timeStep;
 	position.z -= velocity.z * timeStep;

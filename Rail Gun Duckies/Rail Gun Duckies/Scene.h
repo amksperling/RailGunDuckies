@@ -65,12 +65,12 @@ private:
 	void placeBalloons();
 	void resetDuck();
 
-	int score;
-	int ducksRemaining;
-	int balloonsRemaining;
+	static int score;
+	static int ducksRemaining;
+	static int balloonsRemaining;
 
 	GLuint displayListHandle;
 	
 };
 
-
+double genRandomDouble(double low, double high);
