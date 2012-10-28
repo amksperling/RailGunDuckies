@@ -2,9 +2,9 @@
 #include <random>
 #include <ctime>
 
-static float launchSpeed = 50;
-static double old_time;
-static double new_time;
+const double MAX_GUN_POWER = 50;
+const double MIN_GUN_POWER = 0;
+
 static double gravity = -.1;
 static double piOver180 = 0.01745329251;
 static vec3 initialDuckPosition = vec3(0, 1.5, -95);
@@ -399,9 +399,11 @@ double randomnumgen(double low, double high)
 }
 
 void Scene::increaseGunPower(double higher) {
-	this->theGun.increaseGunPower(higher);
+	if (this->theGun.getGunPower() < MAX_GUN_POWER)
+		this->theGun.increaseGunPower(higher);
 }
 
 void Scene::decreaseGunPower(double lower) {
-	this->theGun.decreaseGunPower(lower);
+	if (this->theGun.getGunPower() > MIN_GUN_POWER)
+		this->theGun.decreaseGunPower(lower);
 }
