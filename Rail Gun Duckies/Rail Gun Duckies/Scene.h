@@ -75,3 +75,4 @@ private:
 };
 
 double genRandomDouble(double low, double high);
+int genRandomInt(int low, int high);

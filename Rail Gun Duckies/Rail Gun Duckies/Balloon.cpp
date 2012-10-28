@@ -5,9 +5,9 @@
 const float PI = 3.14159265f;
 
 
-Balloon::Balloon() {
-
-}
+Balloon::Balloon() 
+: hit(false)
+{ }
 
 Balloon::~Balloon() {
 

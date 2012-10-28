@@ -4,7 +4,7 @@
 
 const double MAX_GUN_POWER = 50;
 const double MIN_GUN_POWER = 0;
-const int MAX_BALLOONS = 5;
+const int MAX_BALLOONS = 3;
 
 int Scene::score = 0;
 int Scene::ducksRemaining = 3;
@@ -311,7 +311,8 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
 		glPushMatrix();
 		glTranslated(iter->getPosition().x,iter->getPosition().y, iter->getPosition().z);
-		iter->render();
+		if(!iter->isHit())
+			iter->render();
 		glPopMatrix();
 	}
 
@@ -326,7 +327,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	this->theGun.drawRailGun();
 	
 	glPopMatrix();
-
+	
 	//push for duck
 	//set its initial position
 	if (!this->theDuck.isMoving()) {
@@ -335,7 +336,8 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glScaled(.5, .5, .5);
-		this->theDuck.render();
+		if (w.getCameraMode() != FIRST_PERSON) // dont render the duck in first person!
+			this->theDuck.render();
 		glPopMatrix();
 	}
 	else { // the duck is fired
@@ -352,7 +354,8 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		}
 		//cout << this->theDuck.getPosition().x << ", " << this->theDuck.getPosition().y << ", " << this->theDuck.getPosition().z << endl;
 		glScaled(.5, .5, .5);
-		theDuck.render();
+		if (w.getCameraMode() != FIRST_PERSON) // dont render the duck in first person!
+			theDuck.render();
 		glPopMatrix();
 	}
 	
@@ -433,24 +436,29 @@ void Scene::decreaseGunPower(double lower) {
 // yet hittable places
 void Scene::placeBalloons() {
 
-	double xPosition, yPosition, zPosition;
-
+	int xPosition, yPosition, zPosition;
+	Balloon b;
 	/* for each balloon wanted, generate a random position
 		and assign that position to the balloon after it is constructed.
 		Then add it to the balloon vector. */
+
 	for (int i = 0; i < MAX_BALLOONS; ++i) {
-		Balloon b;
 
 		//x (horizontal) position should be within -50 to 50
-		xPosition = genRandomDouble(-5, 5);
-
+		xPosition = genRandomInt(-10, 10);
+		/*if (balloons.size() > 0 && xPosition == balloons.at(i-1).getPosition().x)
+			xPosition = genRandomInt(0, 00);*/
 		//y (vertical) position is from 10 to 75
-		yPosition = genRandomDouble(5, 25);
-
+		yPosition = genRandomInt(0, 30);
+		/*if (balloons.size() > 0 && yPosition == balloons.at(i-1).getPosition().y)
+			yPosition = genRandomInt(0, 30);*/
 		//z (depth) position shoul be between -80 and 80
-		zPosition = genRandomDouble(-90, -80);
+		zPosition = genRandomInt(-80, -60);
+		/*if (balloons.size() > 0 && zPosition == balloons.at(i-1).getPosition().y)
+			zPosition = genRandomInt(-80, -80);*/
 
 		b.setPosition(vec3(xPosition, yPosition, zPosition));
+
 		this->balloons.push_back(b);
 	}
 	balloonsPlaced = true;
@@ -465,5 +473,10 @@ default_random_engine randomEngine;
 
 double genRandomDouble(double low, double high) {
 	uniform_real_distribution<double> unif(low, high);
+	return unif(randomEngine);
+}
+
+int genRandomInt(int low, int high) {
+	uniform_int_distribution<int> unif(low, high);
 	return unif(randomEngine);
 }
