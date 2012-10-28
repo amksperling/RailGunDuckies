@@ -20,7 +20,7 @@ void Scene::runBeautyMode(int beautyMode) {
 	//set up camera at (0, 2, 0)
 	gluLookAt(0, 2, 0, 0, 0, 10, 0, 1, 0);
 	glPushMatrix();
-	glTranslated(0, 2, 4);
+	glTranslated(0, -2, 4);
 	//glScaled(2, 2, 2);
 	glScalef(20.0f, 20.0f, 20.0f);
 	this->theWorld.renderSky(); // draw the background world		
