@@ -161,12 +161,16 @@ void Duckie::setInitVelocity(double velocity, double inclinationAngle) {
 }
 
 void Duckie::updatePosition(double timeStep, double gravity) {
+
+	
 	position.x += velocity.x * timeStep;
 	position.y += velocity.y * timeStep;
-	position.z -= velocity.z * timeStep;
+	position.z += velocity.z * timeStep;
 
 	// add gravity to the y component of velocity
-	velocity.y += gravity;
+	velocity.y += gravity * timeStep;
+
+
 	if( this->position.y <= .5) {
 		this->position.y = .5; // don't go under the world!
 		//this->launched = false;

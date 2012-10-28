@@ -4,14 +4,14 @@
 
 const double MAX_GUN_POWER = 50;
 const double MIN_GUN_POWER = 0;
-const int MAX_BALLOONS = 3;
+const int MAX_BALLOONS = 10;
 
 int Scene::score = 0;
 int Scene::ducksRemaining = 3;
 int Scene::balloonsRemaining = MAX_BALLOONS;
 bool Scene::balloonsPlaced = false;
 
-static double gravity = -.1;
+static double gravity = -32;
 static double piOver180 = 0.01745329251;
 static vec3 initialDuckPosition = vec3(0, 1.5, -95);
 
@@ -369,7 +369,7 @@ void Scene::fire() {
 		vec3 velocity = vec3(
 			-sin(theGun.getRotationAngle() * piOver180) * this->theGun.getGunPower(),
 			sin(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower(),
-			-cos(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower()
+			cos(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower()
 			);
 
 	//	cout << "Inclincation: " << theGun.getInclinationAngle() << "Rotation: " << theGun.getRotationAngle() << endl;

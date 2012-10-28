@@ -12,6 +12,7 @@
 #include <sstream> //Checka
 #include <vector>
 #include <assert.h> //Checkb
+#include <ctime>
 
 using namespace std;
 
@@ -56,6 +57,14 @@ void camera (void) {
 	glRotatef(zrot, 0, 0, 1);
     glTranslated(-xpos,-ypos,-zpos); //translate the screen
 									// to the position of our camera
+}
+
+
+double getTimeSinceLastFrame() {
+    clock_t currentTime = clock();
+    double ret = (double)(currentTime - oldTimeSinceStart) / (double)CLOCKS_PER_SEC;
+    oldTimeSinceStart = currentTime;
+    return ret;
 }
 
 //function for displaying informational text in an
