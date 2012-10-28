@@ -425,7 +425,7 @@ int main(int argc, char *argv[]) {
 	glutDisplayFunc(SwitchingDisplayFunc);
 	glutReshapeFunc(ReshapeFunc); // what function called if resized window?
 	glutKeyboardFunc(KeyboardFunc); // what function called if keypressed?
-	glutTimerFunc(GLuint(period), TimerFunc, 0);
+	//glutTimerFunc(GLuint(period), TimerFunc, 0);
 	glutPassiveMotionFunc(MouseMovement);
 	glutSpecialFunc(SpecialFunc);
 	glutMainLoop();
