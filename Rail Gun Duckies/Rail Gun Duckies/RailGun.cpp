@@ -3,6 +3,7 @@
 
 RailGun::RailGun() : Object() {
 	this->railgun_display_list = (GLuint) -1;
+	this->gunPower = 50;
 }
 
 RailGun::~RailGun() {

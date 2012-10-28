@@ -17,6 +17,10 @@ public:
 
 	double getRotationAngle() const;
 	double getInclinationAngle() const;
+	inline double getGunPower() const { return this->gunPower; }
+
+	void increaseGunPower(double higher) { this->gunPower += higher; }
+	void decreaseGunPower(double lower) { this->gunPower -= lower; }
 
 	void setRotationAngle(double a);
 	void setInclinationAngle(double a);
@@ -26,4 +30,5 @@ public:
 private:
 	double rotationAngle;
 	double inclinationAngle;
+	double gunPower;
 };

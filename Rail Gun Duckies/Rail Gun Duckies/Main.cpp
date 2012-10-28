@@ -32,6 +32,10 @@ double period = 1000/60;
 
 double pScale = .01;
 
+static double timeSinceStart = 0.0;
+static double timeStep = 0.0;
+static double oldTimeSinceStart = 0.0;
+
 //the test subjets:
 Window * w;
 Duckie  d;
@@ -121,8 +125,11 @@ void initGL() {
 void SwitchingDisplayFunc() {
 	CheckGLErrors("Beginning of Display Function:");
 
-	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
+	timeSinceStart = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
 	
+	timeStep = timeSinceStart - oldTimeSinceStart;
+	oldTimeSinceStart = timeSinceStart;
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glClearColor(1, 0, 0, 1);
@@ -178,7 +185,7 @@ void SwitchingDisplayFunc() {
 
 	case GAME:
 		CheckGLErrors("begin game:");
-		s.runGameMode(false, elapsed_time, *w);
+		s.runGameMode(false, timeStep, *w);
 		CheckGLErrors("end game:");
 	/*	glPushMatrix();
 		s.renderWorld();
@@ -331,6 +338,13 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 		if (w->getSceneMode() == GAME || w->getSceneMode() == GAME_FOREVER)
 			s.fire();
 	break;
+
+	case ']':
+		s.increaseGunPower(1);
+		break;
+	case '[':
+		s.decreaseGunPower(1);
+		break;
 
 	case 'x':
 	case 27: 

@@ -22,10 +22,12 @@ public:
 
 	//use these functions to switch between app modes
 	void runBeautyMode(int beautyMode);
-	void runGameMode(bool runForever, double & elapsed_time, Window & w);
+	void runGameMode(bool runForever, double timeStep, Window & w);
 
 	void fire();
-	void moveRailGun(int x, int y, Window & w);
+	void moveRailGun(int x, int y, const Window & w);
+	void increaseGunPower(double higher);
+	void decreaseGunPower(double lower);
 
 //	void duckBeauty();
 //	void railGunBeauty();
@@ -37,6 +39,8 @@ public:
 	inline int getScore() { return this->score; }
 	inline int getDucksRemainging() { return this->ducksRemaining; }
 	inline int getBalloonsRemaining() { return this->balloonsRemaining; }
+
+	//inline RailGun getGun() { return this->theGun; }
 
 private:
 
@@ -59,6 +63,7 @@ private:
 //	void placeGun();
 //	void placeDuck();
 	void placeBalloons();
+	void resetDuck();
 
 	int score;
 	int ducksRemaining;

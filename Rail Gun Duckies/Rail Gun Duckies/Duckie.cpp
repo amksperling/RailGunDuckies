@@ -9,7 +9,7 @@ static GLUquadric *q = gluNewQuadric();
 //Default constructor
 Duckie::Duckie() : 
 	displayListHandle(GLuint(-1)), 
-	position(0, 0, 0),
+	position(0, 1.5, -95),
 	velocity(0, 0, 0),
 	acceleration(0, 0, 0),
 	color(1, 1, 0)
@@ -45,7 +45,7 @@ void Duckie::render() {
     glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess);
 
 
-	
+	glColor3d(this->color.r, this->color.g, this->color.b);
 	if (this->displayListHandle == GLuint(-1)) {
 		this->displayListHandle = glGenLists(1);
 		glNewList(this->displayListHandle, GL_COMPILE);
@@ -56,7 +56,7 @@ void Duckie::render() {
 
 			glPushMatrix();
 			glScaled(1, .7, 1.2);
-			glColor3d(this->color.r, this->color.g, this->color.b);
+			
 			gluSphere(q,1,100,100);
 			glPopMatrix();
 
@@ -123,7 +123,7 @@ void Duckie::render() {
 		} //end if q
 		
 		else {
-			fprintf(stderr, "Couldn't initialize quadric");
+			fprintf(stderr, "Couldn't initialize quadric"); //impossible else
 			exit(1);
 		}
 		
@@ -135,12 +135,12 @@ void Duckie::render() {
 
 }
 
-
-void Duckie::setColor(vec3 color) {
-	this->color.r = color.r;
-	this->color.g = color.g;
-	this->color.b = color.b;
-}
+//
+//void Duckie::setColor(vec3 color) {
+//	this->color.r = color.r;
+//	this->color.g = color.g;
+//	this->color.b = color.b;
+//}
 
 //update the current position of the duck
 //based on its current velocity and acceleration
@@ -150,8 +150,8 @@ void Duckie::updatePosition(vec3 currentPosition, float timeStep) {
 	if( this->position.y <= 0) {
 		this->position.y = 0; // don't go under the world!
 	}
-	if (this->position.z == 200)
-		this->position.z = 199;
+	if (this->position.z == -200)
+		this->position.z = -199;
 }
 
 void Duckie::setInitVelocity(double velocity, double inclinationAngle) {
@@ -160,11 +160,16 @@ void Duckie::setInitVelocity(double velocity, double inclinationAngle) {
 	this->launched = true;
 }
 
-void Duckie::updatePosition(double elapsed_time, float gravity) {
-	position.x += velocity.x * elapsed_time;
-	position.y += velocity.y * elapsed_time;
-	position.z += velocity.z * elapsed_time;
+void Duckie::updatePosition(double timeStep, float gravity) {
+	position.x += velocity.x * timeStep;
+	position.y += velocity.y * timeStep;
+	position.z -= velocity.z * timeStep;
 
 	// apply gravity
 	velocity.y += gravity;
+	if( this->position.y <= .5) {
+		this->position.y = .5; // don't go under the world!
+		//this->launched = false;
+	}
+	
 }

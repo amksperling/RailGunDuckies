@@ -1,8 +1,13 @@
 #include "Scene.h"
+#include <random>
+#include <ctime>
 
-static float launchSpeed = 30;
-static double old_time;
-static double new_time;
+const double MAX_GUN_POWER = 50;
+const double MIN_GUN_POWER = 0;
+
+static double gravity = -.1;
+static double piOver180 = 0.01745329251;
+static vec3 initialDuckPosition = vec3(0, 1.5, -95);
 
 Scene::Scene() : displayListHandle(-1) { }
 
@@ -29,6 +34,7 @@ void Scene::runBeautyMode(int beautyMode) {
 		glTranslated(0, 1.25, 7);
 		glScaled(2, 2, 2);
 		glRotated(elapsed_time * 30, 0, 1, 0);
+		this->theDuck.setColor(vec3(1, 1, 0));
 		this->theDuck.render();
 		glPopMatrix();
 		break;
@@ -65,27 +71,29 @@ void Scene::runBeautyMode(int beautyMode) {
 }
 
 
-void Scene::runGameMode(bool runForever, double & elapsed_time, Window & w) {
-	double startTime = elapsed_time;
-
-
+void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 
 	//glPushMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	
 	glLoadIdentity();
 
+
 	//set up camera at (0, 2, 0)
 
 	switch (w.getCameraMode()) {
+
+	//basic fixed camera position
 	case MAIN:
 		gluLookAt(0, 5, -100, 0, 0, 50, 0, 1, 0);
 		break;
 
+	// camera stays in one position but looks at the position of the duck
 	case FLIGHT_FOLLOWER:
 		gluLookAt(0, 5, -100, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 1, 0);
 		break;
 
+	// camera is always at the position of the duck and looks foward "through the duck's eyes"
 	case FIRST_PERSON:
 		gluLookAt(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z + 10, 0, 1, 0);
 		break;
@@ -99,28 +107,39 @@ void Scene::runGameMode(bool runForever, double & elapsed_time, Window & w) {
 	//draw the rail gun and the duck on top
 	//push for gun
 	glPushMatrix();
-	glTranslated(0, .5, -94);
+	glTranslated(0, .5, -93);
 	glRotated(180, 0, 1, 0);
 	glRotated(theGun.getInclinationAngle(), 1, 0, 0);
 	glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 	this->theGun.drawRailGun();
+	
 	glPopMatrix();
 
 	//push for duck
 	//set its initial position
 	if (!this->theDuck.isMoving()) {
 		glPushMatrix();
-		glTranslated(0, 2, -96);
+		glTranslated(initialDuckPosition.x, initialDuckPosition.y, initialDuckPosition.z);
 		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glScaled(.5, .5, .5);
 		this->theDuck.render();
 		glPopMatrix();
 	}
-	else {
+	else { // the duck is fired
 		glPushMatrix();
-		theDuck.updatePosition(theDuck.getPosition(), elapsed_time);
+		theDuck.updatePosition(timeStep, gravity);
 		glTranslated(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z);
+		//GLfloat angleX = -glm::asin(theDuck.getVelocity().x / launchSpeed) / piOver180;
+		//GLfloat angleY = glm::asin(theDuck.getVelocity().y / launchSpeed) / piOver180;
+		//GLfloat angleZ = -glm::acos(duckyVelocity.z / launchSpeed) / radianConversion;
+
+		//glRotatef(angleX, 0, 1, 0);
+		//glRotatef(angleY, 0, 0, 1);
+		if (this->theDuck.hitTheGround()) {
+			this->theDuck.setVelocity(vec3(0));
+		}
+		cout << this->theDuck.getPosition().x << ", " << this->theDuck.getPosition().y << ", " << this->theDuck.getPosition().z << endl;
 		glScaled(.5, .5, .5);
 		theDuck.render();
 		glPopMatrix();
@@ -132,20 +151,23 @@ void Scene::runGameMode(bool runForever, double & elapsed_time, Window & w) {
 
 void Scene::fire() {
 
-	vec3 velocity = vec3(
-		-sin(theGun.getRotationAngle()) * launchSpeed,
-		sin(theGun.getInclinationAngle()) * launchSpeed,
-		cos(theGun.getInclinationAngle()) * launchSpeed
-		);
+	if(!this->theDuck.isMoving()) {
+		vec3 velocity = vec3(
+			-sin(theGun.getRotationAngle() * piOver180) * this->theGun.getGunPower(),
+			sin(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower(),
+			-cos(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower()
+			);
 
-	//this->theDuck.setVelocity(velocity);
-	if (!theDuck.isMoving())
-		this->theDuck.setInitVelocity(.01, theGun.getInclinationAngle());
-	//else
-		//reset duck
+		cout << "Inclincation: " << theGun.getInclinationAngle() << "Rotation: " << theGun.getRotationAngle() << endl;
+		this->theDuck.setVelocity(velocity);
+		this->theDuck.setLaunched(true);
+	}
+	else {
+		resetDuck();
+	}
 }
 
-void Scene::moveRailGun(int x, int y, Window & w) {
+void Scene::moveRailGun(int x, int y, const Window & w) {
 
 	double futureXAngle;
 	double futureYAngle;
@@ -157,4 +179,44 @@ void Scene::moveRailGun(int x, int y, Window & w) {
 	
 	this->theGun.setRotationAngle(futureXAngle);
 	this->theGun.setInclinationAngle(futureYAngle);
+}
+
+double randomnumgen(double low, double high);
+
+void Scene::resetDuck() {
+	this->theDuck.setPosition(initialDuckPosition);
+	this->theDuck.setVelocity(vec3(0, 0, 0));
+	this->theDuck.setLaunched(false);
+
+	double lower_bound = 0;
+	double upper_bound = 1;
+//	theDuck.setDLH();
+	std::uniform_real_distribution<double> unif(lower_bound,upper_bound);
+	std::default_random_engine re;
+	srand(time(0));
+	double newRed = rand() * 1 / double(RAND_MAX) + 0 ;//unif(re);
+	double newGreen = rand() * 1 / double(RAND_MAX) + 0;//unif(re);
+	double newBlue = rand() * 1 / double(RAND_MAX) + 0;//unif(re);
+
+//	this->theDuck.setDLH();
+	vec3 newColor = vec3(newRed, newGreen, newBlue);
+	this->theDuck.setColor(newColor);
+	
+}
+
+double randomnumgen(double low, double high)
+{
+  double range=(high-low);
+  double num = fmod(rand(),range)+low;
+  return(num);
+}
+
+void Scene::increaseGunPower(double higher) {
+	if (this->theGun.getGunPower() < MAX_GUN_POWER)
+		this->theGun.increaseGunPower(higher);
+}
+
+void Scene::decreaseGunPower(double lower) {
+	if (this->theGun.getGunPower() > MIN_GUN_POWER)
+		this->theGun.decreaseGunPower(lower);
 }
