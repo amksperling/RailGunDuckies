@@ -2,7 +2,7 @@
 #include <random>
 #include <ctime>
 
-const double MAX_GUN_POWER = 50;
+const double MAX_GUN_POWER = 100;
 const double MIN_GUN_POWER = 0;
 const int MAX_BALLOONS = 10;
 
@@ -11,7 +11,7 @@ int Scene::ducksRemaining = 3;
 int Scene::balloonsRemaining = MAX_BALLOONS;
 bool Scene::balloonsPlaced = false;
 
-static double gravity = -32;
+static double gravity = -32.0;
 static double piOver180 = 0.01745329251;
 static vec3 initialDuckPosition = vec3(0, 1.5, -95);
 

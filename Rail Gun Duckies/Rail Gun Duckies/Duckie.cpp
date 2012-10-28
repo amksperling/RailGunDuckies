@@ -168,6 +168,7 @@ void Duckie::updatePosition(double timeStep, double gravity) {
 	position.z += velocity.z * timeStep;
 
 	// add gravity to the y component of velocity
+	// v = v + gt
 	velocity.y += gravity * timeStep;
 
 
