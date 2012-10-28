@@ -4,11 +4,12 @@
 
 const double MAX_GUN_POWER = 50;
 const double MIN_GUN_POWER = 0;
-const int MAX_BALLOONS = 3;
+const int MAX_BALLOONS = 5;
 
-int score = 0;
-int ducksRemaining = 3;
-int balloonsRemaining = MAX_BALLOONS;
+int Scene::score = 0;
+int Scene::ducksRemaining = 3;
+int Scene::balloonsRemaining = MAX_BALLOONS;
+bool Scene::balloonsPlaced = false;
 
 static double gravity = -.1;
 static double piOver180 = 0.01745329251;
@@ -300,6 +301,20 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	this->theWorld.render(); // draw the background world
 	glPopMatrix();
 
+	//draw the balloons, from the vector of balloons
+	glPushMatrix();
+	if (!balloonsPlaced)
+		this->placeBalloons();
+	//glTranslated(balloons[0].getPosition().x,balloons[0].getPosition().y, balloons[0].getPosition().z);
+//	balloons[0].render();
+	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
+		glPushMatrix();
+		glTranslated(iter->getPosition().x,iter->getPosition().y, iter->getPosition().z);
+		iter->render();
+		glPopMatrix();
+	}
+
+	glPopMatrix();
 	//draw the rail gun and the duck on top
 	//push for gun
 	glPushMatrix();
@@ -389,9 +404,10 @@ void Scene::resetDuck() {
 	//generate random values between 0 and 1 for a new color
 	// uses C++11 unifrom distribution engine and not c-style rand()
 	// adapted from C++ Primer
-	double newRed = genRandomDouble(0,1);//unif(randomEngine); 
-	double newGreen = genRandomDouble(0,1);//unif(randomEngine); 
-	double newBlue = genRandomDouble(0,1);//unif(randomEngine); 
+	// see genRandomDouble()
+	double newRed = genRandomDouble(0,1);
+	double newGreen = genRandomDouble(0,1);
+	double newBlue = genRandomDouble(0,1);
 
 	//set the new color
 	vec3 newColor = vec3(newRed, newGreen, newBlue);
@@ -415,10 +431,28 @@ void Scene::decreaseGunPower(double lower) {
 //function for placing balloons at semi random
 // yet hittable places
 void Scene::placeBalloons() {
+
+	double xPosition, yPosition, zPosition;
+
+	/* for each balloon wanted, generate a random position
+		and assign that position to the balloon after it is constructed.
+		Then add it to the balloon vector. */
 	for (int i = 0; i < MAX_BALLOONS; ++i) {
 		Balloon b;
+
+		//x (horizontal) position should be within -50 to 50
+		xPosition = genRandomDouble(-5, 5);
+
+		//y (vertical) position is from 10 to 75
+		yPosition = genRandomDouble(10, 20);
+
+		//z (depth) position shoul be between -80 and 80
+		zPosition = genRandomDouble(-90, -80);
+
+		b.setPosition(vec3(xPosition, yPosition, zPosition));
 		this->balloons.push_back(b);
 	}
+	balloonsPlaced = true;
 }
 
 
@@ -430,6 +464,5 @@ default_random_engine randomEngine;
 
 double genRandomDouble(double low, double high) {
 	uniform_real_distribution<double> unif(low, high);
-	
 	return unif(randomEngine);
 }

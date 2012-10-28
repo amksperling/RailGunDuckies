@@ -23,6 +23,7 @@ public:
 	void Triangle();
 
 	inline void setPosition(vec3 position) { this->position = position; }
+	inline vec3 getPosition() { return this->position; }
 	
 private:
 	// Used with vertex arrays.

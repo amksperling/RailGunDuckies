@@ -119,7 +119,6 @@ void initGL() {
 	GLfloat light_position[] = { 2 , 2, 1, 0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
-
 }
 
 void SwitchingDisplayFunc() {
@@ -184,6 +183,7 @@ void SwitchingDisplayFunc() {
 
 	case GAME:
 		CheckGLErrors("begin game:");
+		
 		s.runGameMode(false, timeStep, *w);
 		CheckGLErrors("end game:");
 	/*	glPushMatrix();
