@@ -105,7 +105,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 
 	// camera is always at the position of the duck and looks foward "through the duck's eyes"
 	case FIRST_PERSON:
-		gluLookAt(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z + 10, 0, 1, 0);
+		gluLookAt(theDuck.getPosition().x, theDuck.getPosition().y + .5, theDuck.getPosition().z, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z + 10, 0, 1, 0);
 		break;
 	}
 
