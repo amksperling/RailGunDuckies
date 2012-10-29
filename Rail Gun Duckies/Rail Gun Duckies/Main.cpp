@@ -189,6 +189,7 @@ void initGL() {
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT1);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_DEPTH_TEST);
@@ -199,6 +200,9 @@ void initGL() {
 	//////set up light position
 	GLfloat light_position[] = { 2 , 2, 1, 0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+	//GLfloat global_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	//glLightfv(GL_LIGHT0, GL_AMBIENT, global_ambient);
 
 }
 

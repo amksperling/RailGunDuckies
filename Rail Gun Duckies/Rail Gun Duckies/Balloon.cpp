@@ -15,11 +15,11 @@ Balloon::~Balloon() {
 
 }
 
-void Balloon::render() {
+void Balloon::render(ModelManager & m) {
 	//Not set to balloon material yet
 	GLfloat material_ambient[] = {0.0f, 0.0f, 0.0f, 1.0f};
-	GLfloat material_diffuse[] = { 0.5f, 0.5f, 0.0f, 1.0f};
-    GLfloat material_specular[] = { 0.6f, 0.6f, 0.5f, 1.0f };
+	GLfloat material_diffuse[] = { 0.5f, 0.0f, 0.0f, 1.0f};
+    GLfloat material_specular[] = { 0.7f, 0.6f, 0.6f, 1.0f };
     GLfloat material_shininess[] = { .25f * 128.0f };
 
 	glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
@@ -255,53 +255,3 @@ void Balloon::drawDiamond() {
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
-
-
-void Balloon::Triangle()
-{
-	/*glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(50, ((double) this->width) / ((double) this->height), 1, 10);
-	glViewport(0, 0, this->width, this->height);
-
-	glClearColor(0, 0, 0.5, 0);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt(0, 0, -5.5, 0, 0, 0, 0, 1, 0);*/
-
-	if (this->va_v.size() == 0)
-	{
-		this->va_v.push_back(0);
-		this->va_v.push_back(1);
-		this->va_v.push_back(-1);
-		this->va_v.push_back(-1);
-		this->va_v.push_back(1);
-		this->va_v.push_back(-1);
-
-		this->va_c.push_back(1);
-		this->va_c.push_back(0);
-		this->va_c.push_back(0);
-		this->va_c.push_back(0);
-		this->va_c.push_back(1);
-		this->va_c.push_back(0);
-		this->va_c.push_back(0);
-		this->va_c.push_back(1);
-
-		this->va_i.push_back(0);
-		this->va_i.push_back(1);
-		this->va_i.push_back(2);
-	}
-
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_VERTEX_ARRAY);
-
-	glVertexPointer(2 , GL_DOUBLE , 0 , &this->va_v[0]);
-	glColorPointer(3, GL_DOUBLE, 0, &this->va_c[0]);
-
-	glDrawElements(GL_TRIANGLES , 3 , GL_UNSIGNED_INT , &this->va_i[0]);
-
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
-} 

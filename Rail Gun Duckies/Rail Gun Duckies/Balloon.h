@@ -9,6 +9,7 @@
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
 #include "Object.h"
+#include "ModelManager.h"
 
 using namespace std;
 using namespace glm;
@@ -19,7 +20,7 @@ public:
 	Balloon();
 	~Balloon();
 
-	void render();
+	void render(ModelManager & m);
 	void drawDiamond();
 	void Triangle();
 
@@ -33,10 +34,6 @@ public:
 	
 private:
 	// Used with vertex arrays.
-	vector<GLdouble> va_v;
-	vector<GLdouble> va_c;
-	vector<GLuint> va_i;
-	vector<GLdouble> va_n;
 
 	vector<vec3> va_vertices;
 	vector<vec4> va_colors;
