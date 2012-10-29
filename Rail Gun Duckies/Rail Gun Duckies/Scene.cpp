@@ -4,7 +4,7 @@
 
 const double MAX_GUN_POWER = 100;
 const double MIN_GUN_POWER = 0;
-const int MAX_BALLOONS = 1;
+const int MAX_BALLOONS = 5;
 
 int Scene::score = 0;
 int Scene::ducksRemaining = 3;
@@ -81,7 +81,7 @@ void Scene::runBeautyMode(int beautyMode) {
 
 
 void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
-	randomEngine.seed(time(nullptr));
+	randomEngine.seed(time(nullptr)); // set random seed based on current time
 	//glPushMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	
@@ -170,8 +170,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		}
 		//cout << this->theDuck.getPosition().x << ", " << this->theDuck.getPosition().y << ", " << this->theDuck.getPosition().z << endl;
 		glScaled(.5, .5, .5);
-		if (w.getCameraMode() != FIRST_PERSON) // dont render the duck in first person!
-			if (!theDuck.hitABalloon())
+		if (w.getCameraMode() != FIRST_PERSON && !theDuck.hitABalloon()) // dont render the duck in first person!
 			theDuck.render();
 		glPopMatrix();
 	}
@@ -214,7 +213,6 @@ void Scene::moveRailGun(int x, int y, const Window & w) {
 
 
 
-//uniform_real_distribution<double> unif;
 
 
 void Scene::resetDuck() {
@@ -266,7 +264,7 @@ void Scene::placeBalloons() {
 		xPosition = genRandomInt(-10, 10);
 
 		//y (vertical) position is from 10 to 75
-		yPosition = genRandomInt(3, 30);
+		yPosition = genRandomInt(3, 20);
 
 
 		//z (depth) position shoul be between -80 and 80
@@ -312,6 +310,8 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 			if(distance <= duckRadius+balloonRadius){
 				iter->setHit(true);
 				theDuck.setHitBalloon(true);
+				balloonsRemaining--;
+				resetDuck();
 				//w.setPause(true);
 			}
 	}
