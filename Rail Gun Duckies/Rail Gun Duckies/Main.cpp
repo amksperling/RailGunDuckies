@@ -13,7 +13,6 @@
 #include <vector>
 #include <assert.h> //Checkb
 #include <ctime>
-
 #include <iomanip>
 
 using namespace std;

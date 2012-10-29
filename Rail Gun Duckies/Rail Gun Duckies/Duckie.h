@@ -36,9 +36,6 @@ public:
 	inline void setAcceleration(vec3 acceleration) { this->acceleration = acceleration; }
 	inline void setLaunched(bool launched) { this->launched = launched; }
 
-	//set initial velocity based on railgun angles
-	void setInitVelocity(double velocity, double inclinationAngle);
-	
 	
 	void updatePosition(double elapsed_time, double gravity);
 	

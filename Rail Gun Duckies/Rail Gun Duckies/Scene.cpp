@@ -81,7 +81,7 @@ void Scene::runBeautyMode(int beautyMode) {
 
 
 void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
-	randomEngine.seed(time(nullptr)); // set random seed based on current time
+	randomEngine.seed((unsigned long)time(nullptr)); // set random seed based on current time
 	//glPushMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	
