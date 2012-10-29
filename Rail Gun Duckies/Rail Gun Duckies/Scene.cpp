@@ -15,6 +15,8 @@ static double gravity = -32.0;
 static double piOver180 = 0.01745329251;
 static vec3 initialDuckPosition = vec3(0, 1.5, -95);
 
+static default_random_engine randomEngine;
+
 
 Scene::Scene() : displayListHandle(-1) { }
 
@@ -79,7 +81,7 @@ void Scene::runBeautyMode(int beautyMode) {
 
 
 void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
-
+	randomEngine.seed(time(nullptr));
 	//glPushMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	
@@ -281,11 +283,13 @@ void Scene::placeBalloons() {
 //generates a random double between 'low' and 'high'
 // uses C++11 standard random distribution and random engine
 // from C++ primer 5th ed.
-default_random_engine randomEngine; 
+
+
 
 
 double genRandomDouble(double low, double high) {
 	uniform_real_distribution<double> unif(low, high);
+	
 	return unif(randomEngine);
 }
 
