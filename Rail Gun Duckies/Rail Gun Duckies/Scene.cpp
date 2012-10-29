@@ -4,7 +4,7 @@
 
 const double MAX_GUN_POWER = 100;
 const double MIN_GUN_POWER = 0;
-const int MAX_BALLOONS = 5;
+const int MAX_BALLOONS = 50;
 
 int Scene::score = 0;
 int Scene::ducksRemaining = 3;
@@ -311,6 +311,7 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 			
 			if(distance <= duckRadius+balloonRadius) { //something was hit!
 				iter->setHit(true);
+				iter->setPosition(vec3(100, -100, 0)); //set to an unhittable position
 				theDuck.setHitBalloon(true);
 				balloonsRemaining--;
 				resetDuck();
