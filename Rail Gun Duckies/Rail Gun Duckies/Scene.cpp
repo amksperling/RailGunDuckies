@@ -193,6 +193,7 @@ void Scene::fire() {
 		this->theDuck.setLaunched(true);
 	}
 	else {
+		ducksRemaining--;
 		resetDuck();
 	}
 }
@@ -313,6 +314,10 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 				theDuck.setHitBalloon(true);
 				balloonsRemaining--;
 				resetDuck();
+				if (balloonsRemaining == 0) {
+					gameWon = true;
+					gameOver = true;
+				}
 				//w.setPause(true);
 			}
 			
@@ -322,6 +327,8 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 		if (theDuck.hitTheGround()) {
 			ducksRemaining--;
 			resetDuck();
+			if (ducksRemaining == 0) 
+				gameOver = true;
 		}
 	
 }
