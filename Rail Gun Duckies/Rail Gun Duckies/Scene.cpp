@@ -4,7 +4,7 @@
 
 const double MAX_GUN_POWER = 100;
 const double MIN_GUN_POWER = 0;
-const int MAX_BALLOONS = 10;
+const int MAX_BALLOONS = 1;
 
 int Scene::score = 0;
 int Scene::ducksRemaining = 3;
@@ -80,7 +80,7 @@ void Scene::runBeautyMode(int beautyMode) {
 }
 
 
-void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
+void Scene::runGameMode(bool runForever, double timeStep, const Window & w) {
 	randomEngine.seed(time(nullptr));
 	//glPushMatrix();
 	glMatrixMode(GL_MODELVIEW);
@@ -262,19 +262,19 @@ void Scene::placeBalloons() {
 
 		//x (horizontal) position should be within -50 to 50
 		xPosition = genRandomInt(-10, 10);
-		/*if (balloons.size() > 0 && xPosition == balloons.at(i-1).getPosition().x)
-			xPosition = genRandomInt(0, 00);*/
+
 		//y (vertical) position is from 10 to 75
-		yPosition = genRandomInt(0, 30);
-		/*if (balloons.size() > 0 && yPosition == balloons.at(i-1).getPosition().y)
-			yPosition = genRandomInt(0, 30);*/
+		yPosition = genRandomInt(3, 30);
+
+
 		//z (depth) position shoul be between -80 and 80
 		zPosition = genRandomInt(-80, -60);
-		/*if (balloons.size() > 0 && zPosition == balloons.at(i-1).getPosition().y)
-			zPosition = genRandomInt(-80, -80);*/
 
+		// set the position of the balloon and its point value based on the position
 		b.setPosition(vec3(xPosition, yPosition, zPosition));
+		b.setPointValue(yPosition + abs(zPosition));
 
+		//and place it in the vector of all balloons
 		this->balloons.push_back(b);
 	}
 	balloonsPlaced = true;

@@ -26,6 +26,9 @@ public:
 	inline void setPosition(vec3 position) { this->position = position; }
 	inline vec3 getPosition() { return this->position; }
 	inline bool isHit() { return this->hit; }
+
+	inline void setPointValue(int value) { this->points = value; }
+	inline int getPointValue() { return this->points; }
 	
 private:
 	// Used with vertex arrays.
@@ -42,4 +45,5 @@ private:
 	vec3 position;
 
 	bool hit;
+	int points;
 };

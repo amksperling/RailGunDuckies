@@ -41,10 +41,10 @@ static double oldTimeSinceStart = 0.0;
 
 //the test subjets:
 Window * w;
-Duckie  d;
-Duckie p;
-Balloon b;
-RailGun r;
+//Duckie  d;
+//Duckie p;
+//Balloon b;
+//RailGun r;
 
 Scene s;
 
@@ -105,15 +105,19 @@ void displayGameText() {
 	glLoadIdentity();
 
 
-	//int to string conversion from http://www.cplusplus.com/articles/D9j2Nwbp/
+	//int/double to string conversion from http://www.cplusplus.com/articles/D9j2Nwbp/
 	//game status text
 	string score = "Score: " + static_cast<ostringstream*>( &(ostringstream() << s.getScore()) )->str();
 	string ducksRemaining = "Ducks Left: " + static_cast<ostringstream*>( &(ostringstream() << s.getDucksRemaining()) )->str();
 	string balloonsRemaining = "Balloons Left: " + static_cast<ostringstream*>( &(ostringstream() << s.getBalloonsRemaining()) )->str();
 
 	string gunPower = "Gun Power: " + static_cast<ostringstream*>( &(ostringstream() << s.getGunPower()) )->str();
-	string gunRotation = "Gun Rotation: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(4) << s.getGunRotation()) )->str();
-	string gunInclination = "Gun Inclination: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(4) << s.getGunInclination()) )->str();
+
+	//notice use of setprecision() to limit decimal values
+	string gunRotation = "Gun Rotation: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(3) << s.getGunRotation()) )->str();
+	string gunInclination = "Gun Inclination: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(2) << s.getGunInclination()) )->str();
+
+
 	glPushMatrix();
 	glTranslated(0, 5, -1);
 	glScaled(.1, .1, 1);
@@ -137,14 +141,14 @@ void displayGameText() {
 	glPopMatrix();
 
 	glScaled(10, 10, 1);
-	glTranslated(w->getWidth() - 200, -20, 0);
+	glTranslated(w->getWidth() - 140, -20, 0);
 	glScaled(.1, .1, 1);
 
 	glPushMatrix();
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)gunPower.c_str());
 	glPopMatrix();
 
-	glTranslated(-700, 120, 0);
+	glTranslated(-600, 120, 0);
 
 	glPushMatrix();
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)gunRotation.c_str());

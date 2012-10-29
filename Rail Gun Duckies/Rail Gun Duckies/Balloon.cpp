@@ -6,7 +6,9 @@ const float PI = 3.14159265f;
 
 
 Balloon::Balloon() 
-: hit(false)
+: hit(false),
+  points(0),
+  position(vec3(0))
 { }
 
 Balloon::~Balloon() {
