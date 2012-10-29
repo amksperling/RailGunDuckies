@@ -80,7 +80,7 @@ void Scene::runBeautyMode(int beautyMode) {
 }
 
 
-void Scene::runGameMode(bool runForever, double timeStep, const Window & w) {
+void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	randomEngine.seed(time(nullptr));
 	//glPushMatrix();
 	glMatrixMode(GL_MODELVIEW);
@@ -171,6 +171,7 @@ void Scene::runGameMode(bool runForever, double timeStep, const Window & w) {
 		//cout << this->theDuck.getPosition().x << ", " << this->theDuck.getPosition().y << ", " << this->theDuck.getPosition().z << endl;
 		glScaled(.5, .5, .5);
 		if (w.getCameraMode() != FIRST_PERSON) // dont render the duck in first person!
+			if (!theDuck.hitABalloon())
 			theDuck.render();
 		glPopMatrix();
 	}
@@ -220,6 +221,7 @@ void Scene::resetDuck() {
 	this->theDuck.setPosition(initialDuckPosition);
 	this->theDuck.setVelocity(vec3(0, 0, 0));
 	this->theDuck.setLaunched(false);
+	this->theDuck.setHitBalloon(false);
 
 	//generate random values between 0 and 1 for a new color
 	// uses C++11 unifrom distribution engine and not c-style rand()
@@ -308,7 +310,9 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 				+ ((theDuck.getPosition().y - 0.0625) - (iter->getPosition().y - 0.25)) * ((theDuck.getPosition().y - 0.0625) - (iter->getPosition().y - 0.25))
 				+ ((theDuck.getPosition().z - 0.065) - iter->getPosition().z) * ((theDuck.getPosition().z - 0.065) - iter->getPosition().z));
 			if(distance <= duckRadius+balloonRadius){
-				w.setPause(true);
+				iter->setHit(true);
+				theDuck.setHitBalloon(true);
+				//w.setPause(true);
 			}
 	}
 	

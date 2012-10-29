@@ -13,6 +13,7 @@ Duckie::Duckie() : Object() {
 	this->velocity = glm::vec3(0, 0, 0);
 	this->acceleration = glm::vec3(0, 0, 0);
 	this->color = glm::vec3(1, 1, 0);
+	this->hitBalloon = false;
 }
 
 //constructor to initialze color

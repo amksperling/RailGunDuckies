@@ -28,6 +28,7 @@ public:
 	inline bool isHit() { return this->hit; }
 
 	inline void setPointValue(int value) { this->points = value; }
+	inline void setHit(bool hit) { this->hit = hit; }
 	inline int getPointValue() { return this->points; }
 	
 private:

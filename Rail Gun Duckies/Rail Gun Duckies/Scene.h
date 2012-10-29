@@ -23,7 +23,7 @@ public:
 
 	//use these functions to switch between app modes
 	void runBeautyMode(int beautyMode);
-	void runGameMode(bool runForever, double timeStep, const Window & w);
+	void runGameMode(bool runForever, double timeStep, Window & w);
 
 	void fire();
 	void moveRailGun(int x, int y, const Window & w);
