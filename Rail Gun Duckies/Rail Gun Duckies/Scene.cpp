@@ -307,13 +307,21 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 			double distance = glm::sqrt((theDuck.getPosition().x - iter->getPosition().x) * (theDuck.getPosition().x - iter->getPosition().x) 
 				+ ((theDuck.getPosition().y - 0.0625) - (iter->getPosition().y - 0.25)) * ((theDuck.getPosition().y - 0.0625) - (iter->getPosition().y - 0.25))
 				+ ((theDuck.getPosition().z - 0.065) - iter->getPosition().z) * ((theDuck.getPosition().z - 0.065) - iter->getPosition().z));
-			if(distance <= duckRadius+balloonRadius){
+			
+			if(distance <= duckRadius+balloonRadius) { //something was hit!
 				iter->setHit(true);
 				theDuck.setHitBalloon(true);
 				balloonsRemaining--;
 				resetDuck();
 				//w.setPause(true);
 			}
-	}
+			
+		}
+
+		//nothing was hit and the duck hit the ground
+		if (theDuck.hitTheGround()) {
+			ducksRemaining--;
+			resetDuck();
+		}
 	
 }
