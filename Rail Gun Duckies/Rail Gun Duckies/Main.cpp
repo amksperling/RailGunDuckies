@@ -14,6 +14,8 @@
 #include <assert.h> //Checkb
 #include <ctime>
 
+#include <iomanip>
+
 using namespace std;
 
 const int init_width = 1280;
@@ -72,24 +74,91 @@ double getTimeSinceLastFrame() {
 void displayText(string text) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0, window_width, 0, window_height, 1, 10); // set ortho projection based on window size
-	glViewport(0, 0, window_width, window_height);
+	glOrtho(0, w->getWidth(), 0, w->getHeight(), 1, 10); // set ortho projection based on window size
+	glViewport(0, 0, w->getWidth(),  w->getHeight());
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 	//starting from the bottom left corner, translate text 10 units
 	// up and step back to see it. Scale to desired size
+	glPushMatrix();
 	glTranslatef(0, 10, -1);
 	glScalef(0.25f, 0.25f, 1.0f);
 	glDisable(GL_LIGHTING); //make sure to disable lighting!
 	glColor3f(1, 1, 1);
 
 	//freeglut uses c style strings, so we need to get that.
-	const char * c = text.c_str();
 	//and actually print the string:
-	glutStrokeString(GLUT_STROKE_MONO_ROMAN, (unsigned char *)c);
+	glutStrokeString(GLUT_STROKE_MONO_ROMAN, (unsigned char *)text.c_str());
 
 	glEnable(GL_LIGHTING); //enable lighting since we're done
+	glPopMatrix();
+}
+
+
+void displayGameText() {
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, w->getWidth(), 0, w->getHeight(), 1, 10);
+	glViewport(0, 0, w->getWidth(), w->getHeight());
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+
+	//int to string conversion from http://www.cplusplus.com/articles/D9j2Nwbp/
+	//game status text
+	string score = "Score: " + static_cast<ostringstream*>( &(ostringstream() << s.getScore()) )->str();
+	string ducksRemaining = "Ducks Left: " + static_cast<ostringstream*>( &(ostringstream() << s.getDucksRemaining()) )->str();
+	string balloonsRemaining = "Balloons Left: " + static_cast<ostringstream*>( &(ostringstream() << s.getBalloonsRemaining()) )->str();
+
+	string gunPower = "Gun Power: " + static_cast<ostringstream*>( &(ostringstream() << s.getGunPower()) )->str();
+	string gunRotation = "Gun Rotation: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(4) << s.getGunRotation()) )->str();
+	string gunInclination = "Gun Inclination: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(4) << s.getGunInclination()) )->str();
+	glPushMatrix();
+	glTranslated(0, 5, -1);
+	glScaled(.1, .1, 1);
+	glDisable(GL_LIGHTING);
+	glColor3d(1, 1, 1);
+
+	glPushMatrix();
+	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)score.c_str());
+	glPopMatrix();
+
+	glTranslated(0, 120, 0);
+
+	glPushMatrix();
+	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)ducksRemaining.c_str());
+	glPopMatrix();
+
+	glTranslated(0, 120, 0);
+
+	glPushMatrix();
+	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)balloonsRemaining.c_str());
+	glPopMatrix();
+
+	glScaled(10, 10, 1);
+	glTranslated(w->getWidth() - 200, -20, 0);
+	glScaled(.1, .1, 1);
+
+	glPushMatrix();
+	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)gunPower.c_str());
+	glPopMatrix();
+
+	glTranslated(-700, 120, 0);
+
+	glPushMatrix();
+	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)gunRotation.c_str());
+	glPopMatrix();
+
+	glTranslated(0, 120, 0);
+
+	glPushMatrix();
+	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)gunInclination.c_str());
+	glPopMatrix();
+
+	glEnable(GL_LIGHTING); //enable lighting since we're done
+	glPopMatrix();
+
 }
 
 
@@ -112,7 +181,7 @@ bool CheckGLErrors(string location) {
 // for the main function. Handles lighting and depth so far...
 void initGL() {
 
-	glClearColor (1.0, 0.0, 0.0, 1.0);
+	glClearColor (0.0, 0.0, 0.0, 0.0);
 	glShadeModel (GL_SMOOTH);
 
 	glEnable(GL_LIGHTING);
@@ -195,6 +264,7 @@ void SwitchingDisplayFunc() {
 		CheckGLErrors("begin game:");
 		
 		s.runGameMode(false, timeStep, *w);
+		displayGameText();
 		CheckGLErrors("end game:");
 	/*	glPushMatrix();
 		s.renderWorld();

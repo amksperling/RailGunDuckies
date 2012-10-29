@@ -96,7 +96,8 @@ void World::skyBox() {
 
 	// need something for the top
 	glPushMatrix();
-	glTranslated(0, 100, 0);
+	glTranslated(0, 100, -100);
+	glScaled(1, 1, 2);
 	glRotated(-90, 1, 0, 0);
 	glRotated(180, 0, 0, 1);
 	skySide();

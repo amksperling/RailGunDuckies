@@ -37,8 +37,13 @@ public:
 
 
 	inline int getScore() { return this->score; }
-	inline int getDucksRemainging() { return this->ducksRemaining; }
+	inline int getDucksRemaining() { return this->ducksRemaining; }
 	inline int getBalloonsRemaining() { return this->balloonsRemaining; }
+	inline int getGunPower() { return int(this->theGun.getGunPower()); }
+	inline double getGunInclination() { return this->theGun.getInclinationAngle(); }
+	inline double getGunRotation() { return this->theGun.getRotationAngle(); }
+
+
 	void placeBalloons();
 	//inline RailGun getGun() { return this->theGun; }
 

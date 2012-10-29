@@ -284,12 +284,8 @@ void Scene::placeBalloons() {
 // uses C++11 standard random distribution and random engine
 // from C++ primer 5th ed.
 
-
-
-
 double genRandomDouble(double low, double high) {
 	uniform_real_distribution<double> unif(low, high);
-	
 	return unif(randomEngine);
 }
 
