@@ -63,6 +63,9 @@ public:
 	void toggleWireFrame();
 	void toggleLights();
 
+	bool isPaused;
+	void setPause(bool newPausedValue);
+
 	void reshape(int w, int h);
 
 	inline int getSceneMode() const { return sceneMode; }

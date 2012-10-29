@@ -24,9 +24,9 @@ int window_height = init_height;
 
 double aspect = 1;
 
-bool isWireFrame = false;
-bool paused = false;
-bool isFullScreen = false;
+//bool isWireFrame = false;
+//bool paused = false;
+//bool isFullScreen = false;
 bool duckFullSize = false;
 
 double period = 1000/60;
@@ -136,6 +136,7 @@ void SwitchingDisplayFunc() {
 	timeSinceStart = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
 	
 	timeStep = timeSinceStart - oldTimeSinceStart;
+	if(w->isPaused) timeStep = 0;
 	oldTimeSinceStart = timeSinceStart;
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -339,7 +340,8 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 		break;
 
 	case 'p': 
-		paused = !paused;
+		//paused = !paused;
+		w->setPause(!(w->isPaused));
 		break;
 		// need to keep track of elapsed time while pasued and subtract from total time
 
@@ -420,7 +422,7 @@ int main(int argc, char *argv[]) {
 		glutCreateWindow("Driver");
 	 */
 	w = new Window();
-
+	w->setPause(false);
 	initGL();
 
 	glutDisplayFunc(SwitchingDisplayFunc);

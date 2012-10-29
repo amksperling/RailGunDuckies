@@ -2,6 +2,7 @@
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
 #include <cstdio>
+#include "Object.h"
 
 /*
 The Duckie class represents one Duckie object used in the Rail Gun Duckies
@@ -13,7 +14,7 @@ game. Each Duckie has its own intrinsic properties that will be used
 
 using namespace glm;
 
-class Duckie {
+class Duckie : public Object {
 
 public:
 

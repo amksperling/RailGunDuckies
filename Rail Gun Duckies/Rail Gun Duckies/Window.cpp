@@ -139,6 +139,10 @@ void Window::setBasicLights() {
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 }
 
+void Window::setPause(bool newPausedValue) {
+		this->isPaused = newPausedValue;
+}
+
 void Window::reshape(int w, int h) {
 	if (h <= 0) {
 		return;

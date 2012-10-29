@@ -4,6 +4,7 @@
 #include "Balloon.h"
 #include "World.h"
 #include "Window.h"
+#include "Object.h"
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
 #include <vector>
@@ -28,6 +29,7 @@ public:
 	void moveRailGun(int x, int y, const Window & w);
 	void increaseGunPower(double higher);
 	void decreaseGunPower(double lower);
+	void checkForCollisions (Window & w); //(Object movingItem, Object otherObjects[], Window & w);
 
 //	void duckBeauty();
 //	void railGunBeauty();

@@ -85,7 +85,6 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	
 	glLoadIdentity();
 
-
 	//set up camera based on the camera mode selected:
 	// --basic fixed
 	// --follow duck flight
@@ -116,10 +115,12 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 
 	//draw the balloons, from the vector of balloons
 	//glPushMatrix();
-	if (!balloonsPlaced)
+	if (!balloonsPlaced)  //might want to change this eventually to be if balloons.size < 5 or something
 		this->placeBalloons();
 	//glTranslated(balloons[0].getPosition().x,balloons[0].getPosition().y, balloons[0].getPosition().z);
 //	balloons[0].render();
+
+	this->checkForCollisions(w);
 
 	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
 		glPushMatrix();
@@ -292,4 +293,23 @@ double genRandomDouble(double low, double high) {
 int genRandomInt(int low, int high) {
 	uniform_int_distribution<int> unif(low, high);
 	return unif(randomEngine);
+}
+
+void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object otherObjects[], Window & w) {
+			//glTranslated(0, .25, .26); quarter due to scale 0, .0625, .065
+			//glutSolidSphere(1.5f, 20, 20); .375
+	double duckRadius = .375;
+			//glTranslated(0, -.25, 0);
+			//glutSolidSphere(1.25f, 20, 20);
+	double balloonRadius = 1.5;
+
+		for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
+			double distance = glm::sqrt((theDuck.getPosition().x - iter->getPosition().x) * (theDuck.getPosition().x - iter->getPosition().x) 
+				+ ((theDuck.getPosition().y - 0.0625) - (iter->getPosition().y - 0.25)) * ((theDuck.getPosition().y - 0.0625) - (iter->getPosition().y - 0.25))
+				+ ((theDuck.getPosition().z - 0.065) - iter->getPosition().z) * ((theDuck.getPosition().z - 0.065) - iter->getPosition().z));
+			if(distance <= duckRadius+balloonRadius){
+				w.setPause(true);
+			}
+	}
+	
 }
