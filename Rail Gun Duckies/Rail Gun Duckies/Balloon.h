@@ -8,11 +8,12 @@
 //#include <gl/glew.h>
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
+#include "Object.h"
 
 using namespace std;
 using namespace glm;
 
-class Balloon {
+class Balloon : public Object {
 
 public:
 	Balloon();

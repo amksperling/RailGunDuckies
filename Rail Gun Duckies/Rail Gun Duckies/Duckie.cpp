@@ -7,13 +7,13 @@ const double g = -9.8;
 static GLUquadric *q = gluNewQuadric();
 
 //Default constructor
-Duckie::Duckie() : 
-	displayListHandle(GLuint(-1)), 
-	position(0, 1.5, -95),
-	velocity(0, 0, 0),
-	acceleration(0, 0, 0),
-	color(1, 1, 0)
-{ }
+Duckie::Duckie() : Object() {
+	this->displayListHandle = (GLuint(-1));
+	this->position = glm::vec3(0, 1.5, -95);
+	this->velocity = glm::vec3(0, 0, 0);
+	this->acceleration = glm::vec3(0, 0, 0);
+	this->color = glm::vec3(1, 1, 0);
+}
 
 //constructor to initialze color
 Duckie::Duckie(vec3 color) : color(color)
