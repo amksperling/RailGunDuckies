@@ -18,7 +18,10 @@ static vec3 initialDuckPosition = vec3(0, 1.5, -95);
 static default_random_engine randomEngine;
 
 
-Scene::Scene() : displayListHandle(-1) { }
+Scene::Scene() : displayListHandle(-1) { 
+	//this->aBalloon = new Balloon::Balloon(false, (0, 2, 4), (0, 0, 0), (0, 0, 0), (1.0f, 0.0f, 0.0f, 1.0f));
+	//Balloon::Balloon(bool isMoving, vec3 position, vec3 velocity, vec3 rotation, vec4 color) : Object(isMoving, position, velocity, rotation, color)
+}
 
 void Scene::runBeautyMode(int beautyMode) {
 	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
@@ -127,7 +130,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
 		glPushMatrix();
 		glTranslated(iter->getPosition().x,iter->getPosition().y, iter->getPosition().z);
-		if(!iter->isHit())
+		if(!iter->getShouldBeRemoved())
 			iter->render();
 		glPopMatrix();
 	}
@@ -274,6 +277,7 @@ void Scene::placeBalloons() {
 		// set the position of the balloon and its point value based on the position
 		b.setPosition(vec3(xPosition, yPosition, zPosition));
 		b.setPointValue(yPosition + abs(zPosition));
+		b.setShouldBeRemoved(false);
 
 		//and place it in the vector of all balloons
 		this->balloons.push_back(b);
@@ -310,7 +314,7 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 				+ ((theDuck.getPosition().z - 0.065) - iter->getPosition().z) * ((theDuck.getPosition().z - 0.065) - iter->getPosition().z));
 			
 			if(distance <= duckRadius+balloonRadius) { //something was hit!
-				iter->setHit(true);
+				iter->setShouldBeRemoved(true);
 				iter->setPosition(vec3(100, -100, 0)); //set to an unhittable position
 				theDuck.setHitBalloon(true);
 				balloonsRemaining--;

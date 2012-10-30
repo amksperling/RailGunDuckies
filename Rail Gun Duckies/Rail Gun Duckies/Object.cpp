@@ -14,12 +14,13 @@
 
 Object::Object() { }
 
-Object::Object(bool isMoving, vec3 position, vec3 velocity, vec3 rotation, vec4 color) {
+Object::Object(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) {
 	this->shouldBeRemoved = false;
 	this->isMoving = isMoving;
 	this->position = position;
-	this->velocity = velocity;
 	this->rotation = rotation;
+	this->scale = scale;
+	this->velocity = velocity;
 	this->color = color;
 }
 

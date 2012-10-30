@@ -7,11 +7,12 @@ vector<vec4> Balloon::va_colors;
 vector<ivec3> Balloon::va_indices;
 vector<vec3> Balloon::va_normals;
 
-Balloon::Balloon(bool isMoving, vec3 position, vec4 color) : Object(isMoving, position, color)
-: hit(false),
-  points(0),
-  position(vec3(0))
-{ }
+Balloon::Balloon() {
+	
+}
+/*
+Balloon::Balloon(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) : Object(isMoving, position, rotation, scale, velocity, color)
+{ } */
 
 Balloon::~Balloon() {
 
