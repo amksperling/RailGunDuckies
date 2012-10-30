@@ -12,13 +12,20 @@
 */
 //GLuint Object::cubeDisplayListHandle = (GLuint) -1;
 
-Object::Object() {
- 
+Object::Object() { }
+
+Object::Object(bool isMoving, vec3 position, vec3 velocity, vec3 rotation, vec4 color) {
+	this->shouldBeRemoved = false;
+	this->isMoving = isMoving;
+	this->position = position;
+	this->velocity = velocity;
+	this->rotation = rotation;
+	this->color = color;
 }
 
-/* Cube Deconstructor
+/* Object Deconstructor
 
-   Deletes cube.
+   Deletes object.
 
 */
 Object::~Object() {

@@ -1,11 +1,10 @@
 #pragma once
 #include <stdio.h>
-#include <iostream>
-#include <sstream>
+//#include <iostream>
+//#include <sstream>
 #include <vector>
-#include <assert.h>
+//#include <assert.h>
 
-//#include <gl/glew.h>
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
 #include "Object.h"
@@ -16,30 +15,21 @@ using namespace glm;
 class Balloon : public Object {
 
 public:
-	Balloon();
+	Balloon(bool isMoving, vec3 position, vec4 color) : Object(isMoving, position, color) { };
 	~Balloon();
 
 	void render();
-	void drawDiamond();
-	void Triangle();
+	//void drawDiamond();
+	//void Triangle();
 
-	inline void setPosition(vec3 position) { this->position = position; }
-	inline vec3 getPosition() { return this->position; }
-	inline bool isHit() { return this->hit; }
-
-	inline void setPointValue(int value) { this->points = value; }
-	inline void setHit(bool hit) { this->hit = hit; }
-	inline int getPointValue() { return this->points; }
+	inline void setPointValue(int value) { this->pointValue = value; }
+	inline int getPointValue() { return this->pointValue; }
 	
 private:
-
 	static vector<vec3> va_vertices;
 	static vector<vec4> va_colors;
 	static vector<ivec3> va_indices;
 	static vector<vec3> va_normals;
 
-	vec3 position;
-
-	bool hit;
-	int points;
+	int pointValue;
 };
