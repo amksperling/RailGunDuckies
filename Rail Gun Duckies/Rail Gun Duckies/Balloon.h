@@ -9,7 +9,6 @@
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
 #include "Object.h"
-#include "ModelManager.h"
 
 using namespace std;
 using namespace glm;
@@ -20,7 +19,7 @@ public:
 	Balloon();
 	~Balloon();
 
-	void render(ModelManager & m);
+	void render();
 	void drawDiamond();
 	void Triangle();
 
@@ -33,12 +32,11 @@ public:
 	inline int getPointValue() { return this->points; }
 	
 private:
-	// Used with vertex arrays.
 
-	vector<vec3> va_vertices;
-	vector<vec4> va_colors;
-	vector<ivec3> va_indices;
-	vector<vec3> va_normals;
+	static vector<vec3> va_vertices;
+	static vector<vec4> va_colors;
+	static vector<ivec3> va_indices;
+	static vector<vec3> va_normals;
 
 	vec3 position;
 

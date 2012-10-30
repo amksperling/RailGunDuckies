@@ -1,9 +1,11 @@
-/* We've officially started on the balloon. */
-
 #include "Balloon.h"
 
 const float PI = 3.14159265f;
 
+vector<vec3> Balloon::va_vertices;
+vector<vec4> Balloon::va_colors;
+vector<ivec3> Balloon::va_indices;
+vector<vec3> Balloon::va_normals;
 
 Balloon::Balloon() 
 : hit(false),
@@ -15,7 +17,7 @@ Balloon::~Balloon() {
 
 }
 
-void Balloon::render(ModelManager & m) {
+void Balloon::render() {
 	//Not set to balloon material yet
 	GLfloat material_ambient[] = {0.0f, 0.0f, 0.0f, 1.0f};
 	GLfloat material_diffuse[] = { 0.5f, 0.0f, 0.0f, 1.0f};
@@ -27,7 +29,7 @@ void Balloon::render(ModelManager & m) {
     glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
     glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess); 
 
-	if (this->va_vertices.size() == 0) {	
+	if (va_vertices.size() == 0) {
 
 		GLfloat r;
 		GLfloat o;
@@ -197,11 +199,11 @@ void Balloon::render(ModelManager & m) {
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 
-	glVertexPointer(3 , GL_FLOAT , 0 , &this->va_vertices[0]);
-	glColorPointer(4, GL_FLOAT, 0, &this->va_colors[0]);
-	glNormalPointer(GL_FLOAT, 0, &this->va_normals[0]);
+	glVertexPointer(3 , GL_FLOAT , 0 , &va_vertices[0]);
+	glColorPointer(4, GL_FLOAT, 0, &va_colors[0]);
+	glNormalPointer(GL_FLOAT, 0, &va_normals[0]);
 
-	glDrawElements(GL_TRIANGLES, 3 * this->va_indices.size(), GL_UNSIGNED_INT, &this->va_indices[0]);
+	glDrawElements(GL_TRIANGLES, 3 * va_indices.size(), GL_UNSIGNED_INT, &va_indices[0]);
 
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
@@ -215,7 +217,7 @@ void Balloon::render(ModelManager & m) {
 	glPopMatrix();
 }
 
-
+/* //would overwrite balloon if called
 void Balloon::drawDiamond() {
 	if (this->va_vertices.size() == 0)
 	{
@@ -254,4 +256,4 @@ void Balloon::drawDiamond() {
 
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
-}
+} */

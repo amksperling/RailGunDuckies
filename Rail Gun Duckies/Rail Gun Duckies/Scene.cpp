@@ -4,7 +4,7 @@
 
 const double MAX_GUN_POWER = 100;
 const double MIN_GUN_POWER = 0;
-const int MAX_BALLOONS = 50;
+const int MAX_BALLOONS = 10;
 
 int Scene::score = 0;
 int Scene::ducksRemaining = 3;
