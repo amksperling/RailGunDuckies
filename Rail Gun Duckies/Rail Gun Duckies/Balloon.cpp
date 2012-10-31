@@ -10,9 +10,9 @@ vector<vec3> Balloon::va_normals;
 Balloon::Balloon() {
 	
 }
-/*
+
 Balloon::Balloon(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) : Object(isMoving, position, rotation, scale, velocity, color)
-{ } */
+{ } 
 
 Balloon::~Balloon() {
 

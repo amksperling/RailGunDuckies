@@ -19,8 +19,8 @@ static default_random_engine randomEngine;
 
 
 Scene::Scene() : displayListHandle(-1) { 
-	//this->aBalloon = new Balloon::Balloon(false, (0, 2, 4), (0, 0, 0), (0, 0, 0), (1.0f, 0.0f, 0.0f, 1.0f));
-	//Balloon::Balloon(bool isMoving, vec3 position, vec3 velocity, vec3 rotation, vec4 color) : Object(isMoving, position, velocity, rotation, color)
+	this->aBalloon = Balloon::Balloon(false, vec3(0, 2, 4), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	//Balloon::Balloon(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) ;
 }
 
 void Scene::runBeautyMode(int beautyMode) {
