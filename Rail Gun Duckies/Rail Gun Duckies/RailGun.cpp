@@ -1,16 +1,22 @@
-#include <gl/freeglut.h>
 #include "RailGun.h"
+
+GLuint RailGun::railgun_display_list;
 
 RailGun::RailGun() : Object() {
 	this->railgun_display_list = (GLuint) -1;
 	this->gunPower = 50;
 }
 
+RailGun::RailGun(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) : Object(isMoving, position, rotation, scale, velocity, color) {
+	this->railgun_display_list = (GLuint) -1;
+	this->gunPower = 50;
+} 
+
 RailGun::~RailGun() {
 
 }
 
-void RailGun::drawRailGun() {
+void RailGun::render() {
 	if (this->railgun_display_list == (GLuint) -1)
 	{
 		this->railgun_display_list = glGenLists(1);

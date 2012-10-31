@@ -18,6 +18,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="RailGun.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
@@ -28,6 +29,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="RailGun.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SkyBox.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>

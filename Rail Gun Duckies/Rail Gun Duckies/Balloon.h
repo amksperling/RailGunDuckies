@@ -1,10 +1,6 @@
 #pragma once
 #include <stdio.h>
-//#include <iostream>
-//#include <sstream>
 #include <vector>
-//#include <assert.h>
-
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
 #include "Object.h"

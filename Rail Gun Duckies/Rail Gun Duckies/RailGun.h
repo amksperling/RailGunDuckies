@@ -1,6 +1,12 @@
 #pragma once
 #include <gl/freeglut.h>
+#include <stdio.h>
+#include <vector>
+#include <glm/glm.hpp>
 #include "Object.h"
+
+using namespace std;
+using namespace glm;
 
 /*
 The RailGun class represents one RailGun object used in the Rail Gun Duckies
@@ -11,9 +17,10 @@ class RailGun : public Object {
 
 public:
 	RailGun();
+	RailGun(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color);
 	~RailGun();
 	
-	void drawRailGun();
+	void render();
 
 	double getRotationAngle() const;
 	double getInclinationAngle() const;
@@ -25,7 +32,7 @@ public:
 	void setRotationAngle(double a);
 	void setInclinationAngle(double a);
 
-	GLuint railgun_display_list;
+	static GLuint railgun_display_list;
 
 private:
 	double rotationAngle;

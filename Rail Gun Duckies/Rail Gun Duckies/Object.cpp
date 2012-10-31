@@ -84,3 +84,34 @@ void Object::drawRect(float w, float h, float d, float r, float g, float b){
 	//glCallList(cubeDisplayListHandle);
 	glPopMatrix();
 }
+/*
+void Object::drawVecArrayFace(float w, float h, float r, float g, float b){
+		this->va_vertices.push_back(glm::vec3(-1, 0, 1));
+		this->va_colors.push_back(glm::vec4(0.004f,0.306f,0.0f,1.0f));
+		this->va_normals.push_back(glm::vec3(0,1,0));
+
+		this->va_vertices.push_back(glm::vec3(1, 0, 1));
+		this->va_colors.push_back(glm::vec4(0.004f,0.306f,0.0f,1.0f));
+		this->va_normals.push_back(glm::vec3(0,1,0));
+
+		this->va_vertices.push_back(glm::vec3(-1, 0, -1));
+		this->va_colors.push_back(glm::vec4(0.004f,0.306f,0.0f,1.0f));
+		this->va_normals.push_back(glm::vec3(0,1,0));
+
+		this->va_vertices.push_back(glm::vec3(1, 0, -1));
+		this->va_colors.push_back(glm::vec4(0.004f,0.306f,0.0f,1.0f));
+		this->va_normals.push_back(glm::vec3(0,1,0));
+		
+		int startIndex = (int)omegaPoints * (int)phiPoints;
+
+		this->va_indices.push_back(glm::ivec3(startIndex,startIndex+1,startIndex+3));
+		this->va_indices.push_back(glm::ivec3(startIndex,startIndex + 3,startIndex+2));
+}
+
+void Object::setUpForRender() {
+	glTranslated(this->position.x, this->position.y, this->position.z);
+	glRotated(this->rotation.x, 1, 0, 0);
+	glRotated(this->rotation.y, 0, 1, 0);
+	glRotated(this->rotation.z, 0, 0, 1);
+	glScalef(this->scale.x, this->scale.y, this->scale.z);
+} */

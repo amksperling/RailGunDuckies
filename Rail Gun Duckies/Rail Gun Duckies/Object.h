@@ -9,6 +9,9 @@
 using namespace std;
 using namespace glm;
 
+//Possible additions: isBeautyModel, arbitrary int for resolution (can change object resolution 1-5), setUpForRender will be setUpAndRender
+//and do the position update, translation, and render in one method. Also, add draw circle for polished railgun
+
 class Object {
 
 public:
@@ -17,11 +20,12 @@ public:
 	~Object();
 
 //	virtual void render();
-//  virtual void updatePosition();
+//  virtual void updatePosition(double timeStep);
 
-//	void setUpForRender();
+	void setUpForRender();
 
 	void drawRect(float w, float h, float d, float r, float g, float b);
+	void drawVecArrayFace(float w, float h, float r, float g, float b);
 
 	inline void setShouldBeRemoved(bool shouldBeRemoved) { this->shouldBeRemoved = shouldBeRemoved; }
 	inline void setIsMoving(bool isMoving) { this->isMoving = isMoving; }

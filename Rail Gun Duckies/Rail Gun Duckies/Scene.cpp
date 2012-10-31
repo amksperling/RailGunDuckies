@@ -11,16 +11,20 @@ int Scene::ducksRemaining = 3;
 int Scene::balloonsRemaining = MAX_BALLOONS;
 bool Scene::balloonsPlaced = false;
 
-static double gravity = -32.0;
+static double gravity = -32.2;
 static double piOver180 = 0.01745329251;
-static vec3 initialDuckPosition = vec3(0, 1.5, -95);
+static vec3 initialDuckPosition = vec3(0, 1.2, -94);
 
 static default_random_engine randomEngine;
 
 
 Scene::Scene() : displayListHandle(-1) { 
+	// order for input into function \/
+	// (bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) ; color not currently set up, so may be ignored
 	this->aBalloon = Balloon::Balloon(false, vec3(0, 2, 4), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	//Balloon::Balloon(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) ;
+	this->theGun = RailGun::RailGun(false, vec3(0, 1, 7), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	this->skyBox = SkyBox::SkyBox(false, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	this->theWorld = World::World(false, vec3(0, -2, 4), vec3(0, 0, 0), vec3(20, 20, 20), vec3(0, 0, 0), vec4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void Scene::runBeautyMode(int beautyMode) {
@@ -32,10 +36,8 @@ void Scene::runBeautyMode(int beautyMode) {
 	//set up camera at (0, 2, 0)
 	gluLookAt(0, 2, 0, 0, 0, 10, 0, 1, 0);
 	glPushMatrix();
-	glTranslated(0, -2, 4);
-	//glScaled(2, 2, 2);
-	glScalef(20.0f, 20.0f, 20.0f);
-	this->theWorld.renderSky(); // draw the background world		
+	this->theWorld.setUpForRender();
+	this->theWorld.render(); // draw the background world		
 	glPopMatrix();
 
 	//draw the objects based on the input
@@ -53,16 +55,18 @@ void Scene::runBeautyMode(int beautyMode) {
 
 	case RAILGUN_BEAUTY:
 		glPushMatrix();
-		glTranslated(0, 1, 7);
+		//glTranslated(0, 1, 7);
+		this->theGun.setUpForRender();
 		glRotated(elapsed_time * 30, 0, 1, 0);
-		this->theGun.drawRailGun();
+		this->theGun.render();
 		glPopMatrix();
 		break;
 
 	case BALLOON_BEAUTY:
 		glPushMatrix();
-		glTranslated(0, 2, 4);
-		glRotated(elapsed_time * 30, 0, 1, 0);
+		//glTranslated(0, 2, 4);
+		this->aBalloon.setUpForRender();
+		glRotated(elapsed_time * 30, 0, 0.5, 0.5);
 		this->aBalloon.render();
 		glPopMatrix();
 		break;
@@ -115,7 +119,8 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 
 	//gluLookAt(0, 5, -100, 0, 0, 50, 0, 1, 0);
 	glPushMatrix();
-	this->theWorld.render(); // draw the background world
+	this->skyBox.setUpForRender();
+	this->skyBox.render(); // draw the background world
 	glPopMatrix();
 
 	//draw the balloons, from the vector of balloons
@@ -140,10 +145,10 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	//push for gun
 	glPushMatrix();
 	glTranslated(0, .5, -93);
-	glRotated(180, 0, 1, 0);
-	glRotated(theGun.getInclinationAngle(), 1, 0, 0);
+	//glRotated(180, 0, 1, 0);
 	glRotated(-theGun.getRotationAngle(), 0, 1, 0);
-	this->theGun.drawRailGun();
+	glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
+	this->theGun.render();
 	
 	glPopMatrix();
 	
@@ -152,8 +157,8 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	if (!this->theDuck.isMoving()) {
 		glPushMatrix();
 		glTranslated(initialDuckPosition.x, initialDuckPosition.y, initialDuckPosition.z);
-		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
+		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
 		glScaled(.5, .5, .5);
 		if (w.getCameraMode() != FIRST_PERSON) // dont render the duck in first person!
 			this->theDuck.render();
@@ -305,8 +310,8 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 			//glutSolidSphere(1.5f, 20, 20); .375
 	double duckRadius = .375;
 			//glTranslated(0, -.25, 0);
-			//glutSolidSphere(1.25f, 20, 20);
-	double balloonRadius = 1.5;
+			//glutSolidSphere(1.3f, 20, 20);
+	double balloonRadius = 1.3;
 
 		for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
 			double distance = glm::sqrt((theDuck.getPosition().x - iter->getPosition().x) * (theDuck.getPosition().x - iter->getPosition().x) 

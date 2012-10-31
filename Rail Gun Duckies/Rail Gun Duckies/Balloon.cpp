@@ -214,7 +214,7 @@ void Balloon::render() {
 	glTranslated(0, -1.55, 0);
 	glRotated(90, 1, 0, 0);
 	glColor3d(1, 0, 0);
-	glutSolidTorus((GLdouble) 0.018, (GLdouble) 0.12, (GLint) 20, (GLint) 20);
+	glutSolidTorus((GLdouble) 0.018, (GLdouble) 0.11, (GLint) 20, (GLint) 20);
 	glPopMatrix();
 }
 

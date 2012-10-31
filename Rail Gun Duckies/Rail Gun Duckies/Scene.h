@@ -4,6 +4,7 @@
 #include "Balloon.h"
 #include "World.h"
 #include "Window.h"
+#include "SkyBox.h"
 #include "Object.h"
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
@@ -56,6 +57,7 @@ private:
 	RailGun theGun;
 	Duckie theDuck;
 	World theWorld;
+	SkyBox skyBox;
 
 	bool gameWon;
 	bool gameOver;
@@ -64,9 +66,6 @@ private:
 	//used to draw the world in which our objects are placed
 	void renderWorld();
 
-	void skySide();
-	void ground();
-	void skyBox();
 //	void placeGun();
 //	void placeDuck();
 	

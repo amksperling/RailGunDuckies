@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <vector>
 #include <assert.h>
+#include "Object.h"
 
 //#include <gl/glew.h>
 #include <GL/freeglut.h>
@@ -11,23 +12,16 @@ using namespace std;
 using namespace glm;
 
 
-class World {
+class World : public Object {
 
 public:
 
 	World();
+	World(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color);
 
 	void render();
-	void renderSky(); // for future use with a sky dome
-	inline GLuint getDisplayListHandle() { return this->displayListHandle; }
-
 
 private:
-	void skySide();
-	void ground();
-	void skyBox();
-
-	GLuint displayListHandle;
 
 	// Used with vertex arrays.
 	vector<GLdouble> va_v;
