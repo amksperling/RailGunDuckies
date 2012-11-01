@@ -47,8 +47,8 @@ public:
 	inline double getGunRotation() { return this->theGun.getRotationAngle(); }
 
 
-	void placeBalloons();
-	//inline RailGun getGun() { return this->theGun; }
+	
+	void resetGame();
 
 private:
 
@@ -68,7 +68,7 @@ private:
 
 //	void placeGun();
 //	void placeDuck();
-	
+	void placeBalloons();
 	void resetDuck();
 
 	static int score;

@@ -212,7 +212,7 @@ void SwitchingDisplayFunc() {
 	timeSinceStart = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
 	
 	timeStep = timeSinceStart - oldTimeSinceStart;
-	if(w->isPaused) timeStep = 0;
+	if(w->getPaused()) timeStep = 0;
 	oldTimeSinceStart = timeSinceStart;
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -418,9 +418,16 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 
 	case 'p': 
 		//paused = !paused;
-		w->setPause(!(w->isPaused));
+		if (w->getPaused())
+			w->setPause(false);
+		else
+			w->setPause(true);
 		break;
 		// need to keep track of elapsed time while pasued and subtract from total time
+
+	case 'r':
+		s.resetGame();
+		break;
 
 	case 32: //spacebar
 		if (w->getSceneMode() == GAME || w->getSceneMode() == GAME_FOREVER)

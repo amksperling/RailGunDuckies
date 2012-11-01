@@ -63,8 +63,9 @@ public:
 	void toggleWireFrame();
 	void toggleLights();
 
-	bool isPaused;
-	void setPause(bool newPausedValue);
+	
+	inline void setPause(bool newPausedValue) { this->isPaused = newPausedValue; }
+	inline bool getPaused() { return this->isPaused; }
 
 	void reshape(int w, int h);
 
@@ -86,6 +87,7 @@ private:
 	int h;
 	bool isFullScreen;
 	bool isWireFrame;
+	bool isPaused;
 	double aspect;
 	int sceneMode;
 	int cameraMode;

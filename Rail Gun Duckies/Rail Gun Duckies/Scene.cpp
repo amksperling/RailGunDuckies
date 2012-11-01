@@ -5,9 +5,10 @@
 const double MAX_GUN_POWER = 100;
 const double MIN_GUN_POWER = 0;
 const int MAX_BALLOONS = 10;
+const int MAX_DUCKS = 3;
 
 int Scene::score = 0;
-int Scene::ducksRemaining = 3;
+int Scene::ducksRemaining = MAX_DUCKS;
 int Scene::balloonsRemaining = MAX_BALLOONS;
 bool Scene::balloonsPlaced = false;
 
@@ -245,7 +246,7 @@ void Scene::resetDuck() {
 }
 
 
-// functions for changing the power of the gun from 0 to 50
+// functions for changing the power of the gun from 0 to 100
 void Scene::increaseGunPower(double higher) {
 	if (this->theGun.getGunPower() < MAX_GUN_POWER)
 		this->theGun.increaseGunPower(higher);
@@ -327,6 +328,7 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 				if (balloonsRemaining == 0) {
 					gameWon = true;
 					gameOver = true;
+					resetGame();
 				}
 				//w.setPause(true);
 			}
@@ -337,8 +339,23 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 		if (theDuck.hitTheGround()) {
 			ducksRemaining--;
 			resetDuck();
-			if (ducksRemaining == 0) 
+			if (ducksRemaining == 0) {
 				gameOver = true;
+				resetGame();
+			}
 		}
 	
+}
+
+
+void Scene::resetGame() {
+	for (unsigned int i = 0; i < balloons.size(); ++i)
+		balloons.at(i).setShouldBeRemoved(true);
+	this->balloonsPlaced = false;
+	this->gameOver = false;
+	this->gameWon = false;
+	this->balloonsRemaining = MAX_BALLOONS;
+	this->ducksRemaining = MAX_DUCKS;
+	this->score = 0;
+	resetDuck();
 }

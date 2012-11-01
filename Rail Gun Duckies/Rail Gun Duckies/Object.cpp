@@ -107,11 +107,11 @@ void Object::drawVecArrayFace(float w, float h, float r, float g, float b){
 		this->va_indices.push_back(glm::ivec3(startIndex,startIndex+1,startIndex+3));
 		this->va_indices.push_back(glm::ivec3(startIndex,startIndex + 3,startIndex+2));
 }
-
+*/
 void Object::setUpForRender() {
 	glTranslated(this->position.x, this->position.y, this->position.z);
 	glRotated(this->rotation.x, 1, 0, 0);
 	glRotated(this->rotation.y, 0, 1, 0);
 	glRotated(this->rotation.z, 0, 0, 1);
 	glScalef(this->scale.x, this->scale.y, this->scale.z);
-} */
+} 
