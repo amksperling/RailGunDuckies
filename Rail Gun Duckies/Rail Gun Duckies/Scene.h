@@ -43,14 +43,14 @@ public:
 //	void playGameForever();
 
 
-	inline int getScore() { return this->score; }
-	inline int getDucksRemaining() { return this->ducksRemaining; }
-	inline int getBalloonsRemaining() { return this->balloonsRemaining; }
-	inline int getGunPower() { return int(this->theGun.getGunPower()); }
-	inline double getGunInclination() { return this->theGun.getInclinationAngle(); }
-	inline double getGunRotation() { return this->theGun.getRotationAngle(); }
+	inline int getScore() const { return this->score; }
+	inline int getDucksRemaining() const { return this->ducksRemaining; }
+	inline int getBalloonsRemaining() const{ return this->balloonsRemaining; }
+	inline int getGunPower() const { return int(this->theGun.getGunPower()); }
+	inline double getGunInclination() const { return this->theGun.getInclinationAngle(); }
+	inline double getGunRotation() const { return this->theGun.getRotationAngle(); }
 
-
+	inline vector<Balloon> & getBalloons() { return this->balloons; }
 	void displayBalloonPointValue(Balloon & b, const Window & w);
 	void resetGame();
 

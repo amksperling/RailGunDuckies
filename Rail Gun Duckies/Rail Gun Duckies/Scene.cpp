@@ -138,7 +138,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		glPushMatrix();
 		glTranslated(iter->getPosition().x,iter->getPosition().y, iter->getPosition().z);
 		if(!iter->getShouldBeRemoved()) {
-			//iter->render();
+		iter->render();
 		}
 		glPopMatrix();
 	}
@@ -186,11 +186,11 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		glPopMatrix();
 	}
 	
-	//draw the balloon text from each balloon that is not hit
-	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
-		if (!iter->getShouldBeRemoved())
-			displayBalloonPointValue(*iter, w);
-	}
+	////draw the balloon text from each balloon that is not hit
+	//for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
+	//	if (!iter->getShouldBeRemoved())
+	//		displayBalloonPointValue(*iter, w);
+	//}
 }
 
 void Scene::fire() {
@@ -208,6 +208,8 @@ void Scene::fire() {
 	}
 	else {
 		ducksRemaining--;
+		if (ducksRemaining == 0)
+			resetGame();
 		resetDuck();
 	}
 }
@@ -363,6 +365,7 @@ void Scene::resetGame() {
 	this->balloonsRemaining = MAX_BALLOONS;
 	this->ducksRemaining = MAX_DUCKS;
 	this->score = 0;
+	this->theDuck.setColor(vec3(1, 1, 0));
 	resetDuck();
 }
 

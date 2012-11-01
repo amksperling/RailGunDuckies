@@ -117,11 +117,30 @@ void displayGameText() {
 	string gunInclination = "Gun Inclination: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(2) << s.getGunInclination()) )->str();
 
 
+
 	glPushMatrix();
 	glTranslated(0, 5, -1);
 	glScaled(.1, .1, 1);
 	glDisable(GL_LIGHTING);
 	glColor3d(1, 1, 1);
+
+
+	//for each balloon
+	glPushMatrix();
+	for (auto iter = s.getBalloons().begin(); iter != s.getBalloons().end(); ++iter) {
+		//get its point value and convert to a string
+		string pointValue = static_cast<ostringstream*>( &(ostringstream() << iter->getPointValue()) )->str();
+
+
+		//translate to the balloon's position
+		glTranslated(iter->getPosition().x, iter->getPosition().y, iter->getPosition().z);
+
+
+		//and display the point value
+		glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)pointValue.c_str());
+	
+	}
+	glPopMatrix();
 
 	glPushMatrix();
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)score.c_str());
