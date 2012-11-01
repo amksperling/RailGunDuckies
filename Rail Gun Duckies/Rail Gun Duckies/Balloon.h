@@ -22,6 +22,7 @@ public:
 	inline void setPointValue(int value) { this->pointValue = value; }
 	inline int getPointValue() { return this->pointValue; }
 	
+
 private:
 	static vector<vec3> va_vertices;
 	static vector<vec4> va_colors;

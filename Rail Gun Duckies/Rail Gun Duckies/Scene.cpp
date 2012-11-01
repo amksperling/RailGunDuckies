@@ -1,6 +1,5 @@
 #include "Scene.h"
-#include <random>
-#include <ctime>
+
 
 const double MAX_GUN_POWER = 100;
 const double MIN_GUN_POWER = 0;
@@ -11,6 +10,8 @@ int Scene::score = 0;
 int Scene::ducksRemaining = MAX_DUCKS;
 int Scene::balloonsRemaining = MAX_BALLOONS;
 bool Scene::balloonsPlaced = false;
+bool Scene::gameOver = false;
+bool Scene::gameWon = false;
 
 static double gravity = -32.2;
 static double piOver180 = 0.01745329251;
@@ -90,7 +91,7 @@ void Scene::runBeautyMode(int beautyMode) {
 
 void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	randomEngine.seed((unsigned long)time(nullptr)); // set random seed based on current time
-	//glPushMatrix();
+
 	glMatrixMode(GL_MODELVIEW);
 	
 	glLoadIdentity();
@@ -128,20 +129,21 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	//glPushMatrix();
 	if (!balloonsPlaced)  //might want to change this eventually to be if balloons.size < 5 or something
 		this->placeBalloons();
-	//glTranslated(balloons[0].getPosition().x,balloons[0].getPosition().y, balloons[0].getPosition().z);
-//	balloons[0].render();
 
+	//check if any balloons are hit
 	this->checkForCollisions(w);
 
+	// from the vector, display each balloon that is not hit
 	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
 		glPushMatrix();
 		glTranslated(iter->getPosition().x,iter->getPosition().y, iter->getPosition().z);
-		if(!iter->getShouldBeRemoved())
-			iter->render();
+		if(!iter->getShouldBeRemoved()) {
+			//iter->render();
+		}
 		glPopMatrix();
 	}
 
-	//glPopMatrix();
+
 	//draw the rail gun and the duck on top
 	//push for gun
 	glPushMatrix();
@@ -184,8 +186,11 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		glPopMatrix();
 	}
 	
-
-	//glPopMatrix();
+	//draw the balloon text from each balloon that is not hit
+	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
+		if (!iter->getShouldBeRemoved())
+			displayBalloonPointValue(*iter, w);
+	}
 }
 
 void Scene::fire() {
@@ -321,8 +326,9 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 			
 			if(distance <= duckRadius+balloonRadius) { //something was hit!
 				iter->setShouldBeRemoved(true);
-				iter->setPosition(vec3(100, -100, 0)); //set to an unhittable position
+				iter->setPosition(vec3(300, -300, 0)); //set to an unhittable position
 				theDuck.setHitBalloon(true);
+				score += iter->getPointValue();
 				balloonsRemaining--;
 				resetDuck();
 				if (balloonsRemaining == 0) {
@@ -349,8 +355,8 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 
 
 void Scene::resetGame() {
-	for (unsigned int i = 0; i < balloons.size(); ++i)
-		balloons.at(i).setShouldBeRemoved(true);
+	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter)
+		iter->setShouldBeRemoved(true);
 	this->balloonsPlaced = false;
 	this->gameOver = false;
 	this->gameWon = false;
@@ -358,4 +364,36 @@ void Scene::resetGame() {
 	this->ducksRemaining = MAX_DUCKS;
 	this->score = 0;
 	resetDuck();
+}
+
+void Scene::displayBalloonPointValue(Balloon & b, const Window & w) {
+	//push current modelview onto stack
+	glPushMatrix();
+
+	//change to projection and set up ortho
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, w.getWidth(), 0, w.getHeight(), 1, 10);
+	glViewport(0, 0, w.getWidth(), w.getHeight());
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+
+	string points = static_cast<ostringstream*>( &(ostringstream() << b.getPointValue()) )->str();
+
+	glPushMatrix();
+	glTranslated(b.getPosition().x, b.getPosition().y, b.getPosition().z);
+
+	//glScalef(0.25f, 0.25f, 1.0f);
+	glDisable(GL_LIGHTING); //make sure to disable lighting!
+	glColor3f(0, 0, 0);
+	glScaled(10, 10, 10);
+	//freeglut uses c style strings, so we need to get that.
+	//and actually print the string:
+	glutStrokeString(GLUT_STROKE_MONO_ROMAN, (unsigned char *)points.c_str());
+
+	glEnable(GL_LIGHTING); //enable lighting since we're done
+	glPopMatrix();
+	glPopMatrix();
+
 }

@@ -10,6 +10,10 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include <string>
+#include <sstream>
+#include <random>
+#include <ctime>
+
 
 using namespace std;
 using namespace glm;
@@ -47,7 +51,7 @@ public:
 	inline double getGunRotation() { return this->theGun.getRotationAngle(); }
 
 
-	
+	void displayBalloonPointValue(Balloon & b, const Window & w);
 	void resetGame();
 
 private:
@@ -59,8 +63,8 @@ private:
 	World theWorld;
 	SkyBox skyBox;
 
-	bool gameWon;
-	bool gameOver;
+	static bool gameWon;
+	static bool gameOver;
 	bool balloonHit;
 
 	//used to draw the world in which our objects are placed
