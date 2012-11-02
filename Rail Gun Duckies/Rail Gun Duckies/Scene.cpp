@@ -139,7 +139,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		glTranslated(iter->getPosition().x,iter->getPosition().y, iter->getPosition().z);
 		if(!iter->getShouldBeRemoved()) {
 			iter->render();
-			displayBalloonPointValue(*iter, w);
+			displayBalloonPointValue(*iter);
 		}
 		glPopMatrix();
 	}
@@ -368,30 +368,18 @@ void Scene::resetGame() {
 	//balloons.clear();
 }
 
-void Scene::displayBalloonPointValue(Balloon & b, const Window & w) {
-	//push current modelview onto stack
-	//glPushMatrix();
-//	glLoadIdentity();
-//	glTranslated(0, 0, -100);
-//	
-
-	//glPushMatrix();
+void Scene::displayBalloonPointValue(Balloon & b) {
+	
 	//get its point value and convert to a string
 	string pointValue = static_cast<ostringstream*>( &(ostringstream() << b.getPointValue()) )->str();
-
-
-	//translate to the balloon's position
 	
-	
-
-
-	//and display the point value
 	glPushMatrix();
-	glTranslated(1, 1, 0);
-	glRotated(180, 0, 1, 0);
-	glScaled(.01, .01, 1);
-	
+	glTranslated(1, 1, 0); //translate a little so it appears centered over the balloon
+	glRotated(180, 0, 1, 0); // rotate so text isn't mirrored
+	glScaled(.01, .01, 1);  //scale properly
+	glColor3f(0, 0, 0);		// set color to black
+	//actually draw the score string (as a c string)
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)pointValue.c_str());
 	glPopMatrix();
-	//glPopMatrix();
+
 }

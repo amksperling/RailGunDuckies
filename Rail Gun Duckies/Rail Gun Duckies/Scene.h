@@ -51,7 +51,7 @@ public:
 	inline double getGunRotation() const { return this->theGun.getRotationAngle(); }
 
 	inline vector<Balloon> & getBalloons() { return this->balloons; }
-	void displayBalloonPointValue(Balloon & b, const Window & w);
+	
 	void resetGame();
 
 private:
@@ -69,7 +69,7 @@ private:
 
 	//used to draw the world in which our objects are placed
 	void renderWorld();
-
+	void displayBalloonPointValue(Balloon & b);
 //	void placeGun();
 //	void placeDuck();
 	void placeBalloons();
