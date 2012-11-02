@@ -290,7 +290,7 @@ void Scene::placeBalloons() {
 
 		// set the position of the balloon and its point value based on the position
 		b.setPosition(vec3(xPosition, yPosition, zPosition));
-		b.setPointValue(yPosition + abs(zPosition));
+		b.setPointValue(100+zPosition + yPosition);
 		b.setShouldBeRemoved(false);
 
 		//and place it in the vector of all balloons
