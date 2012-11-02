@@ -1,4 +1,9 @@
 #include "Scene.h"
+#include <stdio.h>  
+#include <iostream>
+#include <sstream> //Checka
+
+using namespace std;
 
 
 const double MAX_GUN_POWER = 100;
@@ -266,7 +271,7 @@ void Scene::decreaseGunPower(double lower) {
 void Scene::placeBalloons() {
 
 	int xPosition, yPosition, zPosition;
-	Balloon b;
+	Balloon b = Balloon::Balloon(false, vec3(0, 2, 4), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
 	/* for each balloon wanted, generate a random position
 		and assign that position to the balloon after it is constructed.
 		Then add it to the balloon vector. */
@@ -310,17 +315,19 @@ int genRandomInt(int low, int high) {
 }
 
 void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object otherObjects[], Window & w) {
+	//Quite possible and likely that this function will break if you scale differently in different axi
 			//glTranslated(0, .25, .26); quarter due to scale 0, .0625, .065
 			//glutSolidSphere(1.5f, 20, 20); .375
-	double duckRadius = .375;
+	double duckRadius = .375;// * theDuck.getScale().x; re-add this code when the duck scale is implemented
 			//glTranslated(0, -.25, 0);
 			//glutSolidSphere(1.3f, 20, 20);
 	double balloonRadius = 1.3;
 
 		for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
+			balloonRadius = 1.3 * iter->getScale().y; 
 			double distance = glm::sqrt((theDuck.getPosition().x - iter->getPosition().x) * (theDuck.getPosition().x - iter->getPosition().x) 
-				+ ((theDuck.getPosition().y - 0.0625) - (iter->getPosition().y - 0.25)) * ((theDuck.getPosition().y - 0.0625) - (iter->getPosition().y - 0.25))
-				+ ((theDuck.getPosition().z - 0.065) - iter->getPosition().z) * ((theDuck.getPosition().z - 0.065) - iter->getPosition().z));
+				+ ((theDuck.getPosition().y - 0.0625 /* theDuck.getScale().y */) - (iter->getPosition().y - 0.25 * iter->getScale().y)) * ((theDuck.getPosition().y - 0.0625 /* theDuck.getScale().y*/) - (iter->getPosition().y - 0.25  * iter->getScale().y))
+				+ ((theDuck.getPosition().z - 0.065 /* theDuck.getScale().z */) - iter->getPosition().z) * ((theDuck.getPosition().z - 0.065 /* theDuck.getScale().z*/) - iter->getPosition().z));
 			
 			if(distance <= duckRadius+balloonRadius) { //something was hit!
 				iter->setShouldBeRemoved(true);

@@ -19,16 +19,21 @@ Balloon::~Balloon() {
 }
 
 void Balloon::render() {
+	glDisable(GL_COLOR_MATERIAL);
+	glBlendFunc(GL_ONE,  GL_ONE);
+	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE , 0.0);
+	glEnable(GL_BLEND);
+	glEnable(GL_CULL_FACE);
 	//Not set to balloon material yet
-	GLfloat material_ambient[] = {0.0f, 0.0f, 0.0f, 1.0f};
-	GLfloat material_diffuse[] = { 0.5f, 0.0f, 0.0f, 1.0f};
-    GLfloat material_specular[] = { 0.7f, 0.6f, 0.6f, 1.0f };
+	GLfloat material_ambient[] = {0.7f, 0.0f, 0.0f, 0.5f};
+	GLfloat material_diffuse[] = { 0.5f, 0.0f, 0.0f, 0.5f};
+    GLfloat material_specular[] = { 0.7f, 0.6f, 0.6f, 0.5f };
     GLfloat material_shininess[] = { .25f * 128.0f };
 
-	glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess); 
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess); 
 
 	if (va_vertices.size() == 0) {
 
@@ -196,17 +201,17 @@ void Balloon::render() {
 
 	}
 
-	glEnableClientState(GL_COLOR_ARRAY);
+	//glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 
 	glVertexPointer(3 , GL_FLOAT , 0 , &va_vertices[0]);
-	glColorPointer(4, GL_FLOAT, 0, &va_colors[0]);
+	//glColorPointer(4, GL_FLOAT, 0, &va_colors[0]);
 	glNormalPointer(GL_FLOAT, 0, &va_normals[0]);
 
 	glDrawElements(GL_TRIANGLES, 3 * va_indices.size(), GL_UNSIGNED_INT, &va_indices[0]);
 
-	glDisableClientState(GL_COLOR_ARRAY);
+	//glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 
@@ -216,6 +221,9 @@ void Balloon::render() {
 	glColor3d(1, 0, 0);
 	glutSolidTorus((GLdouble) 0.018, (GLdouble) 0.11, (GLint) 20, (GLint) 20);
 	glPopMatrix();
+
+	glEnable(GL_COLOR_MATERIAL);
+	glDisable(GL_BLEND);
 }
 
 /* //would overwrite balloon if called
