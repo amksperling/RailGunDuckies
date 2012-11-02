@@ -138,7 +138,8 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		glPushMatrix();
 		glTranslated(iter->getPosition().x,iter->getPosition().y, iter->getPosition().z);
 		if(!iter->getShouldBeRemoved()) {
-		iter->render();
+			iter->render();
+			displayBalloonPointValue(*iter, w);
 		}
 		glPopMatrix();
 	}
@@ -185,12 +186,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 			theDuck.render();
 		glPopMatrix();
 	}
-	
-	////draw the balloon text from each balloon that is not hit
-	//for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
-	//	if (!iter->getShouldBeRemoved())
-	//		displayBalloonPointValue(*iter, w);
-	//}
+
 }
 
 void Scene::fire() {
@@ -357,8 +353,10 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 
 
 void Scene::resetGame() {
-	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter)
+	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
 		iter->setShouldBeRemoved(true);
+		
+	}
 	this->balloonsPlaced = false;
 	this->gameOver = false;
 	this->gameWon = false;
@@ -367,36 +365,33 @@ void Scene::resetGame() {
 	this->score = 0;
 	this->theDuck.setColor(vec3(1, 1, 0));
 	resetDuck();
+	//balloons.clear();
 }
 
 void Scene::displayBalloonPointValue(Balloon & b, const Window & w) {
 	//push current modelview onto stack
+	//glPushMatrix();
+//	glLoadIdentity();
+//	glTranslated(0, 0, -100);
+//	
+
+	//glPushMatrix();
+	//get its point value and convert to a string
+	string pointValue = static_cast<ostringstream*>( &(ostringstream() << b.getPointValue()) )->str();
+
+
+	//translate to the balloon's position
+	
+	
+
+
+	//and display the point value
 	glPushMatrix();
-
-	//change to projection and set up ortho
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, w.getWidth(), 0, w.getHeight(), 1, 10);
-	glViewport(0, 0, w.getWidth(), w.getHeight());
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-
-	string points = static_cast<ostringstream*>( &(ostringstream() << b.getPointValue()) )->str();
-
-	glPushMatrix();
-	glTranslated(b.getPosition().x, b.getPosition().y, b.getPosition().z);
-
-	//glScalef(0.25f, 0.25f, 1.0f);
-	glDisable(GL_LIGHTING); //make sure to disable lighting!
-	glColor3f(0, 0, 0);
-	glScaled(10, 10, 10);
-	//freeglut uses c style strings, so we need to get that.
-	//and actually print the string:
-	glutStrokeString(GLUT_STROKE_MONO_ROMAN, (unsigned char *)points.c_str());
-
-	glEnable(GL_LIGHTING); //enable lighting since we're done
+	glTranslated(1, 1, 0);
+	glRotated(180, 0, 1, 0);
+	glScaled(.01, .01, 1);
+	
+	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)pointValue.c_str());
 	glPopMatrix();
-	glPopMatrix();
-
+	//glPopMatrix();
 }

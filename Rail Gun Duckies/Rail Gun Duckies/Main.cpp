@@ -126,21 +126,9 @@ void displayGameText() {
 
 
 	//for each balloon
-	glPushMatrix();
-	for (auto iter = s.getBalloons().begin(); iter != s.getBalloons().end(); ++iter) {
-		//get its point value and convert to a string
-		string pointValue = static_cast<ostringstream*>( &(ostringstream() << iter->getPointValue()) )->str();
-
-
-		//translate to the balloon's position
-		glTranslated(iter->getPosition().x, iter->getPosition().y, iter->getPosition().z);
-
-
-		//and display the point value
-		glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)pointValue.c_str());
 	
-	}
-	glPopMatrix();
+	
+	
 
 	glPushMatrix();
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)score.c_str());
@@ -177,6 +165,32 @@ void displayGameText() {
 	glPushMatrix();
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)gunInclination.c_str());
 	glPopMatrix();
+
+
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+	//gluPerspective(75, w->getAspect(), 1, 2500);
+	//glViewport(0, 0, w->getWidth(), w->getHeight());
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
+	////glPushMatrix();
+	//glTranslated(0, 0, -100);
+	//for (auto iter = s.getBalloons().begin(); iter != s.getBalloons().end(); ++iter) {
+	//	//get its point value and convert to a string
+	//	string pointValue = static_cast<ostringstream*>( &(ostringstream() << iter->getPointValue()) )->str();
+
+
+	//	//translate to the balloon's position
+	//	glScaled(.1, .1, 1);
+	//	glTranslated(iter->getPosition().x, iter->getPosition().y + 5, iter->getPosition().z);
+
+
+	//	//and display the point value
+	//	glPushMatrix();
+	//	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)pointValue.c_str());
+	//	glPopMatrix();
+	//}
+	////glPopMatrix();
 
 	glEnable(GL_LIGHTING); //enable lighting since we're done
 	glPopMatrix();
