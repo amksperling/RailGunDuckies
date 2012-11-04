@@ -81,6 +81,15 @@ void Duckie::render() {
 			gluSphere(q, 1, 100, 100);
 			glPopMatrix();
 
+			//draw a tail
+			glPushMatrix();
+			glScaled(.3, .3, .3);
+			//glScaled(.8, .5, .6);
+			glTranslated(0, .9, -3.2);
+			glRotated(-145, 1, 0, 0);
+			gluCylinder(q, 1, 0, 1, 100, 100);
+
+			glPopMatrix();
 
 			// draw the eyes
 			glPushMatrix();
