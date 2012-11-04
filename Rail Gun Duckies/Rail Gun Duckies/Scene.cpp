@@ -18,9 +18,11 @@ bool Scene::balloonsPlaced = false;
 bool Scene::gameOver = false;
 bool Scene::gameWon = false;
 
-static double gravity = -32.2;
-static double piOver180 = 0.01745329251;
-static vec3 initialDuckPosition = vec3(0, 1.2, -94);
+static const double gravity = -32.2;
+static const double degToRad = 0.01745329251;
+static const double radToDeg = 57.2957795131;
+static const vec3 initialDuckPosition = vec3(0, 1.2, -94);
+static const vec3 initialGunPosition = vec3(0, .5, -93);
 
 static default_random_engine randomEngine;
 
@@ -154,14 +156,14 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	//draw the rail gun and the duck on top
 	//push for gun
 	glPushMatrix();
-	glTranslated(0, .5, -93);
+	glTranslated(initialGunPosition.x, initialGunPosition.y, initialGunPosition.z);
 	//glRotated(180, 0, 1, 0);
 	if (runForever == false) {
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
 	}
 	else {
-		automate();
+		automateGun();
 	}
 	this->theGun.render();
 	
@@ -214,9 +216,9 @@ void Scene::fire() {
 
 	if(!this->theDuck.isMoving()) {
 		vec3 velocity = vec3(
-			-sin(theGun.getRotationAngle() * piOver180) * this->theGun.getGunPower(),
-			sin(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower(),
-			cos(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower()
+			-sin(theGun.getRotationAngle() * degToRad) * this->theGun.getGunPower(),
+			sin(theGun.getInclinationAngle() * degToRad) * this->theGun.getGunPower(),
+			cos(theGun.getInclinationAngle() * degToRad) * this->theGun.getGunPower()
 			);
 
 	//	cout << "Inclincation: " << theGun.getInclinationAngle() << "Rotation: " << theGun.getRotationAngle() << endl;
@@ -408,31 +410,48 @@ void Scene::displayBalloonPointValue(Balloon & b) {
 
 }
 
-void Scene::automate() {
-	vec3 distance = vec3(1000);
+void Scene::automateGun() {
+
+	//closestTargetPosition will become a balloon position
+	vec3 closestTargetPosition = vec3(1000);
+
+	//find the distance from the gun to the target (without using pow()!)
+	double distanceToClosestTarget = sqrt(
+		(closestTargetPosition.x - initialGunPosition.x) * (closestTargetPosition.x - initialGunPosition.x) + 
+		(closestTargetPosition.y - initialGunPosition.y) * (closestTargetPosition.y - initialGunPosition.y) +
+		(closestTargetPosition.z - initialGunPosition.z) * (closestTargetPosition.z - initialGunPosition.z)
+	);
 
 	//find the closest balloon to the gun
 	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
 
 		//only check if it's in play
-		if (!iter->getShouldBeRemoved())
-			if(distance.length() < (iter->getPosition() - vec3(0, .5, -93)).length())
-				distance = iter->getPosition() - vec3(0, .5, -93);
+		if (iter->getShouldBeRemoved() == false) {
+			
+			//calculate the distance from gun to balloon
+			double balloonDistance = sqrt(
+				(iter->getPosition().x - initialGunPosition.x) * (iter->getPosition().x - initialGunPosition.x) + 
+				(iter->getPosition().y - initialGunPosition.y) * (iter->getPosition().y - initialGunPosition.y) +
+				(iter->getPosition().z - initialGunPosition.z) * (iter->getPosition().z - initialGunPosition.z)
+			);
+
+			//if the distance is less than the closest, then make it the closest
+			if (balloonDistance < distanceToClosestTarget) {
+				distanceToClosestTarget = balloonDistance;
+				closestTargetPosition = iter->getPosition();
+			}
+		}
 	}
 
-	
 	
 
 
 	//calculate the angles needed to hit
-	double targetRotation = atan(distance.x / distance.z) * piOver180;
+	double targetRotation = atan(closestTargetPosition.x / closestTargetPosition.z) * radToDeg;
 
-	double targetInclination = asin(distance.y / distance.length()) * piOver180; 
+	double targetInclination = asin(closestTargetPosition.y / closestTargetPosition) * radToDeg; 
 	//move the gun into position
-	theGun.setInclinationAngle(targetInclination);
+//	theGun.setInclinationAngle(targetInclination);
 	theGun.setRotationAngle(targetRotation);
 
-	//fire the duck
-	if(!theDuck.isMoving())
-		fire();
 }

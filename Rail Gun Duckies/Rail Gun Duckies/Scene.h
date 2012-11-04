@@ -74,7 +74,7 @@ private:
 //	void placeDuck();
 	void placeBalloons();
 	void resetDuck();
-	void automate();
+	void automateGun();
 
 	static int score;
 	static int ducksRemaining;
