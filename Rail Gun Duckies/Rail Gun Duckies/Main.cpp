@@ -124,10 +124,6 @@ void displayGameText() {
 	glDisable(GL_LIGHTING);
 	glColor3d(1, 1, 1);
 
-
-	//for each balloon
-	
-	
 	
 
 	glPushMatrix();
@@ -316,7 +312,8 @@ void SwitchingDisplayFunc() {
 		break;
 
 	case GAME_FOREVER:
-	//	s.runGameMode(true, elapsed_time, *w);
+		s.runGameMode(true, timeStep, *w);
+		displayGameText();
 		break;
 
 	default: break;

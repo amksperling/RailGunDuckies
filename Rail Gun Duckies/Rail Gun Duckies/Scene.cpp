@@ -155,10 +155,10 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	glPushMatrix();
 	glTranslated(0, .5, -93);
 	//glRotated(180, 0, 1, 0);
-	if (!runForever) {
+	//if (runForever == false) {
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
-	}
+	//}
 	//else {
 	//	automate();
 	//}
@@ -171,11 +171,15 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	if (!this->theDuck.isMoving()) {
 		glPushMatrix();
 		glTranslated(initialDuckPosition.x, initialDuckPosition.y, initialDuckPosition.z);
+
+		//rotate the duck on the gun
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
 
+		//store the final launch angles fr later
 		theDuck.setLaunchInclination(theGun.getRotationAngle());
 		theDuck.setLaunchRotation(theGun.getInclinationAngle());
+
 		glScaled(.5, .5, .5);
 		if (w.getCameraMode() != FIRST_PERSON) // dont render the duck in first person!
 			this->theDuck.render();
@@ -187,6 +191,8 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		//update the position and actually move the duck to that position
 		theDuck.updatePosition(timeStep, gravity);
 		glTranslated(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z);
+
+		//rotate the duck based on its launch angles
 		glRotated(-theDuck.getLaunchRotation(), 1, 0, 0);
 		glRotated(-theDuck.getLaunchInclination(), 0, 1, 0);
 
@@ -398,4 +404,24 @@ void Scene::displayBalloonPointValue(Balloon & b) {
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)pointValue.c_str());
 	glPopMatrix();
 
+}
+
+void Scene::automate() {
+	vec3 distance;
+
+	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
+
+		//only check if it's in play
+		if (!iter->getShouldBeRemoved())
+			distance = iter->getPosition() - theGun.getPosition();
+	}
+
+	//find the closest balloon to the gun
+
+
+	//calculate the angles needed to hit
+
+	//move the gun into position
+
+	//fire the duck
 }
