@@ -386,7 +386,7 @@ void Scene::resetGame() {
 		iter->setShouldBeRemoved(true);
 		iter->setPosition(vec3(300, -300, 0));
 	}
-	if (gameOver)
+	if (!gameWon)
 		this->score = 0;
 	this->balloonsPlaced = false;
 	this->gameOver = false;

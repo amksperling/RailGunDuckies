@@ -8,6 +8,8 @@ Window::Window() {
 	glutCreateWindow(&DEFAULT_TITLE[0]);
 	this->isFullScreen = false;
 	this->isWireFrame = false;
+	this->isPaused = false;
+	this->ghostMode = false;
 	this->w = DEFAULT_WIDTH;
 	this->h = DEFAULT_HEIGHT;
 	this->sceneMode = DUCK_BEAUTY;
@@ -137,6 +139,17 @@ void Window::setBasicLights() {
 	////set up basic light position
 	GLfloat light_position[] = { 2 , 2, 1, 0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+}
+
+void Window::toggleGhostMode() {
+	if (!ghostMode) {
+		glBlendFunc(GL_ONE,  GL_ONE);
+		glEnable(GL_BLEND);
+	}
+	else
+		glDisable(GL_BLEND);
+
+	ghostMode = !ghostMode;
 }
 
 

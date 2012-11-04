@@ -62,6 +62,7 @@ public:
 	void toggleFullScreen();
 	void toggleWireFrame();
 	void toggleLights();
+	void toggleGhostMode();
 
 	
 	inline void setPause(bool newPausedValue) { this->isPaused = newPausedValue; }
@@ -88,6 +89,8 @@ private:
 	bool isFullScreen;
 	bool isWireFrame;
 	bool isPaused;
+	bool ghostMode;
+
 	double aspect;
 	int sceneMode;
 	int cameraMode;

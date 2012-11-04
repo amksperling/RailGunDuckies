@@ -52,21 +52,22 @@
 	- We made a model that is better than the reference
 	- The duck changes color each time it is fired.
 	
-- We used C++11 random distributions and random engines in order to generate 
-  the random positions for the balloons and the random colors for the duck.
-  This is better than just using a c-style rand().
+- We used C++11 random distributions and random engines in order to generate the random positions for the balloons and the random colors for the duck. This is better than just using a c-style rand().
   
- - We place many balloons at once (more than the minimun one at a time).
+- We place many balloons at once (more than the minimun one at a time).
  
- - Balloons use the alpha channel to become semi transparent
+- Balloons use the alpha channel to become semi transparent
  
- - The railgun has user adjustible power settings. The higher the power, the 
+- The railgun has user adjustible power settings. The higher the power, the 
    farther the duck flies.
    
- - The game can be paused at any time during play. 
+- The game can be paused at any time during play. 
+ 
+- The lights can be turned on and off
    
- - Extra keys implemented:
+- Extra keys implemented:
 	- 'f' toggles fullscreen mode
 	- 'p' toggles pause
+	- 'l' toggles lights on and off
 	- '[' lowers gun power
 	- ']' raises gun power

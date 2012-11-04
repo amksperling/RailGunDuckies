@@ -70,7 +70,7 @@ double getTimeSinceLastFrame() {
 
 //function for displaying informational text in an
 // orthographic projection. 
-void displayText(string text) {
+void displayBeautyText(string text) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, w->getWidth(), 0, w->getHeight(), 1, 10); // set ortho projection based on window size
@@ -266,7 +266,7 @@ void SwitchingDisplayFunc() {
 		CheckGLErrors("begin duck beauty:");
 		s.runBeautyMode(DUCK_BEAUTY);
 		CheckGLErrors("end duck beauty: ");
-		displayText("Duck Beauty Mode");
+		displayBeautyText("Duck Beauty Mode");
 	//	s.duckBeauty();
 		/*glPushMatrix();
 		glTranslated(-3, 0, 0);
@@ -281,7 +281,7 @@ void SwitchingDisplayFunc() {
 	case RAILGUN_BEAUTY:
 		CheckGLErrors("begin railgun beauty:");
 		s.runBeautyMode(RAILGUN_BEAUTY);
-		displayText("RailGun Beauty Mode");
+		displayBeautyText("RailGun Beauty Mode");
 		CheckGLErrors("end gun beauty:");
 	//	s.railGunBeauty();
 		//glPushMatrix();
@@ -292,7 +292,7 @@ void SwitchingDisplayFunc() {
 	case BALLOON_BEAUTY:
 		CheckGLErrors("begin balloon beauty:");
 		s.runBeautyMode(BALLOON_BEAUTY);
-		displayText("Balloon Beauty Mode");
+		displayBeautyText("Balloon Beauty Mode");
 		CheckGLErrors("end balloon beauty:");
 	//	s.balloonBeauty();
 		//glPushMatrix();
@@ -462,6 +462,10 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 		s.resetGame();
 		break;
 
+	case 'g':
+		w->toggleGhostMode();
+		break;
+
 	case 32: //spacebar
 		if (w->getSceneMode() == GAME || w->getSceneMode() == GAME_FOREVER)
 			s.fire();
@@ -539,7 +543,7 @@ int main(int argc, char *argv[]) {
 		glutCreateWindow("Driver");
 	 */
 	w = new Window();
-	w->setPause(false);
+
 	initGL();
 
 	glutDisplayFunc(SwitchingDisplayFunc);
