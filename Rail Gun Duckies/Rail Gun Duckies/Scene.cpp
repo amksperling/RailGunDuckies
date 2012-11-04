@@ -18,9 +18,11 @@ bool Scene::balloonsPlaced = false;
 bool Scene::gameOver = false;
 bool Scene::gameWon = false;
 
-static double gravity = -32.2;
-static double piOver180 = 0.01745329251;
-static vec3 initialDuckPosition = vec3(0, 1.2, -94);
+static const double gravity = -32.2;
+static const double degToRad = 0.01745329251;
+static const double radToDeg = 57.2957795131;
+static const vec3 initialDuckPosition = vec3(0, 1.2, -94);
+static const vec3 initialGunPosition = vec3(0, .5, -93);
 
 static default_random_engine randomEngine;
 
@@ -124,6 +126,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		break;
 	}
 
+	
 	//gluLookAt(0, 5, -100, 0, 0, 50, 0, 1, 0);
 	glPushMatrix();
 	this->skyBox.setUpForRender();
@@ -153,10 +156,14 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	//draw the rail gun and the duck on top
 	//push for gun
 	glPushMatrix();
-	glTranslated(0, .5, -93);
+	glTranslated(initialGunPosition.x, initialGunPosition.y, initialGunPosition.z);
 	//glRotated(180, 0, 1, 0);
+	
+	if (runForever)
+		automateGun();
 	glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 	glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
+
 	this->theGun.render();
 	
 	glPopMatrix();
@@ -165,9 +172,19 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	//set its initial position
 	if (!this->theDuck.isMoving()) {
 		glPushMatrix();
+		
 		glTranslated(initialDuckPosition.x, initialDuckPosition.y, initialDuckPosition.z);
+
+		//rotate the duck on the gun
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
+
+		//store the final launch angles fr later
+		theDuck.setLaunchInclination(theGun.getRotationAngle());
+		theDuck.setLaunchRotation(theGun.getInclinationAngle());
+
+		if (runForever)
+			fire();
 		glScaled(.5, .5, .5);
 		if (w.getCameraMode() != FIRST_PERSON) // dont render the duck in first person!
 			this->theDuck.render();
@@ -179,7 +196,10 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		//update the position and actually move the duck to that position
 		theDuck.updatePosition(timeStep, gravity);
 		glTranslated(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z);
-		
+
+		//rotate the duck based on its launch angles
+		glRotated(-theDuck.getLaunchRotation(), 1, 0, 0);
+		glRotated(-theDuck.getLaunchInclination(), 0, 1, 0);
 
 		//make the duck stop when it hits the ground
 		if (this->theDuck.hitTheGround()) {
@@ -198,9 +218,9 @@ void Scene::fire() {
 
 	if(!this->theDuck.isMoving()) {
 		vec3 velocity = vec3(
-			-sin(theGun.getRotationAngle() * piOver180) * this->theGun.getGunPower(),
-			sin(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower(),
-			cos(theGun.getInclinationAngle() * piOver180) * this->theGun.getGunPower()
+			-sin(theGun.getRotationAngle() * degToRad) * this->theGun.getGunPower(),
+			sin(theGun.getInclinationAngle() * degToRad) * this->theGun.getGunPower(),
+			cos(theGun.getInclinationAngle() * degToRad) * this->theGun.getGunPower()
 			);
 
 	//	cout << "Inclincation: " << theGun.getInclinationAngle() << "Rotation: " << theGun.getRotationAngle() << endl;
@@ -209,8 +229,10 @@ void Scene::fire() {
 	}
 	else {
 		ducksRemaining--;
-		if (ducksRemaining == 0)
+		if (ducksRemaining == 0) {
+			gameOver = true;
 			resetGame();
+		}
 		resetDuck();
 	}
 }
@@ -364,12 +386,14 @@ void Scene::resetGame() {
 		iter->setShouldBeRemoved(true);
 		iter->setPosition(vec3(300, -300, 0));
 	}
+	if (gameOver)
+		this->score = 0;
 	this->balloonsPlaced = false;
 	this->gameOver = false;
 	this->gameWon = false;
 	this->balloonsRemaining = MAX_BALLOONS;
 	this->ducksRemaining = MAX_DUCKS;
-	this->score = 0;
+	
 	this->theDuck.setColor(vec3(1, 1, 0));
 	resetDuck();
 	//balloons.clear();
@@ -388,5 +412,54 @@ void Scene::displayBalloonPointValue(Balloon & b) {
 	//actually draw the score string (as a c string)
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)pointValue.c_str());
 	glPopMatrix();
+
+}
+
+void Scene::automateGun() {
+
+	//closestTargetPosition will become a balloon position
+	vec3 closestTargetPosition = vec3(1000);
+
+	//find the distance from the gun to the target (without using pow()!)
+	double distanceToClosestTarget = sqrt(
+		(closestTargetPosition.x - initialGunPosition.x) * (closestTargetPosition.x - initialGunPosition.x) + 
+		(closestTargetPosition.y - initialGunPosition.y) * (closestTargetPosition.y - initialGunPosition.y) +
+		(closestTargetPosition.z - initialGunPosition.z) * (closestTargetPosition.z - initialGunPosition.z)
+	);
+
+	//find the closest balloon to the gun
+	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
+
+		//only check if it's in play
+		if (iter->getShouldBeRemoved() == false) {
+			
+			//calculate the distance from gun to balloon
+			double balloonDistance = sqrt(
+				(iter->getPosition().x - initialGunPosition.x) * (iter->getPosition().x - initialGunPosition.x) + 
+				(iter->getPosition().y - initialGunPosition.y) * (iter->getPosition().y - initialGunPosition.y) +
+				(iter->getPosition().z - initialGunPosition.z) * (iter->getPosition().z - initialGunPosition.z)
+			);
+
+			//if the distance is less than the closest, then make it the closest
+			if (balloonDistance < distanceToClosestTarget) {
+				distanceToClosestTarget = balloonDistance;
+				closestTargetPosition = iter->getPosition();
+			}
+		}
+	}
+
+	
+
+
+	//calculate the angles needed to hit
+	double targetRotation = -atan((closestTargetPosition.x - initialGunPosition.x) / (closestTargetPosition.z - initialGunPosition.z)) * radToDeg;
+
+	// the inclination includes a slight offset to compensate for the duck's drop over time
+	// its not perfect, but it works on most targets
+	double targetInclination = asin((closestTargetPosition.y - initialGunPosition.y)/ distanceToClosestTarget) * radToDeg + .3 * distanceToClosestTarget;
+
+	//move the gun into position
+	theGun.setInclinationAngle(targetInclination);
+	theGun.setRotationAngle(targetRotation);
 
 }
