@@ -155,8 +155,13 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	glPushMatrix();
 	glTranslated(0, .5, -93);
 	//glRotated(180, 0, 1, 0);
-	glRotated(-theGun.getRotationAngle(), 0, 1, 0);
-	glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
+	if (!runForever) {
+		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
+		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
+	}
+	//else {
+	//	automate();
+	//}
 	this->theGun.render();
 	
 	glPopMatrix();
@@ -168,6 +173,9 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		glTranslated(initialDuckPosition.x, initialDuckPosition.y, initialDuckPosition.z);
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
+
+		theDuck.setLaunchInclination(theGun.getRotationAngle());
+		theDuck.setLaunchRotation(theGun.getInclinationAngle());
 		glScaled(.5, .5, .5);
 		if (w.getCameraMode() != FIRST_PERSON) // dont render the duck in first person!
 			this->theDuck.render();
@@ -179,7 +187,8 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		//update the position and actually move the duck to that position
 		theDuck.updatePosition(timeStep, gravity);
 		glTranslated(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z);
-		
+		glRotated(-theDuck.getLaunchRotation(), 1, 0, 0);
+		glRotated(-theDuck.getLaunchInclination(), 0, 1, 0);
 
 		//make the duck stop when it hits the ground
 		if (this->theDuck.hitTheGround()) {

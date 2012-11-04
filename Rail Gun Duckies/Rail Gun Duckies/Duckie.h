@@ -27,15 +27,18 @@ public:
 	void render();
 
 	inline vec3 getPosition() const {return this->position; }
-	inline double getMass() const { return this->mass; }
 	inline vec3 getVelocity() const { return this->velocity; }
 	inline vec3 getAcceleration() const { return this->acceleration; }
+
+	inline double getLaunchRotation() const { return this->launchRotation; }
+	inline double getLaunchInclination() const { return this->launchInclination; }
 
 	inline void setPosition(vec3 position) { this->position = position; }
 	inline void setVelocity(vec3 velocity) { this->velocity = velocity; }
 	inline void setAcceleration(vec3 acceleration) { this->acceleration = acceleration; }
 	inline void setLaunched(bool launched) { this->launched = launched; }
-
+	inline void setLaunchRotation(double launchRotation) {  if(launched) return; this->launchRotation = launchRotation; }
+	inline void setLaunchInclination(double launchInclination) { if(launched) return; this->launchInclination = launchInclination; }
 	
 	void updatePosition(double elapsed_time, double gravity);
 	
@@ -52,7 +55,8 @@ private:
 	bool launched;
 	bool hitBalloon;
 
-	double mass;
+	double launchRotation;
+	double launchInclination;
 
 	vec3 velocity;
 	vec3 acceleration;
