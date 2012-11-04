@@ -362,7 +362,7 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 void Scene::resetGame() {
 	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
 		iter->setShouldBeRemoved(true);
-		
+		iter->setPosition(vec3(300, -300, 0));
 	}
 	this->balloonsPlaced = false;
 	this->gameOver = false;
