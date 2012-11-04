@@ -158,13 +158,12 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	glPushMatrix();
 	glTranslated(initialGunPosition.x, initialGunPosition.y, initialGunPosition.z);
 	//glRotated(180, 0, 1, 0);
-	if (runForever == false) {
-		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
-		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
-	}
-	else {
+	
+	if (runForever)
 		automateGun();
-	}
+	glRotated(-theGun.getRotationAngle(), 0, 1, 0);
+	glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
+
 	this->theGun.render();
 	
 	glPopMatrix();
@@ -173,6 +172,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	//set its initial position
 	if (!this->theDuck.isMoving()) {
 		glPushMatrix();
+		
 		glTranslated(initialDuckPosition.x, initialDuckPosition.y, initialDuckPosition.z);
 
 		//rotate the duck on the gun
@@ -183,6 +183,8 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		theDuck.setLaunchInclination(theGun.getRotationAngle());
 		theDuck.setLaunchRotation(theGun.getInclinationAngle());
 
+		if (runForever)
+			fire();
 		glScaled(.5, .5, .5);
 		if (w.getCameraMode() != FIRST_PERSON) // dont render the duck in first person!
 			this->theDuck.render();
@@ -447,11 +449,14 @@ void Scene::automateGun() {
 
 
 	//calculate the angles needed to hit
-	double targetRotation = atan(closestTargetPosition.x / closestTargetPosition.z) * radToDeg;
+	double targetRotation = -atan((closestTargetPosition.x - initialGunPosition.x) / (closestTargetPosition.z - initialGunPosition.z)) * radToDeg;
 
-	double targetInclination = asin(closestTargetPosition.y / closestTargetPosition) * radToDeg; 
+	// the inclination includes a slight offset to compensate for the duck's drop over time
+	// its not perfect, but it works on most targets
+	double targetInclination = asin((closestTargetPosition.y - initialGunPosition.y)/ distanceToClosestTarget) * radToDeg + .3 * distanceToClosestTarget;
+
 	//move the gun into position
-//	theGun.setInclinationAngle(targetInclination);
+	theGun.setInclinationAngle(targetInclination);
 	theGun.setRotationAngle(targetRotation);
 
 }
