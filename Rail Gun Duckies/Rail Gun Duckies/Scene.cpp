@@ -8,7 +8,7 @@ using namespace std;
 
 const double MAX_GUN_POWER = 100;
 const double MIN_GUN_POWER = 0;
-const int MAX_BALLOONS = 10;
+const int MAX_BALLOONS = 1;
 const int MAX_DUCKS = 3;
 
 int Scene::score = 0;
@@ -377,14 +377,15 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 void Scene::resetGame() {
 	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
 		iter->setShouldBeRemoved(true);
-		
+		iter->setPosition(vec3(300, -300, 0));
 	}
 	this->balloonsPlaced = false;
 	this->gameOver = false;
 	this->gameWon = false;
 	this->balloonsRemaining = MAX_BALLOONS;
 	this->ducksRemaining = MAX_DUCKS;
-	this->score = 0;
+	if (gameOver)
+		this->score = 0;
 	this->theDuck.setColor(vec3(1, 1, 0));
 	resetDuck();
 	//balloons.clear();
