@@ -229,8 +229,10 @@ void Scene::fire() {
 	}
 	else {
 		ducksRemaining--;
-		if (ducksRemaining == 0)
+		if (ducksRemaining == 0) {
+			gameOver = true;
 			resetGame();
+		}
 		resetDuck();
 	}
 }
@@ -384,13 +386,14 @@ void Scene::resetGame() {
 		iter->setShouldBeRemoved(true);
 		iter->setPosition(vec3(300, -300, 0));
 	}
+	if (gameOver)
+		this->score = 0;
 	this->balloonsPlaced = false;
 	this->gameOver = false;
 	this->gameWon = false;
 	this->balloonsRemaining = MAX_BALLOONS;
 	this->ducksRemaining = MAX_DUCKS;
-	if (gameOver)
-		this->score = 0;
+	
 	this->theDuck.setColor(vec3(1, 1, 0));
 	resetDuck();
 	//balloons.clear();
