@@ -8,7 +8,7 @@ using namespace std;
 
 const double MAX_GUN_POWER = 100;
 const double MIN_GUN_POWER = 0;
-const int MAX_BALLOONS = 1;
+const int MAX_BALLOONS = 10;
 const int MAX_DUCKS = 3;
 
 int Scene::score = 0;
@@ -124,6 +124,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		break;
 	}
 
+	
 	//gluLookAt(0, 5, -100, 0, 0, 50, 0, 1, 0);
 	glPushMatrix();
 	this->skyBox.setUpForRender();
@@ -155,13 +156,13 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	glPushMatrix();
 	glTranslated(0, .5, -93);
 	//glRotated(180, 0, 1, 0);
-	//if (runForever == false) {
+	if (runForever == false) {
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
-	//}
-	//else {
-	//	automate();
-	//}
+	}
+	else {
+		automate();
+	}
 	this->theGun.render();
 	
 	glPopMatrix();
@@ -408,21 +409,30 @@ void Scene::displayBalloonPointValue(Balloon & b) {
 }
 
 void Scene::automate() {
-	vec3 distance;
+	vec3 distance = vec3(1000);
 
+	//find the closest balloon to the gun
 	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
 
 		//only check if it's in play
 		if (!iter->getShouldBeRemoved())
-			distance = iter->getPosition() - theGun.getPosition();
+			if(distance.length() < (iter->getPosition() - vec3(0, .5, -93)).length())
+				distance = iter->getPosition() - vec3(0, .5, -93);
 	}
 
-	//find the closest balloon to the gun
+	
+	
 
 
 	//calculate the angles needed to hit
+	double targetRotation = atan(distance.x / distance.z) * piOver180;
 
+	double targetInclination = asin(distance.y / distance.length()) * piOver180; 
 	//move the gun into position
+	theGun.setInclinationAngle(targetInclination);
+	theGun.setRotationAngle(targetRotation);
 
 	//fire the duck
+	if(!theDuck.isMoving())
+		fire();
 }
