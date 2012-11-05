@@ -184,7 +184,7 @@ void Object::drawVecArrayCircle(int radialPoints, float radius, float r, float g
 		this->va_indices.push_back(glm::ivec3(startIndex,startIndex+1,startIndex+3));
 		this->va_indices.push_back(glm::ivec3(startIndex,startIndex + 3,startIndex+2)); */
 }
-*/
+
 void Object::setUpForRender() {
 	glTranslated(this->position.x, this->position.y, this->position.z);
 	glRotated(this->rotation.x, 1, 0, 0);

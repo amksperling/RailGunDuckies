@@ -12,8 +12,8 @@ using namespace std;
 
 const int DEFAULT_WIDTH = 1280;
 const int DEFAULT_HEIGHT = 720;
-const int DEFAULT_POS_X = 0;
-const int DEFAULT_POS_Y = 0;
+const int DEFAULT_POS_X = 10;
+const int DEFAULT_POS_Y = 10;
 const string DEFAULT_TITLE = "Rail Gun Duckies";
 
 enum APP_MODES {
