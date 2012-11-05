@@ -21,12 +21,12 @@ Balloon::~Balloon() {
 void Balloon::render() {
 	glDisable(GL_COLOR_MATERIAL);
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE , 0.0);
-	GLboolean blendAlreadyEnabled = false; 
+	GLboolean blendAlreadyEnabled; 
 	glGetBooleanv(GL_BLEND, &blendAlreadyEnabled);
-	if(blendAlreadyEnabled == GL_FALSE){
+	if(blendAlreadyEnabled){
 		int bullshit = 1;
 	}
-	else glEnable(GL_BLEND);
+	glEnable(GL_BLEND);
 	glEnable(GL_CULL_FACE);
 	//Not set to balloon material yet
 	GLfloat material_ambient[] = {0.7f, 0.0f, 0.0f, 0.5f};
@@ -229,7 +229,7 @@ void Balloon::render() {
 	glPopMatrix();
 
 	glEnable(GL_COLOR_MATERIAL);
-	if(blendAlreadyEnabled == GL_FALSE) glDisable(GL_BLEND);
+	if(!blendAlreadyEnabled) glDisable(GL_BLEND);
 }
 
 /* //would overwrite balloon if called
