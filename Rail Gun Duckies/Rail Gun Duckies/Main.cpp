@@ -257,11 +257,10 @@ void initGL() {
 	//glEnable(GL_FRONT_AND_BACK);
 	//glEnable(GL_LIGHT1);
 	glEnable(GL_COLOR_MATERIAL);
-	//glBlendFunc(GL_ONE,  GL_ONE);
-	//glEnable(GL_BLEND);
+	glBlendFunc(GL_ONE,  GL_ONE);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_DEPTH_TEST);
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE , 1.0);
 	//glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER , 1.0);
 
