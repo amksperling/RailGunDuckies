@@ -26,6 +26,7 @@ private:
 	void skySide();
 	void ground();
 	void skyBox();
+	void skyTop();
 
 	static GLuint displayListHandle;
 

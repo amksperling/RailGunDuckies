@@ -30,16 +30,35 @@ void SkyBox::render() {
 
 
 // draw one side of the sky box
+// RGB Color values from http://www.tayloredmktg.com/rgb/
 void SkyBox::skySide() {
 	glDisable(GL_LIGHTING);
 	glPushMatrix();
 	glBegin(GL_QUADS);
 
 	glNormal3f(0, 1, 0);
-	glColor3ub(255, 255, 255);
+	glColor3ub(0, 191, 255);
 	glVertex2d(-100, 100);
 	glVertex2d(100, 100);
-	glColor3ub(0, 0, 150);
+	glColor3ub(0, 0, 100);
+	glVertex2d(100, 0);
+	glVertex2d(-100, 0);
+	
+	glEnd();
+	glPopMatrix();
+	glEnable(GL_LIGHTING);
+}
+
+void SkyBox::skyTop() {
+	glDisable(GL_LIGHTING);
+	glPushMatrix();
+	glBegin(GL_QUADS);
+
+	glNormal3f(0, 1, 0);
+	glColor3ub(0, 191, 255);
+	glVertex2d(-100, 100);
+	glVertex2d(100, 100);
+	//glColor3ub(250, 250, 250);
 	glVertex2d(100, 0);
 	glVertex2d(-100, 0);
 	
@@ -61,7 +80,7 @@ void SkyBox::ground() {
 	glColor3ub(0, 100, 0);
 	glNormal3f(0, 1, 0);
 	glVertex2d(-100, 0);
-	glColor3ub(0, 40, 0);
+	glColor3ub(0, 30, 0);
 	glVertex2d(-100, 200);
 	glVertex2d(100, 200);
 	glColor3ub(0, 100, 0);
@@ -109,7 +128,7 @@ void SkyBox::skyBox() {
 	glScaled(1, 1, 2);
 	glRotated(-90, 1, 0, 0);
 	glRotated(180, 0, 0, 1);
-	skySide();
+	skyTop();
 	glPopMatrix();
 
 	glPopMatrix();
