@@ -64,10 +64,16 @@
 - The game can be paused at any time during play. 
  
 - The lights can be turned on and off
+
+- The game can be reset at any time by the user
+
+- "Ghost Mode." (you just have to see it.)
    
 - Extra keys implemented:
 	- 'f' toggles fullscreen mode
 	- 'p' toggles pause
 	- 'l' toggles lights on and off
+	- 'r' will reset the game
+	- 'g' toggles "Ghost Mode"
 	- '[' lowers gun power
 	- ']' raises gun power
