@@ -230,8 +230,11 @@ void initGL() {
 
 }
 
+/*
+The switching display function is the meat of the entire application.
+It determines which application mode to run and what to display on the screen.
 
-
+*/
 void SwitchingDisplayFunc() {
 	CheckGLErrors("Beginning of Display Function:");
 
@@ -252,35 +255,26 @@ void SwitchingDisplayFunc() {
 	gluPerspective(75, w->getAspect(), 1, 250);
 	glViewport(0, 0, w->getWidth(), w->getHeight());
 	camera();
-//	glPushMatrix(); // push projection matrix	
+
 	CheckGLErrors("push projection ");
+
+	//swtich application modes
+	// for each mode, the 3d scene is drawn, and then the 2d text is displayed over it
 	switch (w->getSceneMode()) {
 
 	case DUCK_BEAUTY:
 		CheckGLErrors("begin duck beauty:");
 		s.runBeautyMode(DUCK_BEAUTY);
-		CheckGLErrors("end duck beauty: ");
 		displayBeautyText("Duck Beauty Mode");
-	//	s.duckBeauty();
-		/*glPushMatrix();
-		glTranslated(-3, 0, 0);
-		g.render();
-		glPopMatrix();
-		glPushMatrix();
-		glTranslated(3, 0, 0);
-		d.render();
-		glPopMatrix();*/
+		CheckGLErrors("end duck beauty: ");
 		break;
 
 	case RAILGUN_BEAUTY:
 		CheckGLErrors("begin railgun beauty:");
 		s.runBeautyMode(RAILGUN_BEAUTY);
 		displayBeautyText("RailGun Beauty Mode");
+
 		CheckGLErrors("end gun beauty:");
-	//	s.railGunBeauty();
-		//glPushMatrix();
-		//r.render();
-		//glPopMatrix();
 		break;
 
 	case BALLOON_BEAUTY:
@@ -288,21 +282,16 @@ void SwitchingDisplayFunc() {
 		s.runBeautyMode(BALLOON_BEAUTY);
 		displayBeautyText("Balloon Beauty Mode");
 		CheckGLErrors("end balloon beauty:");
-	//	s.balloonBeauty();
-		//glPushMatrix();
-		//b.render();
-		//glPopMatrix();
 		break;
 
+	//the game modes require 3 paramaters:
+	// runForever, timeStep, and a window.
+	// the timestep was just calculated above and used here
 	case GAME:
 		CheckGLErrors("begin game:");
-		
 		s.runGameMode(false, timeStep, *w);
 		displayGameText();
 		CheckGLErrors("end game:");
-	/*	glPushMatrix();
-		s.renderWorld();
-		glPopMatrix();*/
 		break;
 
 	case GAME_FOREVER:
@@ -319,111 +308,19 @@ void SwitchingDisplayFunc() {
 
 	CheckGLErrors("End of Display Function:");
 }
-//void DuckieDisplayFunc() {
-//	// use a switch to toggle between modes
-//	// each mode has a separate function
-//
-//	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
-//	
-//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//
-//	glClearColor(1, 1, 1, 0);
-//	glClear(GL_COLOR_BUFFER_BIT);
-//
-//	//set up the world so we can see stuff!
-//	glMatrixMode(GL_PROJECTION);
-//	glLoadIdentity();
-////	glOrtho(-3 * aspect, 3 * aspect, -3, 3, 1, 10);
-//	gluPerspective(60, aspect, 1, 20);
-//	glViewport(0, 0, window_width, window_height);
-//	
-//	glMatrixMode(GL_MODELVIEW);
-//	glLoadIdentity();
-//	glTranslated(0, 0, -8);
-//	camera();
-////	glRotated(elapsed_time * 60, 0, 1, 0);
-//	glPushMatrix();
-//	
-//	b.render();
-////	b.drawDiamond();
-////	b.Triangle();
-//	glPopMatrix();
-//
-//	glPushMatrix();
-//	glTranslated(-3, 0, 0);
-////	glRotated(elapsed_time * 60, 0, -1, 1);
-//	d.render();
-//	glPopMatrix();
-//
-//	glPushMatrix();
-//	glTranslated(3, 0, 0);
-//	d.render();
-//	glPopMatrix();
-//
-//	glPushMatrix();
-//	glTranslated(0, 0, 3);
-//	d.render();
-//	glPopMatrix();
-//
-//	glPushMatrix();
-//	glTranslated(0, 0, -3);
-//	d.render();
-//	glPopMatrix();
-//
-//	//RailGun * basic = new RailGun();
-///*
-//	glPushMatrix();
-//	glTranslated(0, 0, -5);
-//	glTranslated(-3, 0, 0);
-//	glRotated(elapsed_time * 60, 0, 1, 0);
-//
-//
-//	d.render();
-//
-//	//basic->render();
-//
-//
-//	glPopMatrix();
-//
-//	
-//
-//	glPushMatrix();
-//	glTranslated(0, 0, -5);
-//	glTranslated(3, 0, 0);
-//	glRotated(elapsed_time * 60, 1, 0, 0);
-//
-//	// grow the duck
-//	if (pScale <= 1) {
-//		glScaled(pScale, pScale, pScale);
-//		pScale += .001;
-//	}
-//
-//	p.render();
-////	basic->render();
-//
-////	delete basic;
-//
-//	glPopMatrix();
-//*/
-//	
-//	glutSwapBuffers();
-//	glutPostRedisplay();
-//}
 
+//Called when the window is resized in the OS
 void ReshapeFunc(int width, int height) {
-	
+	//our window manager class handles this
 	w->reshape(width, height);
-	/*if (height <= 0) {
-		return;
-	}
-
-	window_width = width;
-	window_height = height;
-
-
-	aspect = double(width) / double(height);*/ // remember to guard against div/0
+	
 }
 
+
+//The KeyboardFunc handles all standard keyboard controls
+//our window and scene classes handle all functions themselves,
+// so this function becomes really simple
+//see the README for information on implemented functions
 void KeyboardFunc(unsigned char key, int x, int y) {
 	switch (key) {
 	
@@ -450,7 +347,6 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 		else
 			w->setPause(true);
 		break;
-		// need to keep track of elapsed time while pasued and subtract from total time
 
 	case 'r':
 		s.resetGame();
@@ -477,13 +373,15 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 		break;
 
 	case 'x':
-	case 27: 
+	case 27:  //both x and Esc exit the program
 		glutLeaveMainLoop();
 		delete w;
 		return;
 	}
 }
 
+// The specialFunc handles special keys,
+// in this case, only F1 and the arrow keys
 void SpecialFunc(int key, int x, int y) {
 	switch (key) {
 	case GLUT_KEY_F1:
@@ -508,18 +406,22 @@ void SpecialFunc(int key, int x, int y) {
 		break;
 
 	case GLUT_KEY_UP:
-		if (xrot < 45)
+		if (xrot < 35)
 			xrot += 1;
 		break;
 
 	case GLUT_KEY_DOWN:
-		if (xrot > -45)
+		if (xrot > -35)
 			xrot -= 1;
 		break;
 	
 	default: break;
 	}
 }
+
+//we dont even use the timer function,
+// because we call glutPostRedisplay() at the end of 
+// our display function
 void TimerFunc(int value) {
 	glutTimerFunc(GLuint(period), TimerFunc, value);
 	glutPostRedisplay();
@@ -527,7 +429,7 @@ void TimerFunc(int value) {
 
 
 void MouseMovement(int x, int y) {
-	//should probably find a way to convert pixels to degrees
+
 	// pass in the reference to the window in order to access current
 	// height and width
 	if (w && !w->getPaused()) // only move if not paused
@@ -536,16 +438,14 @@ void MouseMovement(int x, int y) {
 
 int main(int argc, char *argv[]) {
 	glutInit(&argc, argv);
-	/*
-		glutInitWindowPosition(0, 0);
-		glutInitWindowSize(init_width, init_height);
-		glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-		glutCreateWindow("Driver");
-	 */
+
+	//create a new default window to handle all glut calls
 	w = new Window();
 
+	//enable initial GL paramaters
 	initGL();
 
+	//list our callbacks
 	glutDisplayFunc(SwitchingDisplayFunc);
 	glutReshapeFunc(ReshapeFunc); // what function called if resized window?
 	glutKeyboardFunc(KeyboardFunc); // what function called if keypressed?
