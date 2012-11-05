@@ -1,5 +1,7 @@
 #include "Object.h"
 
+const float PI = 3.14159265f;
+
 /* Object Class
 
    This class is a super class for all objects used
@@ -84,28 +86,103 @@ void Object::drawRect(float w, float h, float d, float r, float g, float b){
 	//glCallList(cubeDisplayListHandle);
 	glPopMatrix();
 }
-/*
-void Object::drawVecArrayFace(float w, float h, float r, float g, float b){
-		this->va_vertices.push_back(glm::vec3(-1, 0, 1));
-		this->va_colors.push_back(glm::vec4(0.004f,0.306f,0.0f,1.0f));
+
+void Object::drawVecArrayBox(float w, float h, float d, float r, float g, float b, Object &objectToModify){
+	glPushMatrix();
+	glScalef(w,h,d);
+
+	glPushMatrix();
+	glTranslated(0, 0, (d/2));
+	drawVecArrayFace(w,h,r,g,b,objectToModify);
+	glPopMatrix();
+
+
+	glPushMatrix();
+	glRotated(180, 0 , 1, 0);
+	glTranslated(0, 0, (d/2));
+	drawVecArrayFace(w,h,r,g,b,objectToModify);
+	glPopMatrix();
+
+	glPushMatrix();
+	glRotated(90, 0, 1, 0);
+	glTranslated(0, 0, (w/2));
+	drawVecArrayFace(d,h,r,g,b,objectToModify);
+	glPopMatrix();
+
+	glPushMatrix();
+	glRotated(270, 0, 1, 0);
+	glTranslated(0, 0, (w/2));
+	drawVecArrayFace(d,h,r,g,b,objectToModify);
+	glPopMatrix();
+
+	glPushMatrix();
+	glRotated(90, 1, 0, 0);
+	glTranslated(0, 0, (h/2));
+	drawVecArrayFace(w,d,r,g,b,objectToModify);
+	glPopMatrix();
+
+	glPushMatrix();
+	glRotated(270, 1, 0, 0);
+	glTranslated(0, 0, (h/2));
+	drawVecArrayFace(w,d,r,g,b,objectToModify);
+	glPopMatrix();
+
+	glPopMatrix();
+}
+
+void Object::drawVecArrayFace(float w, float h, float r, float g, float b, Object &objectToModify){
+		/*
+		int startIndex = objectToModify.va_vertices.size();
+
+		objectToModify.va_vertices.push_back(glm::vec3(-0.5, 0, 0.5));
+		this->va_colors.push_back(glm::vec4(r, g, b,1.0f));
+		this->va_normals.push_back(glm::vec3(0,0,1));
+
+		this->va_vertices.push_back(glm::vec3(0.5, 0, 0.5));
+		this->va_colors.push_back(glm::vec4(r, g, b,1.0f));
+		this->va_normals.push_back(glm::vec3(0,0,1));
+
+		this->va_vertices.push_back(glm::vec3(-0.5, 0, -0.5));
+		this->va_colors.push_back(glm::vec4(r, g, g,1.0f));
+		this->va_normals.push_back(glm::vec3(0,0,1));
+
+		this->va_vertices.push_back(glm::vec3(0.5, 0, -0.5));
+		this->va_colors.push_back(glm::vec4(r, g, b, 1.0f));
+		this->va_normals.push_back(glm::vec3(0,0,1));
+		
+
+		this->va_indices.push_back(glm::ivec3(startIndex,startIndex+1,startIndex+3));
+		this->va_indices.push_back(glm::ivec3(startIndex,startIndex + 3,startIndex+2)); */
+}
+
+void Object::drawVecArrayCircle(int radialPoints, float radius, float r, float g, float b, Object &objectToModify){
+		/*
+	float angleIncrement = 360/(float)radialPoints;
+
+	for(float angle = 0; angle < 360; angle+=angleIncrement) {
+		this->va_normals.push_back(glm::normalize(glm::vec3(r*cos(angle *(PI/180)),0,r*sin(angle *(PI/180)))));
+	}
+	*/
+	/*objectToModify.va_vertices.push_back(glm::vec3(-1, 0, 1));
+		this->va_colors.push_back(glm::vec4(r, g, b,1.0f));
 		this->va_normals.push_back(glm::vec3(0,1,0));
 
 		this->va_vertices.push_back(glm::vec3(1, 0, 1));
-		this->va_colors.push_back(glm::vec4(0.004f,0.306f,0.0f,1.0f));
+		this->va_colors.push_back(glm::vec4(r, g, b,1.0f));
 		this->va_normals.push_back(glm::vec3(0,1,0));
 
 		this->va_vertices.push_back(glm::vec3(-1, 0, -1));
-		this->va_colors.push_back(glm::vec4(0.004f,0.306f,0.0f,1.0f));
+		this->va_colors.push_back(glm::vec4(r, g, g,1.0f));
 		this->va_normals.push_back(glm::vec3(0,1,0));
 
 		this->va_vertices.push_back(glm::vec3(1, 0, -1));
-		this->va_colors.push_back(glm::vec4(0.004f,0.306f,0.0f,1.0f));
+		this->va_colors.push_back(glm::vec4(r, g, b, 1.0f));
 		this->va_normals.push_back(glm::vec3(0,1,0));
 		
 		int startIndex = (int)omegaPoints * (int)phiPoints;
 
 		this->va_indices.push_back(glm::ivec3(startIndex,startIndex+1,startIndex+3));
-		this->va_indices.push_back(glm::ivec3(startIndex,startIndex + 3,startIndex+2));
+		this->va_indices.push_back(glm::ivec3(startIndex,startIndex + 3,startIndex+2)); */
 }
 */
 void Object::setUpForRender() {

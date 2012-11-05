@@ -25,7 +25,9 @@ public:
 	void setUpForRender();
 
 	void drawRect(float w, float h, float d, float r, float g, float b);
-	void drawVecArrayFace(float w, float h, float r, float g, float b);
+	void Object::drawVecArrayBox(float w, float h, float d, float r, float g, float b, Object &objectToModify);
+	void Object::drawVecArrayFace(float w, float h, float r, float g, float b, Object &objectToModify);
+	void Object::drawVecArrayCircle(int radialPoints, float radius, float r, float g, float b, Object &objectToModify);
 
 	inline void setShouldBeRemoved(bool shouldBeRemoved) { this->shouldBeRemoved = shouldBeRemoved; }
 	inline void setIsMoving(bool isMoving) { this->isMoving = isMoving; }

@@ -68,15 +68,17 @@ void Balloon::render() {
 		GLfloat anglePoints = 18;
 		GLfloat angleIncrement = 360/anglePoints;
 
+		GLfloat radialIncreasePerHeightIncrement = 0.02;
+
 		for(height = (GLfloat)-1.45f; height >=(GLfloat)-1.55f; height -=heightIncrement) {
 			for(angle = 0; angle < 360; angle+=angleIncrement){
 				this->va_vertices.push_back(glm::vec3((r * cos(angle*(PI/180))), height, (r * sin(angle*(PI/180)))));
 				this->va_colors.push_back(glm::vec4(1.0f,0.0f,0.0f,1.0f));
 			}
-			r+=(GLfloat)0.02;
+			r+=radialIncreasePerHeightIncrement;
 		}
 	
-		r-=0.02f;
+		r-=radialIncreasePerHeightIncrement;
 
 		GLfloat a;
 		GLfloat aMax = (omegaPoints - 1) * phiPoints;
