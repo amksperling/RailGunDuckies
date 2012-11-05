@@ -115,6 +115,8 @@ void displayGameText() {
 	//notice use of setprecision() to limit decimal values
 	string gunRotation = "Gun Rotation: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(3) << s.getGunRotation()) )->str();
 	string gunInclination = "Gun Inclination: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(2) << s.getGunInclination()) )->str();
+	
+	//more info text
 	string difficulty = "Difficulty: " + s.getDifficultyString();
 	string automated = "AUTOMATED";
 	string paused = "PAUSED";
@@ -173,7 +175,7 @@ void displayGameText() {
 
 	//move over to the right side
 	glScaled(10, 10, 1);
-	glTranslated(w->getWidth() - 140, -80, 0);
+	glTranslated(w->getWidth() - 140, -60, 0);
 	glScaled(.1, .1, 1);
 
 
@@ -536,23 +538,27 @@ void SpecialFunc(int key, int x, int y) {
 
 	//useing arrow keys to control camera for now
 	case GLUT_KEY_LEFT:
-		yrot -= 1;
-		if (yrot < -360) yrot += 360;
+		if (yrot > -35)
+			yrot -= 1;
+		// yrot += 360;
 		break;
 
 	case GLUT_KEY_RIGHT: 
-		yrot += 1;
-		if (yrot < -360) yrot -= 360;
+		if (yrot < 35)
+			yrot += 1;
+		// yrot -= 360;
 		break;
 
 	case GLUT_KEY_UP:
-		xrot += 1;
-		if (xrot < -360) xrot -= 360;
+		if (xrot < 45)
+			xrot += 1;
+		// xrot -= 60;
 		break;
 
 	case GLUT_KEY_DOWN:
-		xrot -= 1;
-		if (xrot < -360) xrot -= 360;
+		if (xrot > -45)
+			xrot -= 1;
+	//xrot -= 60;
 		break;
 	
 	default: break;
@@ -568,7 +574,7 @@ void MouseMovement(int x, int y) {
 	//should probably find a way to convert pixels to degrees
 	// pass in the reference to the window in order to access current
 	// height and width
-	if (w && !w->getPaused())
+	if (w && !w->getPaused()) // only move if not paused
 		s.moveRailGun(x, y, *w);
 }
 
