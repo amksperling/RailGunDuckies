@@ -5,6 +5,8 @@
 
 - All required modes and features specified:
 
+	- The application should run forver (tested > 5 hours on).
+
 	- The duck and gun are drawn using GL Display Lists
 
 	- Beauty Modes for the duck, gun an balloon
@@ -54,9 +56,9 @@
 	
 - We used C++11 random distributions and random engines in order to generate the random positions for the balloons and the random colors for the duck. This is better than just using a c-style rand().
   
-- We place many balloons at once (more than the minimun one at a time).
+- We place many balloons at once (more than the minimum of one at a time).
  
-- Balloons use the alpha channel to become semi transparent
+- Balloons use the alpha channel and blending to become semi transparent
  
 - The railgun has user adjustible power settings. The higher the power, the 
    farther the duck flies.
@@ -67,9 +69,13 @@
 
 - The game can be reset at any time by the user
 
+- More information about the position of the gun is displayed on screen
+
 - "Ghost Mode." (you just have to see it.)
 
-- 3 levels of difficulty! (Easy, normal and hard)
+- Automated mode actually makes a nice attempt to hit balloons. (The specification doesn't say whether automation requires hitting balloons or not!)
+
+- 3 levels of difficulty!  Adjusting gun power is really helpful on hard mode.
    
 - Extra keys implemented:
 	- 'f' toggles fullscreen mode

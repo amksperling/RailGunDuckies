@@ -1,8 +1,6 @@
 
 #include "Duckie.h"
 
-//gravitational constant
-const double g = -9.8;
 
 static GLUquadric *q = gluNewQuadric();
 

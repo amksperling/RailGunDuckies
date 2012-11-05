@@ -124,7 +124,7 @@ void displayGameText() {
 	glDisable(GL_LIGHTING);
 	glColor3d(1, 1, 1);
 
-	
+	//left side
 	//display score
 	glPushMatrix();
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)score.c_str());
@@ -145,26 +145,34 @@ void displayGameText() {
 	glPopMatrix();
 
 	glTranslated(0, 120, 0);
+
+	//display difficulty level
 	glPushMatrix();
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)difficulty.c_str());
 	glPopMatrix();
 
+
+	//move over to the right side
 	glScaled(10, 10, 1);
-	glTranslated(w->getWidth() - 140, -20, 0);
+	glTranslated(w->getWidth() - 140, -40, 0);
 	glScaled(.1, .1, 1);
 
+
+	//display gun power
 	glPushMatrix();
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)gunPower.c_str());
 	glPopMatrix();
 
 	glTranslated(-600, 120, 0);
 
+	//display gun rotation
 	glPushMatrix();
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)gunRotation.c_str());
 	glPopMatrix();
 
 	glTranslated(0, 120, 0);
 
+	//display gun inclination
 	glPushMatrix();
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)gunInclination.c_str());
 	glPopMatrix();

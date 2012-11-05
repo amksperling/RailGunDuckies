@@ -336,14 +336,14 @@ void Scene::placeBalloons() {
 		xLeft = -10;
 		xRight = 10;
 		yBottom = 3;
-		yTop = 20;
+		yTop = 18;
 		zNear = -80;
 		zFar = -60;
 		break;
 	case HARD:
 		
-		xLeft = -10;
-		xRight = 10;
+		xLeft = -15;
+		xRight = 15;
 		yBottom = 3;
 		yTop = 25;
 		zNear = -80;
@@ -510,7 +510,7 @@ void Scene::automateGun() {
 	//calculate the angles needed to hit
 	double targetRotation = -atan((closestTargetPosition.x - initialGunPosition.x) / (closestTargetPosition.z - initialGunPosition.z)) * radToDeg;
 
-	// the inclination includes a slight offset to compensate for the duck's drop over time
+	// the inclination includes a slight offset (based on the distance to the target) to compensate for the duck's drop over time
 	// its not perfect, but it works on most targets
 	double targetInclination = asin((closestTargetPosition.y - initialGunPosition.y)/ distanceToClosestTarget) * radToDeg + .3 * distanceToClosestTarget;
 
