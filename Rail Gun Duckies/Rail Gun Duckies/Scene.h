@@ -18,6 +18,12 @@
 using namespace std;
 using namespace glm;
 
+enum DIFFICULTY {
+	EASY,
+	NORMAL,
+	HARD
+};
+
 class Scene {
 
 public:
@@ -44,15 +50,17 @@ public:
 
 
 	inline int getScore() const { return this->score; }
+	inline int getDifficulty() const { return this->difficulty; }
 	inline int getDucksRemaining() const { return this->ducksRemaining; }
 	inline int getBalloonsRemaining() const{ return this->balloonsRemaining; }
 	inline int getGunPower() const { return int(this->theGun.getGunPower()); }
 	inline double getGunInclination() const { return this->theGun.getInclinationAngle(); }
 	inline double getGunRotation() const { return this->theGun.getRotationAngle(); }
-
+	inline string getDifficultyString() const { return this->difficulty_string; }
 	inline vector<Balloon> & getBalloons() { return this->balloons; }
 	
 	void resetGame();
+	void cycleDifficulty();
 
 private:
 
@@ -80,6 +88,8 @@ private:
 	static int ducksRemaining;
 	static int balloonsRemaining;
 	static bool balloonsPlaced;
+	int difficulty;
+	string difficulty_string;
 
 	GLuint displayListHandle;
 	

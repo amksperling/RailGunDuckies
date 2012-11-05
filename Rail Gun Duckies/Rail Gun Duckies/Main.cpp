@@ -115,7 +115,7 @@ void displayGameText() {
 	//notice use of setprecision() to limit decimal values
 	string gunRotation = "Gun Rotation: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(3) << s.getGunRotation()) )->str();
 	string gunInclination = "Gun Inclination: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(2) << s.getGunInclination()) )->str();
-
+	string difficulty = "Difficulty: " + s.getDifficultyString();
 
 
 	glPushMatrix();
@@ -125,21 +125,28 @@ void displayGameText() {
 	glColor3d(1, 1, 1);
 
 	
-
+	//display score
 	glPushMatrix();
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)score.c_str());
 	glPopMatrix();
 
 	glTranslated(0, 120, 0);
 
+	//display ducks remaining
 	glPushMatrix();
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)ducksRemaining.c_str());
 	glPopMatrix();
 
 	glTranslated(0, 120, 0);
 
+	//display balloons remaining
 	glPushMatrix();
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)balloonsRemaining.c_str());
+	glPopMatrix();
+
+	glTranslated(0, 120, 0);
+	glPushMatrix();
+	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)difficulty.c_str());
 	glPopMatrix();
 
 	glScaled(10, 10, 1);
@@ -464,6 +471,10 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 
 	case 'g':
 		w->toggleGhostMode();
+		break;
+
+	case 'd':
+		s.cycleDifficulty();
 		break;
 
 	case 32: //spacebar

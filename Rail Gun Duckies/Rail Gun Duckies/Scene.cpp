@@ -8,7 +8,7 @@ using namespace std;
 
 const double MAX_GUN_POWER = 100;
 const double MIN_GUN_POWER = 0;
-const int MAX_BALLOONS = 10;
+static int MAX_BALLOONS = 10;
 const int MAX_DUCKS = 3;
 
 int Scene::score = 0;
@@ -34,6 +34,8 @@ Scene::Scene() : displayListHandle(-1) {
 	this->theGun = RailGun::RailGun(false, vec3(0, 1, 7), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
 	this->skyBox = SkyBox::SkyBox(false, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(0.0f, 0.0f, 0.0f, 1.0f));
 	this->theWorld = World::World(false, vec3(0, -2, 4), vec3(0, 0, 0), vec3(20, 20, 20), vec3(0, 0, 0), vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	this->difficulty = NORMAL;
+	this->difficulty_string = "Normal";
 }
 
 void Scene::runBeautyMode(int beautyMode) {
@@ -287,10 +289,67 @@ void Scene::decreaseGunPower(double lower) {
 		this->theGun.decreaseGunPower(lower);
 }
 
+void Scene::cycleDifficulty() {
+	switch (this->getDifficulty()) {
+	case EASY:
+		this->difficulty = NORMAL;
+		this->difficulty_string = "Normal";
+		MAX_BALLOONS = 10;
+		resetGame();
+		break;
+
+	case NORMAL:
+		this->difficulty = HARD;
+		this->difficulty_string = "Hard";
+		MAX_BALLOONS = 20;
+		resetGame();
+		break;
+
+	case HARD:
+		this->difficulty = EASY;
+		this->difficulty_string = "Easy";
+		MAX_BALLOONS = 3;
+		resetGame();
+		break;
+	}
+}
+
 
 //function for placing balloons at semi random
 // yet hittable places
 void Scene::placeBalloons() {
+	int xLeft, xRight, yBottom, yTop, zNear, zFar;
+
+	//set number of balloons and range of positions based on difficulty
+	switch (this->getDifficulty()) {
+	case EASY:
+		
+		xLeft = -10;
+		xRight = 10;
+		yBottom = 3;
+		yTop = 15;
+		zNear = -80;
+		zFar = -70;
+		break;
+	case NORMAL:
+		
+		xLeft = -10;
+		xRight = 10;
+		yBottom = 3;
+		yTop = 20;
+		zNear = -80;
+		zFar = -60;
+		break;
+	case HARD:
+		
+		xLeft = -10;
+		xRight = 10;
+		yBottom = 3;
+		yTop = 25;
+		zNear = -80;
+		zFar = -20;
+		break;
+	}
 
 	int xPosition, yPosition, zPosition;
 	Balloon b = Balloon::Balloon(false, vec3(0, 2, 4), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
@@ -300,15 +359,12 @@ void Scene::placeBalloons() {
 
 	for (int i = 0; i < MAX_BALLOONS; ++i) {
 
-		//x (horizontal) position should be within -50 to 50
-		xPosition = genRandomInt(-10, 10);
+		//generate balloon positions based on difficulty level		
+		xPosition = genRandomInt(xLeft, xRight);
+		
+		yPosition = genRandomInt(yBottom, yTop);
 
-		//y (vertical) position is from 10 to 75
-		yPosition = genRandomInt(3, 20);
-
-
-		//z (depth) position shoul be between -80 and 80
-		zPosition = genRandomInt(-80, -60);
+		zPosition = genRandomInt(zNear, zFar);
 
 		// set the position of the balloon and its point value based on the position
 		b.setPosition(vec3(xPosition, yPosition, zPosition));

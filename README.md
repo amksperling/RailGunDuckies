@@ -68,12 +68,15 @@
 - The game can be reset at any time by the user
 
 - "Ghost Mode." (you just have to see it.)
+
+- 3 levels of difficulty! (Easy, normal and hard)
    
 - Extra keys implemented:
 	- 'f' toggles fullscreen mode
 	- 'p' toggles pause
 	- 'l' toggles lights on and off
 	- 'r' will reset the game
+	- 'd' cycles difficulty level
 	- 'g' toggles "Ghost Mode"
 	- '[' lowers gun power
 	- ']' raises gun power
