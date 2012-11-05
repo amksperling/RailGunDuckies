@@ -80,7 +80,7 @@ void Scene::runBeautyMode(int beautyMode) {
 		glPushMatrix();
 		//glTranslated(0, 2, 4);
 		this->aBalloon.setUpForRender();
-		glRotated(elapsed_time * 30, 0, 0.5, 0.5);
+		glRotated(elapsed_time * 30 * 2, 0, 0.8, 0.2);
 		this->aBalloon.render();
 		glPopMatrix();
 		break;

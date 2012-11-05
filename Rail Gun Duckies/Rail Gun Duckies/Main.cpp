@@ -257,7 +257,6 @@ void initGL() {
 	//glEnable(GL_FRONT_AND_BACK);
 	//glEnable(GL_LIGHT1);
 	glEnable(GL_COLOR_MATERIAL);
-	glBlendFunc(GL_ONE,  GL_ONE);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);

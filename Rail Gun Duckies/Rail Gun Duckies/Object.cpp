@@ -186,6 +186,7 @@ void Object::drawVecArrayCircle(int radialPoints, float radius, float r, float g
 }
 
 void Object::setUpForRender() {
+
 	glTranslated(this->position.x, this->position.y, this->position.z);
 	glRotated(this->rotation.x, 1, 0, 0);
 	glRotated(this->rotation.y, 0, 1, 0);

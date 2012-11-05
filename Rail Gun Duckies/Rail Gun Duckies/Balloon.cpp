@@ -19,18 +19,19 @@ Balloon::~Balloon() {
 }
 
 void Balloon::render() {
-
+	//glDisable(GL_CULL_FACE);
 	glDisable(GL_COLOR_MATERIAL);
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE , 0.0);
 	GLboolean blendAlreadyEnabled; 
 	glGetBooleanv(GL_BLEND, &blendAlreadyEnabled);
+	if(blendAlreadyEnabled) glBlendFunc(GL_ONE, GL_ONE);
+	else glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
-	glEnable(GL_CULL_FACE);
 
 	//Not set to balloon material yet
-	GLfloat material_ambient[] = {0.7f, 0.0f, 0.0f, 0.5f};
-	GLfloat material_diffuse[] = { 0.5f, 0.0f, 0.0f, 0.5f};
-    GLfloat material_specular[] = { 0.7f, 0.6f, 0.6f, 0.5f };
+	GLfloat material_ambient[] = {1.0f, 0.1f, 0.1f, 0.8f};//{ 0.7f, 0.6f, 0.6f, 0.7f};
+    GLfloat material_diffuse[] = {1.0f, 0.1f, 0.1f, 0.8f};//{ 0.7f, 0.6f, 0.6f, 0.7f};
+    GLfloat material_specular[] = { 0.7f, 0.6f, 0.6f, 0.7f};
     GLfloat material_shininess[] = { .25f * 128.0f };
 
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient);
@@ -223,12 +224,16 @@ void Balloon::render() {
 	glPushMatrix();
 	glTranslated(0, -1.55, 0);
 	glRotated(90, 1, 0, 0);
-	glColor3d(1, 0, 0);
+	glColor3d(1, 0, 0); //change this too
 	glutSolidTorus((GLdouble) 0.018, (GLdouble) 0.11, (GLint) 20, (GLint) 20);
 	glPopMatrix();
 
 	glEnable(GL_COLOR_MATERIAL);
-	if(!blendAlreadyEnabled) glDisable(GL_BLEND);
+//	glEnable(GL_CULL_FACE);
+	if(!blendAlreadyEnabled){
+		glDisable(GL_BLEND);
+	}
+	else glBlendFunc(GL_ONE, GL_ONE);
 }
 
 /* //would overwrite balloon if called

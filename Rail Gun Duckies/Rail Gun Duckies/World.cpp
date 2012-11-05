@@ -8,7 +8,6 @@ World::World(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 veloc
 const float PI = 3.14159265f;
 
 void World::render() {
-	glDisable(GL_CULL_FACE);
 
 	//Not set to balloon material yet
 	GLfloat material_ambient[] = {0.5f, 0.5f, 0.5f, 1.0f};
@@ -57,12 +56,12 @@ void World::render() {
 		for(int a = 0; a < (int)(omegaPoints * phiPoints); a++) {
 		if(a < (omegaPoints - 1) * phiPoints) { //last row does not need to construct triangles as there is no row beneath it
 			if(((int)a % (int)phiPoints) != ((int)phiPoints-1)) {
-				this->va_indices.push_back(glm::ivec3(a,a+phiPoints+1,a+phiPoints));
-				this->va_indices.push_back(glm::ivec3(a,a + 1,a+phiPoints+1));
+				this->va_indices.push_back(glm::ivec3(a+phiPoints,a+phiPoints+1,a));
+				this->va_indices.push_back(glm::ivec3(a+phiPoints+1,a + 1,a));
 			}
 			else {
-				this->va_indices.push_back(glm::ivec3(a,a+1,a+phiPoints));
-				this->va_indices.push_back(glm::ivec3(a,a-phiPoints+1,a+1));
+				this->va_indices.push_back(glm::ivec3(a+phiPoints,a+1,a));
+				this->va_indices.push_back(glm::ivec3(a+1,a-phiPoints+1,a));
 			}
 		}
 			if(a < phiPoints) {
@@ -104,7 +103,7 @@ void World::render() {
 				}
 				sum += glm::cross(six - va_vertices[GLuint(a)], five - va_vertices[GLuint(a)]);
 				sum += glm::cross(one - va_vertices[GLuint(a)], six - va_vertices[GLuint(a)]);
-				this->va_normals.push_back(glm::normalize(sum));
+				this->va_normals.push_back((glm::normalize(sum)));
 			}
 		}
 		

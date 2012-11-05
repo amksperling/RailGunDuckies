@@ -143,6 +143,7 @@ void Window::setBasicLights() {
 
 void Window::toggleGhostMode() {
 	if (!ghostMode) {
+		glBlendFunc(GL_ONE, GL_ONE);
 		glEnable(GL_BLEND);
 	}
 	else
