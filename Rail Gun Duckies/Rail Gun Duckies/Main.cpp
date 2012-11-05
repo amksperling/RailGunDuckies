@@ -116,6 +116,8 @@ void displayGameText() {
 	string gunRotation = "Gun Rotation: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(3) << s.getGunRotation()) )->str();
 	string gunInclination = "Gun Inclination: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(2) << s.getGunInclination()) )->str();
 	string difficulty = "Difficulty: " + s.getDifficultyString();
+	string automated = "AUTOMATED";
+	string paused = "PAUSED";
 
 
 	glPushMatrix();
@@ -151,10 +153,27 @@ void displayGameText() {
 	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)difficulty.c_str());
 	glPopMatrix();
 
+	glTranslated(0, 120, 0);
+
+	//display "automated" if game is automated
+	if (w->getSceneMode() == GAME_FOREVER) {
+		glPushMatrix();
+		glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)automated.c_str());
+		glPopMatrix();
+	}
+
+	glTranslated(0, 120, 0);
+
+	//display "paused" if game is paused
+	if (w->getPaused()) {
+		glPushMatrix();
+		glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)paused.c_str());
+		glPopMatrix();
+	}
 
 	//move over to the right side
 	glScaled(10, 10, 1);
-	glTranslated(w->getWidth() - 140, -40, 0);
+	glTranslated(w->getWidth() - 140, -80, 0);
 	glScaled(.1, .1, 1);
 
 
@@ -549,7 +568,7 @@ void MouseMovement(int x, int y) {
 	//should probably find a way to convert pixels to degrees
 	// pass in the reference to the window in order to access current
 	// height and width
-	if (w)
+	if (w && !w->getPaused())
 		s.moveRailGun(x, y, *w);
 }
 
