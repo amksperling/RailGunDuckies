@@ -235,7 +235,8 @@ void Scene::fire() {
 			gameOver = true;
 			resetGame();
 		}
-		resetDuck();
+		else 
+			resetDuck();
 	}
 }
 
@@ -418,8 +419,9 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 					gameWon = true;
 					gameOver = true;
 					resetGame();
+					return; //return so we don't check collisions on an empty balloon vector
 				}
-				//w.setPause(true);
+				
 			}
 			
 		}
@@ -438,12 +440,12 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 
 
 void Scene::resetGame() {
-	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
-		iter->setShouldBeRemoved(true);
-		iter->setPosition(vec3(300, -300, 0));
-	}
-	if (!gameWon)
+
+	if (!gameWon) {	
+		//only reset score on loss
 		this->score = 0;
+	}
+		
 	this->balloonsPlaced = false;
 	this->gameOver = false;
 	this->gameWon = false;
@@ -452,7 +454,9 @@ void Scene::resetGame() {
 	
 	this->theDuck.setColor(vec3(1, 1, 0));
 	resetDuck();
-	//balloons.clear();
+
+	//chear the balloon vector to keep memory low
+	balloons.clear();
 }
 
 void Scene::displayBalloonPointValue(Balloon & b) {

@@ -532,33 +532,31 @@ void SpecialFunc(int key, int x, int y) {
 		w->cycleSceneMode();
 		break;
 
-	case GLUT_KEY_F2:
-		w->cycleLightingMode();
-		break;
+	// planed feature for multiple lighting modes
+	// not used now
+	//case GLUT_KEY_F2:
+	//	w->cycleLightingMode();
+	//	break;
 
-	//useing arrow keys to control camera for now
+	//useing arrow keys to control global camera 
 	case GLUT_KEY_LEFT:
 		if (yrot > -35)
 			yrot -= 1;
-		// yrot += 360;
 		break;
 
 	case GLUT_KEY_RIGHT: 
 		if (yrot < 35)
 			yrot += 1;
-		// yrot -= 360;
 		break;
 
 	case GLUT_KEY_UP:
 		if (xrot < 45)
 			xrot += 1;
-		// xrot -= 60;
 		break;
 
 	case GLUT_KEY_DOWN:
 		if (xrot > -45)
 			xrot -= 1;
-	//xrot -= 60;
 		break;
 	
 	default: break;

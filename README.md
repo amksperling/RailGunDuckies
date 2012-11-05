@@ -76,6 +76,8 @@
 - Automated mode actually makes a nice attempt to hit balloons. (The specification doesn't say whether automation requires hitting balloons or not!)
 
 - 3 levels of difficulty!  Adjusting gun power is really helpful on hard mode.
+
+- added a global camera to fully appreciate the world (control with arrow keys)
    
 - Extra keys implemented:
 	- 'f' toggles fullscreen mode
@@ -86,3 +88,4 @@
 	- 'g' toggles "Ghost Mode"
 	- '[' lowers gun power
 	- ']' raises gun power
+	- arrow keys: move global camera
