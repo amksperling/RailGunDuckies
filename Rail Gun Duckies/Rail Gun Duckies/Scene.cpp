@@ -31,7 +31,7 @@ Scene::Scene() : displayListHandle(-1) {
 	// order for input into function \/
 	// (bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) ; color not currently set up, so may be ignored
 	this->aBalloon = Balloon::Balloon(false, vec3(0, 2, 4), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	this->theDuck = Duckie::Duckie(false, vec3(0, 1.25, 7), vec3(0, 0, 0), vec3(2, 2, 2), vec3(0, 0, 0), vec4(1, 1, 0, 1));
+	//this->theDuck = Duckie::Duckie(false, vec3(0, 1.25, 7), vec3(0, 0, 0), vec3(2, 2, 2), vec3(0, 0, 0), vec4(1, 1, 0, 1));
 	this->theGun = RailGun::RailGun(false, vec3(0, 1, 7), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
 	this->skyBox = SkyBox::SkyBox(false, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(0.0f, 0.0f, 0.0f, 1.0f));
 	this->theWorld = World::World(false, vec3(0, -2, 4), vec3(0, 0, 0), vec3(20, 20, 20), vec3(0, 0, 0), vec4(0.0f, 0.0f, 0.0f, 1.0f));
@@ -57,11 +57,11 @@ void Scene::runBeautyMode(int beautyMode) {
 	case DUCK_BEAUTY:
 		
 		glPushMatrix();
-	//	glTranslated(0, 1.25, 7);
-	//	glScaled(2, 2, 2);
-		this->theDuck.setUpForRender();
+		glTranslated(0, 1.25, 7);
+		glScaled(2, 2, 2);
+		//this->theDuck.setUpForRender();
 		glRotated(elapsed_time * 30, 0, 1, 0);
-	//	this->theDuck.setColor(vec3(1, 1, 0));
+		this->theDuck.setColor(vec3(1, 1, 0));
 		
 		this->theDuck.render();
 		glPopMatrix();
