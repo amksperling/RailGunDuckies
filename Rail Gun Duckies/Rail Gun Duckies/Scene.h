@@ -95,5 +95,7 @@ private:
 	
 };
 
+//non class functions to generate random ints and doubles
+//uses C++11 random engines and distributions
 double genRandomDouble(double low, double high);
 int genRandomInt(int low, int high);

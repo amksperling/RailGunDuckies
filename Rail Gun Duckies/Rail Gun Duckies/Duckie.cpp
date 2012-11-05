@@ -9,18 +9,26 @@ Duckie::Duckie() : Object() {
 	this->displayListHandle = (GLuint(-1));
 	this->position = glm::vec3(0, 1.5, -95);
 	this->velocity = glm::vec3(0, 0, 0);
-	this->acceleration = glm::vec3(0, 0, 0);
+	//this->acceleration = glm::vec3(0, 0, 0);
 	this->color = glm::vec3(1, 1, 0);
 	this->hitBalloon = false;
 }
 
-//constructor to initialze color
-Duckie::Duckie(vec3 color) : color(color)
-{ }
+//constructor for the object paramaters
+Duckie::Duckie(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) :
+	Object(isMoving, position, rotation, scale, velocity, color),
+	displayListHandle(GLuint(-1)),
+	position(glm::vec3(0, 1.5, -95)),
+	velocity(vec3(0)),
+	color(vec3(1, 1, 0)),
+	hitBalloon(false)
+{  }
 
 Duckie::~Duckie() {
 
 }
+
+
 
 void Duckie::render() {
 		

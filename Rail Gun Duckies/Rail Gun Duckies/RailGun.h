@@ -22,6 +22,8 @@ public:
 	
 	void render();
 
+
+
 	double getRotationAngle() const;
 	double getInclinationAngle() const;
 	inline double getGunPower() const { return this->gunPower; }

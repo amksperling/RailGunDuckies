@@ -20,7 +20,7 @@ public:
 	~Object();
 
 //	virtual void render();
-//  virtual void updatePosition(double timeStep);
+//  virtual void updatePosition(double timeStep, double gravity);
 
 	void setUpForRender();
 
