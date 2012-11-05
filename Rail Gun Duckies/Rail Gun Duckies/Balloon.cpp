@@ -23,9 +23,6 @@ void Balloon::render() {
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE , 0.0);
 	GLboolean blendAlreadyEnabled; 
 	glGetBooleanv(GL_BLEND, &blendAlreadyEnabled);
-	if(blendAlreadyEnabled){
-		int bullshit = 1;
-	}
 	glEnable(GL_BLEND);
 	glEnable(GL_CULL_FACE);
 	//Not set to balloon material yet
