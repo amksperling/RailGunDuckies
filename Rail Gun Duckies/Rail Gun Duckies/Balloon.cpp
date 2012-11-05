@@ -19,12 +19,14 @@ Balloon::~Balloon() {
 }
 
 void Balloon::render() {
+
 	glDisable(GL_COLOR_MATERIAL);
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE , 0.0);
 	GLboolean blendAlreadyEnabled; 
 	glGetBooleanv(GL_BLEND, &blendAlreadyEnabled);
 	glEnable(GL_BLEND);
 	glEnable(GL_CULL_FACE);
+
 	//Not set to balloon material yet
 	GLfloat material_ambient[] = {0.7f, 0.0f, 0.0f, 0.5f};
 	GLfloat material_diffuse[] = { 0.5f, 0.0f, 0.0f, 0.5f};
