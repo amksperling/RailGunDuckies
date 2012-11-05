@@ -1,10 +1,9 @@
-/* The DuckieDriver file is a testing file for the Duckie class
-   and its functions. */ 
+/* The main file  for Rail Gun Duckies:
+	It uses a Window and Scene object to handle
+	all freeglut callbacks and run the program properly.
 
+*/ 
 #include <GL/freeglut.h>
-#include "Duckie.h"
-#include "RailGun.h"
-#include "Balloon.h"
 #include "Window.h"
 #include "Scene.h"
 #include <stdio.h>  
@@ -17,39 +16,26 @@
 
 using namespace std;
 
-const int init_width = 1280;
-const int init_height = 720;
+//the period determines the ideal fps for the application:
+//in this case, its 60.
+const double period = 1000/60;
 
-int window_width = init_width;
-int window_height = init_height;
-
-double aspect = 1;
-
-//bool isWireFrame = false;
-//bool paused = false;
-//bool isFullScreen = false;
-bool duckFullSize = false;
-
-double period = 1000/60;
-
-double pScale = .01;
-
+//the time variables are used to determine the timesteps
+//required for drawing the duck in flight
 static double timeSinceStart = 0.0;
 static double timeStep = 0.0;
 static double oldTimeSinceStart = 0.0;
 
 //the test subjets:
 Window * w;
-//Duckie  d;
-//Duckie p;
-//Balloon b;
-//RailGun r;
-
 Scene s;
 
 
 //angle of rotation for camera
-float xpos = 0, ypos = 0, zpos = 0, xrot = 0, yrot = 0, zrot = 0.0, angle=0.0;
+static float xpos = 0, ypos = 0, zpos = 0, xrot = 0, yrot = 0, zrot = 0.0, angle=0.0;
+
+//camera function for controlling a global camera:
+// controlled with the arrow keys
 void camera (void) {
     glRotatef(xrot,1.0,0.0,0.0);  //rotate our camera on teh 
 									//x-axis (left and right)
@@ -61,14 +47,7 @@ void camera (void) {
 }
 
 
-double getTimeSinceLastFrame() {
-    clock_t currentTime = clock();
-    double ret = (double)(currentTime - oldTimeSinceStart) / (double)CLOCKS_PER_SEC;
-    oldTimeSinceStart = currentTime;
-    return ret;
-}
-
-//function for displaying informational text in an
+//function for displaying beauty mode text in an
 // orthographic projection. 
 void displayBeautyText(string text) {
 	glMatrixMode(GL_PROJECTION);
@@ -81,10 +60,10 @@ void displayBeautyText(string text) {
 	//starting from the bottom left corner, translate text 10 units
 	// up and step back to see it. Scale to desired size
 	glPushMatrix();
-	glTranslatef(0, 10, -1);
-	glScalef(0.25f, 0.25f, 1.0f);
+	glTranslated(0, 10, -1);
+	glScaled(0.25, 0.25, 1);
 	glDisable(GL_LIGHTING); //make sure to disable lighting!
-	glColor3f(1, 1, 1);
+	glColor3d(1, 1, 1);
 
 	//freeglut uses c style strings, so we need to get that.
 	//and actually print the string:
@@ -95,6 +74,8 @@ void displayBeautyText(string text) {
 }
 
 
+
+//function for displaying all informational text in game mode in an ortho projection
 void displayGameText() {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -125,8 +106,8 @@ void displayGameText() {
 	glPushMatrix();
 	glTranslated(0, 5, -1);
 	glScaled(.1, .1, 1);
-	glDisable(GL_LIGHTING);
-	glColor3d(1, 1, 1);
+	glDisable(GL_LIGHTING); //text doesn't need lighting!
+	glColor3d(1, 1, 1);     //make it white
 
 	//left side
 	//display score
@@ -199,37 +180,14 @@ void displayGameText() {
 	glPopMatrix();
 
 
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	//gluPerspective(75, w->getAspect(), 1, 2500);
-	//glViewport(0, 0, w->getWidth(), w->getHeight());
-	//glMatrixMode(GL_MODELVIEW);
-	//glLoadIdentity();
-	////glPushMatrix();
-	//glTranslated(0, 0, -100);
-	//for (auto iter = s.getBalloons().begin(); iter != s.getBalloons().end(); ++iter) {
-	//	//get its point value and convert to a string
-	//	string pointValue = static_cast<ostringstream*>( &(ostringstream() << iter->getPointValue()) )->str();
-
-
-	//	//translate to the balloon's position
-	//	glScaled(.1, .1, 1);
-	//	glTranslated(iter->getPosition().x, iter->getPosition().y + 5, iter->getPosition().z);
-
-
-	//	//and display the point value
-	//	glPushMatrix();
-	//	glutStrokeString(GLUT_STROKE_MONO_ROMAN,(unsigned char *)pointValue.c_str());
-	//	glPopMatrix();
-	//}
-	////glPopMatrix();
-
 	glEnable(GL_LIGHTING); //enable lighting since we're done
 	glPopMatrix();
 
 }
 
 
+//fnuction used in debugging to check for GL errors
+// prints any error to the console if one is found
 bool CheckGLErrors(string location) {
 	bool error_found = false;
 	GLenum  error;
@@ -246,7 +204,7 @@ bool CheckGLErrors(string location) {
 }
 
 //InitGL function to handle all GL initializations
-// for the main function. Handles lighting and depth so far...
+// for the main function. Handles lighting, depth, and face culling
 void initGL() {
 
 	glClearColor (0.0, 0.0, 0.0, 0.0);
@@ -271,6 +229,8 @@ void initGL() {
 	//glLightfv(GL_LIGHT0, GL_AMBIENT, global_ambient);
 
 }
+
+
 
 void SwitchingDisplayFunc() {
 	CheckGLErrors("Beginning of Display Function:");
