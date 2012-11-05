@@ -512,14 +512,13 @@ void Scene::automateGun() {
 
 
 	//calculate the angles needed to hit. using atan2 because I overheard Perry talking about it at the last BBQ
-	double targetRotation = -atan((closestTargetPosition.x - initialGunPosition.x) / (closestTargetPosition.z - initialGunPosition.z) ) * radToDeg;
+	double targetRotation = -atan2((closestTargetPosition.x - initialGunPosition.x), (closestTargetPosition.z - initialGunPosition.z) ) * radToDeg;
 
-	//compensate for rotation a little bit to provided added accuracy
+	//compensate for rotation a little bit to provide added accuracy
 	if (targetRotation < 0)
 		targetRotation += 2;
 	else
 		targetRotation -= 2;
-	//double targetRotation = -atan2((closestTargetPosition.x - initialGunPosition.x), (closestTargetPosition.z - initialGunPosition.z) ) * radToDeg;
 
 	// the inclination includes a slight offset (based on the distance to the target) to compensate for the duck's drop over time
 	// its not perfect, but it works on most targets
