@@ -220,21 +220,15 @@ void initGL() {
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-	//glEnable(GL_FRONT_AND_BACK);
-	//glEnable(GL_LIGHT1);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE , 1.0);
-	//glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER , 1.0);
 
 	//////set up light position
 	GLfloat light_position[] = { 2 , 2, 1, 0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
-	//GLfloat global_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	//glLightfv(GL_LIGHT0, GL_AMBIENT, global_ambient);
 
 }
 
@@ -457,6 +451,13 @@ void MouseMovement(int x, int y) {
 		s.moveRailGun(x, y, *w);
 }
 
+void MouseClick(int button, int state, int x, int y) {
+	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
+		if (w->getSceneMode() == GAME || w->getSceneMode() == GAME_FOREVER)
+			s.fire();
+	}
+}
+
 int main(int argc, char *argv[]) {
 	glutInit(&argc, argv);
 
@@ -472,6 +473,7 @@ int main(int argc, char *argv[]) {
 	glutKeyboardFunc(KeyboardFunc); // what function called if keypressed?
 	//glutTimerFunc(GLuint(period), TimerFunc, 0);
 	glutPassiveMotionFunc(MouseMovement);
+	glutMouseFunc(MouseClick);
 	glutSpecialFunc(SpecialFunc);
 	glutMainLoop();
 	return 0;

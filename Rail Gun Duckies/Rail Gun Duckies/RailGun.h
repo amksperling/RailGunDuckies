@@ -35,6 +35,7 @@ public:
 	//the power of the gun is variable from 0 to 100
 	inline void increaseGunPower(double higher) { this->gunPower += higher; }
 	inline void decreaseGunPower(double lower) { this->gunPower -= lower; }
+	inline void setGunPower(double input) { this->gunPower = input; }
 
 	void setRotationAngle(double a);
 	void setInclinationAngle(double a);

@@ -9,7 +9,6 @@ Duckie::Duckie() : Object() {
 	this->displayListHandle = (GLuint(-1));
 	this->position = glm::vec3(0, 1.5, -95);
 	this->velocity = glm::vec3(0, 0, 0);
-	//this->acceleration = glm::vec3(0, 0, 0);
 	this->color = glm::vec3(1, 1, 0);
 	this->hitBalloon = false;
 }
@@ -18,8 +17,6 @@ Duckie::Duckie() : Object() {
 Duckie::Duckie(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) :
 	Object(isMoving, position, rotation, scale, velocity, color),
 	displayListHandle(GLuint(-1)),
-	position(glm::vec3(0, 1.5, -95)),
-	velocity(vec3(0)),
 	color(vec3(1, 1, 0)),
 	hitBalloon(false)
 {  }
@@ -147,39 +144,4 @@ void Duckie::render() {
 
 	glCallList(this->displayListHandle);
 
-}
-
-/*
-	The railgun provides a constant velocity to the duck.
-	updatePositon() calculates a new position based on the 
-	current velocity. It also applies gravity to the velocity 
-	in the Y direction so the duck actually falls to the ground.
-	We also do checks to make sure the duck doesn't leave our world.
-
-*/
-void Duckie::updatePosition(double timeStep, double gravity) {
-
-	//x = x + vt
-	position.x += velocity.x * float(timeStep);
-	position.y += velocity.y * float(timeStep);
-	position.z += velocity.z * float(timeStep);
-
-	// add gravity to the y component of velocity
-	// v = v + gt
-	velocity.y += float(gravity) * float(timeStep);
-
-
-	if( this->position.y <= .5) {
-		this->position.y = .5; // don't go under the world!
-	}
-
-	//dont leave the world
-	if (this->position.x >= 100)
-		this->position.x = 100;
-	if (this->position.x <= -100)
-		this->position.x = -100;
-	
-	if (this->position.z >= 100)
-		this->position.z = 100;
-	
 }

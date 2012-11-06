@@ -39,7 +39,8 @@ public:
 
 	Scene();
 
-
+	void setToBeautyMode(); //transition objects and positions to beauty mode
+	void setToGameMode();   //transition objects and positions to game mode
 
 	//use these functions to switch between app modes
 	void runBeautyMode(int beautyMode);
@@ -67,6 +68,9 @@ public:
 	//collision detection
 	void checkForCollisions (Window & w); //(Object movingItem, Object otherObjects[], Window & w);
 
+	//setup base of railgun
+	void drawPedestal();
+
 	//inline getters for all instance variables
 	inline int getScore() const { return this->score; }
 	inline int getDifficulty() const { return this->difficulty; }
@@ -89,6 +93,10 @@ private:
 	RailGun theGun; 
 	Duckie theDuck;
 
+	Duckie lifeIndicatingDuck1;
+	Duckie lifeIndicatingDuck2;
+	Duckie lifeIndicatingDuck3;
+
 	//World is used for beauty modes, skybox is for the game
 	World theWorld;
 	SkyBox skyBox;
@@ -96,6 +104,8 @@ private:
 	static bool gameWon;
 	static bool gameOver;
 	static bool balloonHit;
+	static bool transitionedFromGameMode;
+	static bool transitionedFromBeautyMode;
 
 	//used to draw the world in which our objects are placed
 	void renderWorld();

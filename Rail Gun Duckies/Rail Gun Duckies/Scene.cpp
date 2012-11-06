@@ -17,11 +17,17 @@ int Scene::balloonsRemaining = MAX_BALLOONS;
 bool Scene::balloonsPlaced = false;
 bool Scene::gameOver = false;
 bool Scene::gameWon = false;
+bool Scene::transitionedFromGameMode = true;
+bool Scene::transitionedFromBeautyMode = false;
 
 static const double gravity = -32.2;
 static const double degToRad = 0.01745329251;
 static const double radToDeg = 57.2957795131;
+static const vec3 beautyDuckPosition = vec3(0, 1.25, 7);
+static const vec3 beautyDuckScale = vec3(2,2,2);
 static const vec3 initialDuckPosition = vec3(0, 1.3, -94);
+static const vec3 gameDuckScale = vec3(0.5,0.5,0.5);
+static const vec3 beautyGunPosition = vec3(0, 1, 7);
 static const vec3 initialGunPosition = vec3(0, .5, -94);
 
 static default_random_engine randomEngine;
@@ -31,7 +37,12 @@ Scene::Scene() : displayListHandle(-1) {
 	// order for input into function \/
 	// (bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) ; color not currently set up, so may be ignored
 	this->aBalloon = Balloon::Balloon(false, vec3(0, 2, 4), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	//this->theDuck = Duckie::Duckie(false, vec3(0, 1.25, 7), vec3(0, 0, 0), vec3(2, 2, 2), vec3(0, 0, 0), vec4(1, 1, 0, 1));
+	this->aBalloon.setBeautyModeRotationVector(vec3(0, 0.8, 0.2)); //only balloon needs to update vector and speed as other objects use defaults
+	this->aBalloon.setBeautyModeRotationSpeed(60);
+	this->theDuck = Duckie::Duckie(false, vec3(0, 1.25, 7), vec3(0, 0, 0), vec3(2, 2, 2), vec3(0, 0, 0), vec4(1, 1, 0, 1));
+	this->lifeIndicatingDuck1 = Duckie::Duckie(false, vec3(7, 8.5, -94), vec3(0, -85, 0), vec3(.5, .5, .5), vec3(0, 0, 0), vec4(1, 1, 0, 1));
+	this->lifeIndicatingDuck2 = Duckie::Duckie(false, vec3(6, 8.5, -94), vec3(0, -85, 0), vec3(.5, .5, .5), vec3(0, 0, 0), vec4(1, 1, 0, 1));
+	this->lifeIndicatingDuck3 = Duckie::Duckie(false, vec3(5, 8.5, -94), vec3(0, -85, 0), vec3(.5, .5, .5), vec3(0, 0, 0), vec4(1, 1, 0, 1));
 	this->theGun = RailGun::RailGun(false, vec3(0, 1, 7), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
 	this->skyBox = SkyBox::SkyBox(false, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(0.0f, 0.0f, 0.0f, 1.0f));
 	this->theWorld = World::World(false, vec3(0, -2, 4), vec3(0, 0, 0), vec3(20, 20, 20), vec3(0, 0, 0), vec4(0.0f, 0.0f, 0.0f, 1.0f));
@@ -39,7 +50,31 @@ Scene::Scene() : displayListHandle(-1) {
 	this->difficulty_string = "Normal";
 }
 
+void Scene::setToBeautyMode() {
+	this->aBalloon.setIsBeautyModeModel(true);
+	this->theDuck.setIsBeautyModeModel(true);
+	this->theDuck.setPosition(beautyDuckPosition);
+	this->theDuck.setScale(beautyDuckScale);
+	this->theGun.setIsBeautyModeModel(true);
+	this->theGun.setPosition(beautyGunPosition);
+}
+
+void Scene::setToGameMode() {
+	this->aBalloon.setIsBeautyModeModel(false);
+	this->theDuck.setIsBeautyModeModel(false);
+	this->theDuck.setPosition(initialDuckPosition);
+	this->theDuck.setScale(gameDuckScale);
+	this->theGun.setIsBeautyModeModel(false);
+	resetDuck();
+	this->theGun.setPosition(initialGunPosition);
+}
+
 void Scene::runBeautyMode(int beautyMode) {
+	transitionedFromBeautyMode = true;
+	if(transitionedFromGameMode){
+		setToBeautyMode();
+		transitionedFromGameMode = false;
+	}
 	double elapsed_time = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
 	
 	glMatrixMode(GL_MODELVIEW);
@@ -47,52 +82,36 @@ void Scene::runBeautyMode(int beautyMode) {
 
 	//set up camera at (0, 2, 0)
 	gluLookAt(0, 2, 0, 0, 0, 10, 0, 1, 0);
-	glPushMatrix();
-	this->theWorld.setUpForRender();
-	this->theWorld.render(); // draw the background world		
-	glPopMatrix();
+	this->theWorld.updateAndRender(elapsed_time);
 
 	//draw the objects based on the input
 	switch (beautyMode) {
 	case DUCK_BEAUTY:
-		
-		glPushMatrix();
-		glTranslated(0, 1.25, 7);
-		glScaled(2, 2, 2);
-		//this->theDuck.setUpForRender();
-		glRotated(elapsed_time * 30, 0, 1, 0);
-		this->theDuck.setColor(vec3(1, 1, 0));
-		
-		this->theDuck.render();
-		glPopMatrix();
+		this->theDuck.updateAndRender(elapsed_time);
 		break;
 
 	case RAILGUN_BEAUTY:
-		glPushMatrix();
-		//glTranslated(0, 1, 7);
-		this->theGun.setUpForRender();
-		glRotated(elapsed_time * 30, 0, 1, 0);
-		this->theGun.render();
-		glPopMatrix();
+		this->theGun.updateAndRender(elapsed_time);
 		break;
 
 	case BALLOON_BEAUTY:
-		glPushMatrix();
-		//glTranslated(0, 2, 4);
-		this->aBalloon.setUpForRender();
-		glRotated(elapsed_time * 30 * 2, 0, 0.8, 0.2);
-		this->aBalloon.render();
-		glPopMatrix();
+		this->aBalloon.updateAndRender(elapsed_time);
 		break;
 
 	default:
 		break;
-	}//end switch
+	}
 
 }
 
 
 void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
+	transitionedFromGameMode = true;
+	if(transitionedFromBeautyMode){
+		setToGameMode();
+		transitionedFromBeautyMode = false;
+	}
+
 	randomEngine.seed((unsigned long)time(nullptr)); // set random seed based on current time
 
 	glMatrixMode(GL_MODELVIEW);
@@ -154,15 +173,16 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		break;
 	}
 
+	if(w.getCameraMode() == MAIN || w.getCameraMode() == FLIGHT_FOLLOWER){
+		if(ducksRemaining >=1) lifeIndicatingDuck1.updateAndRender(timeStep);
+		if(ducksRemaining >=2) lifeIndicatingDuck2.updateAndRender(timeStep);
+		if(ducksRemaining >=3) lifeIndicatingDuck3.updateAndRender(timeStep);
+	}
 	
 	//gluLookAt(0, 5, -100, 0, 0, 50, 0, 1, 0);
-	glPushMatrix();
-	this->skyBox.setUpForRender();
-	this->skyBox.render(); // draw the background world
-	glPopMatrix();
+	this->skyBox.updateAndRender(timeStep);
 
 	//place the balloons, and put them in the vector
-	//glPushMatrix();
 	if (!balloonsPlaced)  //might want to change this eventually to be if balloons.size < 5 or something
 		this->placeBalloons();
 
@@ -171,74 +191,50 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 
 	// from the vector, display each balloon that is not hit
 	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
-		glPushMatrix();
-		glTranslated(iter->getPosition().x,iter->getPosition().y, iter->getPosition().z);
 		if(!iter->getShouldBeRemoved()) {
-			iter->render();
+			iter->updateAndRender(timeStep);
+			glPushMatrix();
+			glTranslated(iter->getPosition().x,iter->getPosition().y, iter->getPosition().z);
 			displayBalloonPointValue(*iter);  //display the balloon and its point value
+			glPopMatrix();
 		}
-		glPopMatrix();
 	}
 
 
 	//draw the rail gun and the duck on top
-	//push for gun
-	glPushMatrix();
-	glTranslated(initialGunPosition.x, initialGunPosition.y, initialGunPosition.z);
-	//glRotated(180, 0, 1, 0);
-	
+	//drawPedestal();
 	if (runForever)
 		automateGun();
-	glRotated(-theGun.getRotationAngle(), 0, 1, 0);
-	glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
-
-	this->theGun.render();
-	
-	glPopMatrix();
+	this->theGun.setRotation(vec3(-theGun.getInclinationAngle(),-theGun.getRotationAngle(),0));
+	this->theGun.updateAndRender(timeStep);
 	
 	//push for duck
 	//set its initial position
 	if (!this->theDuck.isMoving()) {
-		glPushMatrix();
-		
-		glTranslated(initialDuckPosition.x, initialDuckPosition.y, initialDuckPosition.z);
-
-		//rotate the duck on the gun
-		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
-		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
+		this->theDuck.setRotation(vec3(-theGun.getInclinationAngle(),-theGun.getRotationAngle(),0));
 
 		//store the final launch angles for later
 		theDuck.setLaunchInclination(theGun.getRotationAngle());
 		theDuck.setLaunchRotation(theGun.getInclinationAngle());
 
-		if (runForever)
+		if (runForever){
+			theGun.setGunPower(50);
 			fire();
+		}
 
-		glScaled(.5, .5, .5);
 		if (w.getCameraMode() != FIRST_PERSON) // dont render the duck in first person!
-			this->theDuck.render();
-		glPopMatrix();
+			this->theDuck.updateAndRender(timeStep);
 	}
 	else { // the duck is fired
-		glPushMatrix();
 
-		//update the position and actually move the duck to that position
-		theDuck.updatePosition(timeStep, gravity);
-		glTranslated(theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z);
-
-		//rotate the duck based on its launch angles
-		glRotated(-theDuck.getLaunchRotation(), 1, 0, 0);
-		glRotated(-theDuck.getLaunchInclination(), 0, 1, 0);
+		this->theDuck.setRotation(vec3(-theDuck.getLaunchRotation(),-theDuck.getLaunchInclination(),0));
 
 		//make the duck stop when it hits the ground
 		if (this->theDuck.hitTheGround()) {
 			this->theDuck.setVelocity(vec3(0));
 		}
-		//cout << this->theDuck.getPosition().x << ", " << this->theDuck.getPosition().y << ", " << this->theDuck.getPosition().z << endl;
-		glScaled(.5, .5, .5);
 		if (w.getCameraMode() != FIRST_PERSON && !theDuck.hitABalloon()) // dont render the duck in first person!
-			theDuck.render();
-		glPopMatrix();
+			theDuck.updateAndRender(timeStep);
 	}
 
 }
@@ -255,8 +251,10 @@ void Scene::fire() {
 			cos(theGun.getInclinationAngle() * degToRad) * this->theGun.getGunPower()
 			);
 
-	//	cout << "Inclincation: " << theGun.getInclinationAngle() << "Rotation: " << theGun.getRotationAngle() << endl;
+		//cout << "Inclincation: " << theGun.getInclinationAngle() << "Rotation: " << theGun.getRotationAngle() << endl;
 		this->theDuck.setVelocity(velocity);
+
+		cout << "X: " << theDuck.getVelocity().x << " Y: " << theDuck.getVelocity().y << endl;
 		this->theDuck.setLaunched(true);
 	}
 	else {
@@ -271,7 +269,6 @@ void Scene::fire() {
 }
 
 void Scene::moveRailGun(int x, int y, const Window & w) {
-
 	double futureXAngle;
 	double futureYAngle;
 
@@ -433,8 +430,8 @@ int genRandomInt(int low, int high) {
 void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object otherObjects[], Window & w) {
 	//Quite possible and likely that this function will break if you scale differently in different axi
 			//glTranslated(0, .25, .26); quarter due to scale 0, .0625, .065
-			//glutSolidSphere(1.5f, 20, 20); .375
-	double duckRadius = .375;// * theDuck.getScale().x; re-add this code when the duck scale is implemented
+			//glutSolidSphere(1.5f, 20, 20); .375 DON'T ACTUALLY QUARTER! AT A ONE SCALE THE VALUES ARE ONLY HALVED
+	double duckRadius = .75 * theDuck.getScale().x;
 			//glTranslated(0, -.25, 0);
 			//glutSolidSphere(1.3f, 20, 20);
 	double balloonRadius = 1.3;
@@ -443,13 +440,13 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 			balloonRadius = 1.3 * iter->getScale().y; 
 			double distance = glm::sqrt((theDuck.getPosition().x - iter->getPosition().x) * 
 				(theDuck.getPosition().x - iter->getPosition().x) 
-				+ ((theDuck.getPosition().y - 0.0625 /* theDuck.getScale().y */) - 
+				+ ((theDuck.getPosition().y - 0.125 * theDuck.getScale().y) - 
 				(iter->getPosition().y - 0.25 * iter->getScale().y)) * 
-				((theDuck.getPosition().y - 0.0625 /* theDuck.getScale().y*/) - 
+				((theDuck.getPosition().y - 0.125 * theDuck.getScale().y) - 
 				(iter->getPosition().y - 0.25  * iter->getScale().y))
-				+ ((theDuck.getPosition().z - 0.065 /* theDuck.getScale().z */) - 
-				iter->getPosition().z) * ((theDuck.getPosition().z - 0.065 
-				/* theDuck.getScale().z*/) - iter->getPosition().z));
+				+ ((theDuck.getPosition().z - 0.13 * theDuck.getScale().z) - 
+				iter->getPosition().z) * ((theDuck.getPosition().z - 0.13 
+				* theDuck.getScale().z) - iter->getPosition().z));
 			
 			if(distance <= duckRadius+balloonRadius) { //something was hit!
 				iter->setShouldBeRemoved(true);
@@ -588,3 +585,25 @@ void Scene::automateGun() {
 
 }
 
+void Scene::drawPedestal(){
+	glDisable(GL_CULL_FACE);
+	GLfloat material_ambient[] = {.05, .05, 0, 1};
+	GLfloat material_diffuse[] = { .5, .5, .4, 1 };
+	GLfloat material_specular[] = { .7, .7, .04, 1 };
+	GLfloat material_shininess[] = { .078125 * 128 };
+	glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess);
+
+	GLUquadric *q = gluNewQuadric();
+	glPushMatrix();
+//	glScaled(.25, .1, .5);
+	glScaled(10,10,10);
+	glColor3f(0.2f, 0.2f, 0.2f);
+	glTranslated(0, 20, -20);
+	gluCylinder(q, 1, 0, 1, 100, 100);
+	glutSolidSphere(1.5f, 20, 20);
+	glPopMatrix();
+	glEnable(GL_CULL_FACE);
+}

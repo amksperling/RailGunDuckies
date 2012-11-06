@@ -1,6 +1,17 @@
 #include "Object.h"
 
+#include <stdio.h>  
+#include <iostream>
+#include <sstream> //Checka
+#include <vector>
+#include <assert.h> //Checkb
+#include <ctime>
+#include <iomanip>
+
+using namespace std;
+
 const float PI = 3.14159265f;
+static const float gravity = -32.2;
 
 /* Object Class
 
@@ -24,6 +35,9 @@ Object::Object(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 vel
 	this->scale = scale;
 	this->velocity = velocity;
 	this->color = color;
+	this->isBeautyModeModel = false;
+	this->beautyModeRotationVector = vec3(0,1,0);
+	this->beautyModeRotationSpeed = 30;
 }
 
 /* Object Deconstructor
@@ -181,11 +195,34 @@ void Object::drawVecArrayCircle(int radialPoints, float radius, float r, float g
 }
 
 
-void Object::setUpForRender() {
-	//moves object into position, rotate, and scales it
+void Object::updateAndRender(float timeStep) {
+	//updates position of object, rotates it, scales it, and renders it
+
+	glPushMatrix();
+
+	//if its a beauty mode object then move it to position and rotate according to beauty mode style
+	if(this->isBeautyModeModel) {
+		glTranslated(this->position.x, this->position.y, this->position.z);
+		glRotated(timeStep * this->beautyModeRotationSpeed, this->beautyModeRotationVector.x, 
+			this->beautyModeRotationVector.y, this->beautyModeRotationVector.z);
+	}
+	else {
+
+	//x = x + vt
+	position.x += velocity.x * timeStep;
+	position.y += velocity.y * timeStep;
+	position.z += velocity.z * timeStep;
+
+	// add gravity to the y component of velocity
+	// v = v + gt
+	if(velocity.y != 0) velocity.y += gravity * timeStep;
+
 	glTranslated(this->position.x, this->position.y, this->position.z);
-	glRotated(this->rotation.x, 1, 0, 0);
-	glRotated(this->rotation.y, 0, 1, 0);
 	glRotated(this->rotation.z, 0, 0, 1);
+	glRotated(this->rotation.y, 0, 1, 0);
+	glRotated(this->rotation.x, 1, 0, 0);
+	}
 	glScalef(this->scale.x, this->scale.y, this->scale.z);
+	this->render();
+	glPopMatrix();
 } 
