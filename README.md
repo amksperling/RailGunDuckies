@@ -5,11 +5,11 @@
 
 - All required modes and features specified:
 
-	- The application should run forver (tested > 5 hours on).
+	- The application should run forever (tested > 5 hours on).
 
 	- The duck and gun are drawn using GL Display Lists
 
-	- Beauty Modes for the duck, gun an balloon
+	- Beauty Modes for the duck, gun and balloon
 		- All objects are properly lit with one white light.
 		- All objects slowly rotate in order to be easily observed.
 		
@@ -23,8 +23,7 @@
 		
 		- Game text is presented in an orthographic projection.
 		
-		- Balloon score is drawn above each balloon, and score accumulates as
-		  balloons are hit.
+		- Balloon score is drawn above each balloon, and score accumulates as balloons are hit.
 		  
 		- The game resets after 3 ducks have missed.
 		
