@@ -135,7 +135,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		gluLookAt(-80, 5, -50, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 1, 0);
 		break;
 
-	case SPECTATE_TOP:
+	case SPECTATE_FRONT:
 		gluLookAt(0/*theDuck.getPosition().x + 5*/, theDuck.getPosition().y + 5, theDuck.getPosition().z + 5, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 1, 0);
 		break;
 	}
