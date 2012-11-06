@@ -35,7 +35,10 @@ enum LIGHT_MODES {
 enum CAMERA_MODES {
 	MAIN,
 	FLIGHT_FOLLOWER,
-	FIRST_PERSON
+	FIRST_PERSON,
+	SPECTATE_LEFT,
+	SPECTATE_RIGHT,
+	SPECTATE_TOP
 };
 
 class Window {
@@ -58,6 +61,7 @@ public:
 	void cycleLightingMode();
 
 	void cycleCameraMode();
+	void cycleSpectatorMode();
 
 	void toggleFullScreen();
 	void toggleWireFrame();

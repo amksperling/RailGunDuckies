@@ -124,6 +124,34 @@ void Window::cycleCameraMode() {
 	case FIRST_PERSON:
 		this->cameraMode = MAIN;
 		break;
+
+	default:
+		this->cameraMode = MAIN;
+	}
+}
+
+
+void Window::cycleSpectatorMode() {
+	//if (this->cameraMode != SPECTATE_LEFT) {
+	//	this->cameraMode = SPECTATE_LEFT;
+	//	return;
+	//}
+
+	switch (this->cameraMode) {
+	case SPECTATE_LEFT:
+		this->cameraMode = SPECTATE_RIGHT;
+		break;
+
+	case SPECTATE_RIGHT:
+		this->cameraMode = SPECTATE_FRONT;
+		break;
+
+	case SPECTATE_FRONT:
+		this->cameraMode = SPECTATE_LEFT;
+		break;
+
+	default:
+		this->cameraMode = SPECTATE_LEFT;
 	}
 }
 

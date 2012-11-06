@@ -48,7 +48,7 @@
 
 - Fullscreen support
 
-- The game saves its state if modes are switched
+- The game remembers its state if modes are switched
 
 - The duck has personality:
 	- We made a model that is better than the reference

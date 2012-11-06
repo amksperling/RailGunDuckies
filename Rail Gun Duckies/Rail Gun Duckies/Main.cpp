@@ -326,7 +326,7 @@ void ReshapeFunc(int width, int height) {
 //The KeyboardFunc handles all standard keyboard controls
 //our window and scene classes handle all functions themselves,
 // so this function becomes really simple
-//see the README for information on implemented functions
+//see the README for full information on implemented functions
 void KeyboardFunc(unsigned char key, int x, int y) {
 	switch (key) {
 	
@@ -348,6 +348,11 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 	case 'C':
 	case 'c':
 		w->cycleCameraMode();
+		break;
+
+	case 'V':
+	case 'v':
+		w->cycleSpectatorMode();
 		break;
 
 	case 'P':

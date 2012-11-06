@@ -126,6 +126,18 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 			theDuck.getPosition().z + 10, 
 			0, 1, 0);
 		break;
+
+	case SPECTATE_LEFT:
+		gluLookAt(80, 5, -50, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 1, 0);
+		break;
+
+	case SPECTATE_RIGHT:
+		gluLookAt(-80, 5, -50, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 1, 0);
+		break;
+
+	case SPECTATE_TOP:
+		gluLookAt(0/*theDuck.getPosition().x + 5*/, theDuck.getPosition().y + 5, theDuck.getPosition().z + 5, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 1, 0);
+		break;
 	}
 
 	
@@ -294,6 +306,7 @@ void Scene::decreaseGunPower(double lower) {
 		this->theGun.decreaseGunPower(lower);
 }
 
+//cycles through the 3 difficuilty levels
 void Scene::cycleDifficulty() {
 	switch (this->getDifficulty()) {
 	case EASY:
@@ -473,8 +486,9 @@ void Scene::resetGame() {
 	this->theDuck.setColor(vec3(1, 1, 0));
 	resetDuck();
 
-	//chear the balloon vector to keep memory low
+	//chear the balloon vector and shrink it to keep memory low
 	balloons.clear();
+	balloons.shrink_to_fit();
 }
 
 void Scene::displayBalloonPointValue(Balloon & b) {
