@@ -245,14 +245,14 @@ It determines which application mode to run and what to display on the screen.
 void SwitchingDisplayFunc() {
 	CheckGLErrors("Beginning of Display Function:");
 
-	timeSinceStart = float(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
+	timeSinceStart = float(glutGet(GLUT_ELAPSED_TIME)) / 1000.0f;
 	
 	timeStep = timeSinceStart - oldTimeSinceStart;
 	if(w->getPaused()) timeStep = 0;
 	oldTimeSinceStart = timeSinceStart;
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	
 	glClearColor(ghostModeColorRed, ghostModeColorGreen, ghostModeColorBlue, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
