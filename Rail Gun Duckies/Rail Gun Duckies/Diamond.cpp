@@ -23,8 +23,8 @@ void Diamond::render() {
 
 	//Unique color and alpha values for each component of light result in giving a unique look to the
 	//model. These values were chosen to simulate the appearance of a shiny, semi-transparent balloon
-	GLfloat material_ambient_gold[] = {0.25f, 0.20f, 0.08f, 0.8f};//{ 0.7f, 0.6f, 0.6f, 0.7f};
-    GLfloat material_diffuse_gold[] = {0.75f, 0.61f, 0.22f, 0.8f};//{ 0.7f, 0.6f, 0.6f, 0.7f};
+	GLfloat material_ambient_gold[] = {0.25f, 0.20f, 0.08f, 0.8f};
+    GLfloat material_diffuse_gold[] = {0.75f, 0.61f, 0.22f, 0.8f};
     GLfloat material_specular_gold[] = { 0.63f, 0.56f, 0.37f, 0.7f};
     GLfloat material_shininess_gold[] = { .4f * 128.0f };
 
@@ -33,18 +33,18 @@ void Diamond::render() {
     GLfloat material_specular_silver[] = { 0.7f, 0.6f, 0.6f, 0.7f};
     GLfloat material_shininess_silver[] = { .25f * 128.0f };
 
-	GLfloat material_ambient_red[] = {1.0f, 0.1f, 0.1f, 0.8f};//{ 0.7f, 0.6f, 0.6f, 0.7f};
-    GLfloat material_diffuse_red[] = {1.0f, 0.1f, 0.1f, 0.8f};//{ 0.7f, 0.6f, 0.6f, 0.7f};
+	GLfloat material_ambient_red[] = {1.0f, 0.1f, 0.1f, 0.8f};
+    GLfloat material_diffuse_red[] = {1.0f, 0.1f, 0.1f, 0.8f};
     GLfloat material_specular_red[] = { 0.7f, 0.6f, 0.6f, 0.7f};
     GLfloat material_shininess_red[] = { .25f * 128.0f };
 
-	GLfloat material_ambient_green[] = {0.1f, 1.0f, 0.1f, 0.8f};//{ 0.7f, 0.6f, 0.6f, 0.7f};
-    GLfloat material_diffuse_green[] = {0.1f, 1.0f, 0.1f, 0.8f};//{ 0.7f, 0.6f, 0.6f, 0.7f};
+	GLfloat material_ambient_green[] = {0.1f, 1.0f, 0.1f, 0.8f};
+    GLfloat material_diffuse_green[] = {0.1f, 1.0f, 0.1f, 0.8f};
     GLfloat material_specular_green[] = { 0.6f, 0.7f, 0.6f, 0.7f};
     GLfloat material_shininess_green[] = { .25f * 128.0f };
 
-	GLfloat material_ambient_blue[] = {0.1f, 0.1f, 1.0f, 0.8f};//{ 0.7f, 0.6f, 0.6f, 0.7f};
-    GLfloat material_diffuse_blue[] = {0.1f, 0.1f, 1.0f, 0.8f};//{ 0.7f, 0.6f, 0.6f, 0.7f};
+	GLfloat material_ambient_blue[] = {0.1f, 0.1f, 1.0f, 0.8f};
+    GLfloat material_diffuse_blue[] = {0.1f, 0.1f, 1.0f, 0.8f};
     GLfloat material_specular_blue[] = { 0.6f, 0.6f, 0.7f, 0.7f};
     GLfloat material_shininess_blue[] = { .25f * 128.0f };
 

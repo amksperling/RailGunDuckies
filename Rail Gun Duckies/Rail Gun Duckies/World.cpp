@@ -9,7 +9,6 @@ World::World(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 veloc
 const float PI = 3.14159265f;
 
 void World::render() {
-	glDisable(GL_CULL_FACE);
 	if (this->va_vertices.size() == 0) {	
 
 		GLfloat r;
@@ -144,6 +143,4 @@ void World::render() {
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
-
-	glEnable(GL_CULL_FACE);
 } 
