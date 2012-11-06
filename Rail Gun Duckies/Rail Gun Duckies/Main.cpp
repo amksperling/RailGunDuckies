@@ -324,22 +324,27 @@ void ReshapeFunc(int width, int height) {
 void KeyboardFunc(unsigned char key, int x, int y) {
 	switch (key) {
 	
+	case 'F':
 	case 'f':
 		w->toggleFullScreen();
 		break;
 		
+	case 'W':
 	case 'w':
 		w->toggleWireFrame();
 		break;
 
+	case 'L':
 	case 'l':
 		w->toggleLights();
 		break;
 
+	case 'C':
 	case 'c':
 		w->cycleCameraMode();
 		break;
 
+	case 'P':
 	case 'p': 
 		//paused = !paused;
 		if (w->getPaused())
@@ -348,14 +353,17 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 			w->setPause(true);
 		break;
 
+	case 'R':
 	case 'r':
 		s.resetGame();
 		break;
 
+	case 'G':
 	case 'g':
 		w->toggleGhostMode();
 		break;
 
+	case 'D':
 	case 'd':
 		s.cycleDifficulty();
 		break;

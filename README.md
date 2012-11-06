@@ -78,6 +78,8 @@
 - 3 levels of difficulty!  Adjusting gun power is really helpful on hard mode.
 
 - added a global camera to fully appreciate the world (control with arrow keys)
+
+-caps lock support (the program still works if caps lock is on and you don't realize it!)
    
 - Extra keys implemented:
 	- 'f' toggles fullscreen mode

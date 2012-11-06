@@ -414,9 +414,15 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 
 		for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
 			balloonRadius = 1.3 * iter->getScale().y; 
-			double distance = glm::sqrt((theDuck.getPosition().x - iter->getPosition().x) * (theDuck.getPosition().x - iter->getPosition().x) 
-				+ ((theDuck.getPosition().y - 0.0625 /* theDuck.getScale().y */) - (iter->getPosition().y - 0.25 * iter->getScale().y)) * ((theDuck.getPosition().y - 0.0625 /* theDuck.getScale().y*/) - (iter->getPosition().y - 0.25  * iter->getScale().y))
-				+ ((theDuck.getPosition().z - 0.065 /* theDuck.getScale().z */) - iter->getPosition().z) * ((theDuck.getPosition().z - 0.065 /* theDuck.getScale().z*/) - iter->getPosition().z));
+			double distance = glm::sqrt((theDuck.getPosition().x - iter->getPosition().x) * 
+				(theDuck.getPosition().x - iter->getPosition().x) 
+				+ ((theDuck.getPosition().y - 0.0625 /* theDuck.getScale().y */) - 
+				(iter->getPosition().y - 0.25 * iter->getScale().y)) * 
+				((theDuck.getPosition().y - 0.0625 /* theDuck.getScale().y*/) - 
+				(iter->getPosition().y - 0.25  * iter->getScale().y))
+				+ ((theDuck.getPosition().z - 0.065 /* theDuck.getScale().z */) - 
+				iter->getPosition().z) * ((theDuck.getPosition().z - 0.065 
+				/* theDuck.getScale().z*/) - iter->getPosition().z));
 			
 			if(distance <= duckRadius+balloonRadius) { //something was hit!
 				iter->setShouldBeRemoved(true);
@@ -496,9 +502,12 @@ void Scene::automateGun() {
 
 	//find the distance from the gun to the target (without using pow()!)
 	double distanceToClosestTarget = sqrt(
-		(closestTargetPosition.x - initialGunPosition.x) * (closestTargetPosition.x - initialGunPosition.x) + 
-		(closestTargetPosition.y - initialGunPosition.y) * (closestTargetPosition.y - initialGunPosition.y) +
-		(closestTargetPosition.z - initialGunPosition.z) * (closestTargetPosition.z - initialGunPosition.z)
+		(closestTargetPosition.x - initialGunPosition.x) * 
+		(closestTargetPosition.x - initialGunPosition.x) + 
+		(closestTargetPosition.y - initialGunPosition.y) * 
+		(closestTargetPosition.y - initialGunPosition.y) +
+		(closestTargetPosition.z - initialGunPosition.z) * 
+		(closestTargetPosition.z - initialGunPosition.z)
 	);
 
 	//find the closest balloon to the gun
@@ -509,9 +518,12 @@ void Scene::automateGun() {
 			
 			//calculate the distance from gun to balloon
 			double balloonDistance = sqrt(
-				(iter->getPosition().x - initialGunPosition.x) * (iter->getPosition().x - initialGunPosition.x) + 
-				(iter->getPosition().y - initialGunPosition.y) * (iter->getPosition().y - initialGunPosition.y) +
-				(iter->getPosition().z - initialGunPosition.z) * (iter->getPosition().z - initialGunPosition.z)
+				(iter->getPosition().x - initialGunPosition.x) * 
+				(iter->getPosition().x - initialGunPosition.x) + 
+				(iter->getPosition().y - initialGunPosition.y) * 
+				(iter->getPosition().y - initialGunPosition.y) +
+				(iter->getPosition().z - initialGunPosition.z) * 
+				(iter->getPosition().z - initialGunPosition.z)
 			);
 
 			//if the distance is less than the closest, then make it the closest
@@ -525,8 +537,10 @@ void Scene::automateGun() {
 	
 
 
-	//calculate the angles needed to hit. using atan2 because I overheard Perry talking about it at the last BBQ
-	double targetRotation = -atan2((closestTargetPosition.x - initialGunPosition.x), (closestTargetPosition.z - initialGunPosition.z) ) * radToDeg;
+	//calculate the angles needed to hit. 
+	//using atan2 because I overheard Perry talking about it at the last BBQ
+	double targetRotation = -atan2((closestTargetPosition.x - initialGunPosition.x), 
+							(closestTargetPosition.z - initialGunPosition.z) ) * radToDeg;
 
 	//compensate for rotation a little bit to provide added accuracy
 	if (targetRotation < 0)
@@ -534,9 +548,11 @@ void Scene::automateGun() {
 	else
 		targetRotation -= 2;
 
-	// the inclination includes a slight offset (based on the distance to the target) to compensate for the duck's drop over time
-	// its not perfect, but it works on most targets
-	double targetInclination = asin((closestTargetPosition.y - initialGunPosition.y)/ distanceToClosestTarget) * radToDeg + .3 * distanceToClosestTarget;
+	// the inclination includes a slight offset (based on the distance to the target) to compensate 
+	//for the duck's drop over time.  its not perfect, but it works on most targets
+	double targetInclination = asin((closestTargetPosition.y - initialGunPosition.y) / 
+								distanceToClosestTarget) * radToDeg 
+								+ .3 * distanceToClosestTarget;
 
 	//move the gun into position
 	theGun.setInclinationAngle(targetInclination);

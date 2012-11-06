@@ -60,6 +60,8 @@ void Window::toggleWireFrame() {
 	this->isWireFrame = !this->isWireFrame;
 }
 
+
+//cycle scene mode.
 void Window::cycleSceneMode() {
 	switch (this->sceneMode) {
 	case DUCK_BEAUTY:
@@ -80,6 +82,8 @@ void Window::cycleSceneMode() {
 	}
 }
 
+
+//cycle lights: not used, could be added in the future
 void Window::cycleLightingMode() {
 	switch (this->lightMode) {
 	case OFF:
@@ -106,6 +110,7 @@ void Window::cycleLightingMode() {
 	}
 }
 
+//cycles through the 3 main camera modes
 void Window::cycleCameraMode() {
 	switch (this->cameraMode) {
 	case MAIN:
@@ -122,6 +127,7 @@ void Window::cycleCameraMode() {
 	}
 }
 
+//turn lights on and off
 void Window::toggleLights() {
 	if (this->lightMode == OFF) {
 		glEnable(GL_LIGHTING);
@@ -141,6 +147,9 @@ void Window::setBasicLights() {
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 }
 
+
+//"Ghost Mode" uses blending to create a unique effect
+// this toggles it on and off
 void Window::toggleGhostMode() {
 	if (!ghostMode) {
 		glBlendFunc(GL_ONE, GL_ONE);
@@ -152,8 +161,9 @@ void Window::toggleGhostMode() {
 	ghostMode = !ghostMode;
 }
 
-
+//just like glut reshape, but sets window paramaters
 void Window::reshape(int w, int h) {
+	//guard against div by 0
 	if (h <= 0) {
 		return;
 	}
