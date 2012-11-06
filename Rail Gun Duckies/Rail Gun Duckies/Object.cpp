@@ -195,7 +195,7 @@ void Object::drawVecArrayCircle(int radialPoints, float radius, float r, float g
 }
 
 
-void Object::updateAndRender(float timeStep) {
+void Object::updateAndRender(float timeStep, bool shouldFall) {
 	//updates position of object, rotates it, scales it, and renders it
 
 	glPushMatrix();
@@ -213,9 +213,16 @@ void Object::updateAndRender(float timeStep) {
 	position.y += velocity.y * timeStep;
 	position.z += velocity.z * timeStep;
 
+	cout << "\n What?: ";
+	cout << position.y;
+
+	if(position.y >= 40){
+		position.y = -5;
+	}
+
 	// add gravity to the y component of velocity
 	// v = v + gt
-	if(velocity.y != 0) velocity.y += gravity * timeStep;
+	if(shouldFall && velocity.y >0) velocity.y += gravity * timeStep;
 
 	glTranslated(this->position.x, this->position.y, this->position.z);
 	glRotated(this->rotation.z, 0, 0, 1);

@@ -20,13 +20,13 @@ using namespace std;
 
 //the period determines the ideal fps for the application:
 //in this case, its 60.
-const double period = 1000/60;
+const float period = 1000/60;
 
 //the time variables are used to determine the timesteps
 //required for drawing the duck in flight
-static double timeSinceStart = 0.0;
-static double timeStep = 0.0;
-static double oldTimeSinceStart = 0.0;
+static float timeSinceStart = 0.0;
+static float timeStep = 0.0;
+static float oldTimeSinceStart = 0.0;
 
 //the test subjets:
 Window * w;
@@ -240,7 +240,7 @@ It determines which application mode to run and what to display on the screen.
 void SwitchingDisplayFunc() {
 	CheckGLErrors("Beginning of Display Function:");
 
-	timeSinceStart = double(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
+	timeSinceStart = float(glutGet(GLUT_ELAPSED_TIME)) / 1000.0;
 	
 	timeStep = timeSinceStart - oldTimeSinceStart;
 	if(w->getPaused()) timeStep = 0;

@@ -17,6 +17,9 @@ RailGun::~RailGun() {
 }
 
 void RailGun::render() {
+	if(!this->getIsBeautyModeModel()){
+		glTranslated(0, 0, 2); //changes center of model to pivot at end of rail gun instead of center
+	}
 	if (this->railgun_display_list == (GLuint) -1)
 	{
 		this->railgun_display_list = glGenLists(1);

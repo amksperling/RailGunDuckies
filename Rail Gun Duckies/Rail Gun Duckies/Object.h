@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <vector>
 #include <assert.h>
-
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
 
@@ -23,7 +22,7 @@ public:
 
 	virtual void render() = 0;
 
-	void updateAndRender(float timeStep);
+	void updateAndRender(float timeStep, bool shouldFall);
 
 	void drawRect(float w, float h, float d, float r, float g, float b);
 	void Object::drawVecArrayBox(float w, float h, float d, float r, float g, float b, Object &objectToModify);

@@ -44,7 +44,7 @@ public:
 
 	//use these functions to switch between app modes
 	void runBeautyMode(int beautyMode);
-	void runGameMode(bool runForever, double timeStep, Window & w);
+	void runGameMode(bool runForever, float timeStep, Window & w);
 
 
 	//fire the duck
@@ -67,6 +67,9 @@ public:
 
 	//collision detection
 	void checkForCollisions (Window & w); //(Object movingItem, Object otherObjects[], Window & w);
+
+	//move hit balloon
+	void moveHitBalloon(Balloon &b);
 
 	//setup base of railgun
 	void drawPedestal();
