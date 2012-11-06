@@ -26,7 +26,7 @@ static const vec3 initialGunPosition = vec3(0, .5, -93);
 
 static default_random_engine randomEngine;
 
-
+//This constructor initializes all object paramaters for our objects
 Scene::Scene() : displayListHandle(-1) { 
 	// order for input into function \/
 	// (bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) ; color not currently set up, so may be ignored
@@ -89,15 +89,6 @@ void Scene::runBeautyMode(int beautyMode) {
 		break;
 	}//end switch
 
-	//glPopMatrix();
-
-	//glPushMatrix();
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	//glOrtho(0, 1280, 0, 720, 1, 10);
-	//glLoadIdentity();
-	//glutStrokeString(GLUT_STROKE_MONO_ROMAN, string);
-	//glPopMatrix();
 }
 
 
@@ -127,7 +118,13 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 
 	// camera is always at the position of the duck and looks foward "through the duck's eyes"
 	case FIRST_PERSON:
-		gluLookAt(theDuck.getPosition().x, theDuck.getPosition().y + .5, theDuck.getPosition().z, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z + 10, 0, 1, 0);
+		gluLookAt(theDuck.getPosition().x, 
+			theDuck.getPosition().y + .5, 
+			theDuck.getPosition().z, 
+			theDuck.getPosition().x, 
+			theDuck.getPosition().y, 
+			theDuck.getPosition().z + 10, 
+			0, 1, 0);
 		break;
 	}
 
@@ -138,7 +135,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 	this->skyBox.render(); // draw the background world
 	glPopMatrix();
 
-	//draw the balloons, from the vector of balloons
+	//place the balloons, and put them in the vector
 	//glPushMatrix();
 	if (!balloonsPlaced)  //might want to change this eventually to be if balloons.size < 5 or something
 		this->placeBalloons();
@@ -152,7 +149,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		glTranslated(iter->getPosition().x,iter->getPosition().y, iter->getPosition().z);
 		if(!iter->getShouldBeRemoved()) {
 			iter->render();
-			displayBalloonPointValue(*iter);
+			displayBalloonPointValue(*iter);  //display the balloon and its point value
 		}
 		glPopMatrix();
 	}
@@ -184,7 +181,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		glRotated(-theGun.getRotationAngle(), 0, 1, 0);
 		glRotated(-theGun.getInclinationAngle(), 1, 0, 0);
 
-		//store the final launch angles fr later
+		//store the final launch angles for later
 		theDuck.setLaunchInclination(theGun.getRotationAngle());
 		theDuck.setLaunchRotation(theGun.getInclinationAngle());
 
@@ -220,6 +217,9 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 
 }
 
+
+//If the duck isn't moving, fire it off.
+// if it is moving, decrement duck count and reset the duck
 void Scene::fire() {
 
 	if(!this->theDuck.isMoving()) {
@@ -261,7 +261,7 @@ void Scene::moveRailGun(int x, int y, const Window & w) {
 
 
 
-
+//plsce the duck back on the gun and give it a new color
 void Scene::resetDuck() {
 	this->theDuck.setPosition(initialDuckPosition);
 	this->theDuck.setVelocity(vec3(0, 0, 0));
@@ -376,6 +376,9 @@ void Scene::placeBalloons() {
 
 		// set the position of the balloon and its point value based on the position
 		b.setPosition(vec3(xPosition, yPosition, zPosition));
+		
+		//set point value based on distance from the gun
+		//since all z positions are negative, the farther away + higher = more points
 		b.setPointValue(100 + zPosition + yPosition);
 		b.setShouldBeRemoved(false);
 
@@ -417,11 +420,13 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 			
 			if(distance <= duckRadius+balloonRadius) { //something was hit!
 				iter->setShouldBeRemoved(true);
-				iter->setPosition(vec3(300, -300, 0)); //set to an unhittable position
+				iter->setPosition(vec3(300, -300, 0)); //set to an unhittable position, will be cleared later
 				theDuck.setHitBalloon(true);
 				score += iter->getPointValue();
 				balloonsRemaining--;
 				resetDuck();
+
+				//you won the game!
 				if (balloonsRemaining == 0) {
 					gameWon = true;
 					gameOver = true;
@@ -482,6 +487,8 @@ void Scene::displayBalloonPointValue(Balloon & b) {
 
 }
 
+
+//Finds the closest balloon and moves the railgun to try and hit it
 void Scene::automateGun() {
 
 	//closestTargetPosition will become a balloon position
@@ -536,3 +543,4 @@ void Scene::automateGun() {
 	theGun.setRotationAngle(targetRotation);
 
 }
+

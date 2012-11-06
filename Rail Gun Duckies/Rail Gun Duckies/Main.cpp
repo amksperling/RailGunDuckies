@@ -396,22 +396,22 @@ void SpecialFunc(int key, int x, int y) {
 
 	//useing arrow keys to control global camera 
 	case GLUT_KEY_LEFT:
-		if (yrot > -35)
+		if (yrot > -15)
 			yrot -= 1;
 		break;
 
 	case GLUT_KEY_RIGHT: 
-		if (yrot < 35)
+		if (yrot < 15)
 			yrot += 1;
 		break;
 
 	case GLUT_KEY_UP:
-		if (xrot < 35)
+		if (xrot < 15)
 			xrot += 1;
 		break;
 
 	case GLUT_KEY_DOWN:
-		if (xrot > -35)
+		if (xrot > -15)
 			xrot -= 1;
 		break;
 	
