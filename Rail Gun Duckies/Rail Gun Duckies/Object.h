@@ -22,7 +22,7 @@ public:
 
 	virtual void render() = 0;
 
-	void updateAndRender(float timeStep, bool shouldFall);
+	void updateAndRender(float timeStep, bool shouldFall, bool shouldRender);
 
 	void drawRect(float w, float h, float d, float r, float g, float b);
 	void Object::drawVecArrayBox(float w, float h, float d, float r, float g, float b, Object &objectToModify);

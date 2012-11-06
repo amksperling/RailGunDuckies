@@ -11,7 +11,7 @@
 using namespace std;
 
 const float PI = 3.14159265f;
-static const float gravity = -32.2;
+static const float gravity = -32.2f;
 
 /* Object Class
 
@@ -195,7 +195,7 @@ void Object::drawVecArrayCircle(int radialPoints, float radius, float r, float g
 }
 
 
-void Object::updateAndRender(float timeStep, bool shouldFall) {
+void Object::updateAndRender(float timeStep, bool shouldFall, bool shouldRender) {
 	//updates position of object, rotates it, scales it, and renders it
 
 	glPushMatrix();
@@ -213,16 +213,13 @@ void Object::updateAndRender(float timeStep, bool shouldFall) {
 	position.y += velocity.y * timeStep;
 	position.z += velocity.z * timeStep;
 
-	cout << "\n What?: ";
-	cout << position.y;
-
-	if(position.y >= 40){
+	if(position.y >= 30){
 		position.y = -5;
 	}
 
 	// add gravity to the y component of velocity
 	// v = v + gt
-	if(shouldFall && velocity.y >0) velocity.y += gravity * timeStep;
+	if(shouldFall && velocity.y != 0) velocity.y += gravity * timeStep;
 
 	glTranslated(this->position.x, this->position.y, this->position.z);
 	glRotated(this->rotation.z, 0, 0, 1);
@@ -230,6 +227,6 @@ void Object::updateAndRender(float timeStep, bool shouldFall) {
 	glRotated(this->rotation.x, 1, 0, 0);
 	}
 	glScalef(this->scale.x, this->scale.y, this->scale.z);
-	this->render();
+	if(shouldRender) this->render();
 	glPopMatrix();
 } 

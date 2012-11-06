@@ -28,6 +28,11 @@ static float timeSinceStart = 0.0;
 static float timeStep = 0.0;
 static float oldTimeSinceStart = 0.0;
 
+//variables used to keep track of clear color
+static float ghostModeColorRed = 1.0;
+static float ghostModeColorGreen = 0.0;
+static float ghostModeColorBlue = 1.0;
+
 //the test subjets:
 Window * w;
 Scene s;
@@ -248,7 +253,7 @@ void SwitchingDisplayFunc() {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glClearColor(1, 0, 1, 1);
+	glClearColor(ghostModeColorRed, ghostModeColorGreen, ghostModeColorBlue, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	//set up the world so we can see stuff!
@@ -341,6 +346,11 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 		w->toggleLights();
 		break;
 
+	case 'M':
+	case 'm':
+		s.cycleBalloonMovement();
+		break;
+
 	case 'C':
 	case 'c':
 		w->cycleCameraMode();
@@ -363,6 +373,18 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 	case 'R':
 	case 'r':
 		s.resetGame();
+		break;
+
+	case 'T':
+	case 't':
+		if(ghostModeColorRed && !ghostModeColorGreen && ghostModeColorBlue) ghostModeColorRed = 0;
+		else if(!ghostModeColorRed && !ghostModeColorGreen && ghostModeColorBlue) ghostModeColorBlue = 0; 
+		else if(!ghostModeColorRed && !ghostModeColorGreen && !ghostModeColorBlue) ghostModeColorGreen = 1; 
+		else if(!ghostModeColorRed && ghostModeColorGreen && !ghostModeColorBlue) ghostModeColorBlue = 1; 
+		else if(!ghostModeColorRed && ghostModeColorGreen && ghostModeColorBlue){
+			ghostModeColorRed = 1; 
+		    ghostModeColorGreen = 0; 
+		}
 		break;
 
 	case 'G':
@@ -452,6 +474,8 @@ void MouseMovement(int x, int y) {
 }
 
 void MouseClick(int button, int state, int x, int y) {
+
+	// now with click to fire!
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
 		if (w->getSceneMode() == GAME || w->getSceneMode() == GAME_FOREVER)
 			s.fire();
@@ -469,11 +493,11 @@ int main(int argc, char *argv[]) {
 
 	//list our callbacks
 	glutDisplayFunc(SwitchingDisplayFunc);
-	glutReshapeFunc(ReshapeFunc); // what function called if resized window?
-	glutKeyboardFunc(KeyboardFunc); // what function called if keypressed?
+	glutReshapeFunc(ReshapeFunc); // function called if resized window
+	glutKeyboardFunc(KeyboardFunc); // function called if keypressed
 	//glutTimerFunc(GLuint(period), TimerFunc, 0);
-	glutPassiveMotionFunc(MouseMovement);
-	glutMouseFunc(MouseClick);
+	glutPassiveMotionFunc(MouseMovement); //function called if mouse movement
+	glutMouseFunc(MouseClick); //function called on mouse click/release
 	glutSpecialFunc(SpecialFunc);
 	glutMainLoop();
 	return 0;

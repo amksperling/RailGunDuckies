@@ -12,6 +12,7 @@
 #include "World.h"
 #include "Window.h"
 #include "SkyBox.h"
+#include "Diamond.h"
 #include "Object.h"
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
@@ -56,6 +57,9 @@ public:
 	//cycle through the 3 difficulties
 	void cycleDifficulty();
 
+	//turn balloon movement on and off
+	void cycleBalloonMovement();
+
 
 	//move the rail gun based on mouse movement and position in the window
 	//this function converts pixels to degrees
@@ -67,12 +71,7 @@ public:
 
 	//collision detection
 	void checkForCollisions (Window & w); //(Object movingItem, Object otherObjects[], Window & w);
-
-	//move hit balloon
-	void moveHitBalloon(Balloon &b);
-
-	//setup base of railgun
-	void drawPedestal();
+	bool checkForCollisionsBetweenBalloons (Balloon & b);
 
 	//inline getters for all instance variables
 	inline int getScore() const { return this->score; }
@@ -91,11 +90,14 @@ private:
 	vector<Balloon> balloons; // list of all balloons
 	Balloon aBalloon; //used for beauty mode
 
+	vector<Diamond> diamonds; //list of all diamonds
+
 	//we only use one gun and one duck the whole time!
 	//save memory!
 	RailGun theGun; 
 	Duckie theDuck;
 
+	//small duck models used to indicate lives left.
 	Duckie lifeIndicatingDuck1;
 	Duckie lifeIndicatingDuck2;
 	Duckie lifeIndicatingDuck3;
@@ -107,8 +109,9 @@ private:
 	static bool gameWon;
 	static bool gameOver;
 	static bool balloonHit;
-	static bool transitionedFromGameMode;
+	static bool transitionedFromGameMode; //booleans used to indicate state transitions between game and beauty mode
 	static bool transitionedFromBeautyMode;
+	static bool movableBalloons; //whether the balloons are allowed to float or not
 
 	//used to draw the world in which our objects are placed
 	void renderWorld();

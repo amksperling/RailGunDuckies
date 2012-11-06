@@ -16,7 +16,7 @@
 
 	- Manual and automated game modes
 		- Three different camera modes: fixed, following, and first person
-			- The duck does not render in first person mode
+		- The duck does not render in first person mode
 			
 		- Railgun is controlled with the mouse, and the bottom of the screen is
 		  equivalent to flat on the ground.
@@ -62,8 +62,7 @@
  
 - Balloons use the alpha channel and blending to become semi transparent
  
-- The railgun has user adjustible power settings. The higher the power, the 
-   farther the duck flies.
+- The railgun has user adjustible power settings. The higher the power, the farther the duck flies.
    
 - The game can be paused at any time during play. 
  
@@ -84,11 +83,22 @@
 - even more camera modes: spectator modes that make watching automated mode more awesome.
 
 - caps lock support (the program still works if caps lock is on and you don't realize it!)
-   
+
+- the balloons float up at different speeds and with increased value if the user turns on movement mode
+
+- the amount of lives you have left is represented in the top left of the screen
+
+- color of balloons reflects their value  
+
+- there are different colors of clear color for use in ghost mode 
+
+- balloons explode
+
 - Extra keys implemented:
 	- 'f' toggles fullscreen mode
 	- 'p' toggles pause
-	- 'l' toggles lights on and off
+	- 'l' toggles lights on and off'
+	- 'm' turns on balloon movement
 	- 'r' will reset the game
 	- 'd' cycles difficulty level
 	- 'g' toggles "Ghost Mode"
@@ -96,3 +106,4 @@
 	- '[' lowers gun power
 	- ']' raises gun power
 	- arrow keys: move global camera
+	- clicking: fires railgun
