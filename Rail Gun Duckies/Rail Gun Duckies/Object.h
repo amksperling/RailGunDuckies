@@ -9,8 +9,10 @@
 using namespace std;
 using namespace glm;
 
-//Possible additions: isBeautyModel, arbitrary int for resolution (can change object resolution 1-5), setUpForRender will be setUpAndRender
-//and do the position update, translation, and render in one method. Also, add draw circle for polished railgun
+/*
+   The Object class is a superclass. It contains properties and methods that are useful to most, if not all, objects
+   rendered in the scene.
+*/
 
 class Object {
 
@@ -47,12 +49,12 @@ public:
 
 private:
 
-	bool shouldBeRemoved;
-	bool isMoving;
-	vec3 position;
-	vec3 rotation;
-	vec3 scale;
-	vec3 velocity;
-	vec4 color;
+	bool shouldBeRemoved; //sets object for removal
+	bool isMoving;        //indicates object is moving
+	vec3 position;        //current position of object relative to the origin
+	vec3 rotation;        //indicates degrees to rotate about x, y, and z-axis
+	vec3 scale;           //scales object to this size
+	vec3 velocity;        //velocity of object in units/time
+	vec4 color;           //color object should be rendered
 
 };

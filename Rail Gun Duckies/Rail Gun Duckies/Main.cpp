@@ -16,6 +16,8 @@
 
 using namespace std;
 
+//Source: http://www.opengl.org/sdk/docs/ Generally used to look up and understand basic GL functions
+
 //the period determines the ideal fps for the application:
 //in this case, its 60.
 const double period = 1000/60;

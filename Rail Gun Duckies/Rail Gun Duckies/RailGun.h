@@ -9,8 +9,8 @@ using namespace std;
 using namespace glm;
 
 /*
-The RailGun class represents one RailGun object used in the Rail Gun Duckies
-game.
+   The RailGun class is a subclass of Object. It contains properties and methods unique to the railgun class 
+   as well as the method to construct and render a railgun.
 */
 
 class RailGun : public Object {

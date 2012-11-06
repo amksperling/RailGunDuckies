@@ -36,11 +36,10 @@ Object::~Object() {
 }
 
 void Object::drawRect(float w, float h, float d, float r, float g, float b){
+	//draws a cube with the scale specified. Responsibility of caller to save in display list.
+	//r,g,b unused
 	glPushMatrix();
 	glScalef(w, h, d);
-	glColor3f(r, g, b);
-	//if (cubeDisplayListHandle == GLuint(-1)) {
-	//cubeDisplayListHandle = glGenLists(1);
 
     glBegin(GL_QUADS);		// Draw The Cube Using quads
 	glNormal3f(0.0, 1.0f, 0.0f);
@@ -80,10 +79,6 @@ void Object::drawRect(float w, float h, float d, float r, float g, float b){
 	glVertex3f(0.5f, -0.5f, 0.5f);	// Bottom Left Of The Quad (Right)
     glVertex3f(0.5f, -0.5f, -0.5f);	// Bottom Right Of The Quad (Right)
     glEnd();
-	//End of my rectangle making test
-	//glEndList();
-	//} // end if displayList == -1
-	//glCallList(cubeDisplayListHandle);
 	glPopMatrix();
 }
 
@@ -185,8 +180,9 @@ void Object::drawVecArrayCircle(int radialPoints, float radius, float r, float g
 		this->va_indices.push_back(glm::ivec3(startIndex,startIndex + 3,startIndex+2)); */
 }
 
-void Object::setUpForRender() {
 
+void Object::setUpForRender() {
+	//moves object into position, rotate, and scales it
 	glTranslated(this->position.x, this->position.y, this->position.z);
 	glRotated(this->rotation.x, 1, 0, 0);
 	glRotated(this->rotation.y, 0, 1, 0);
