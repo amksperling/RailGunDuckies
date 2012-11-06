@@ -7,11 +7,11 @@ SkyBox::SkyBox() {
 	this->displayListHandle = (GLuint) -1;
 }
 
-SkyBox::SkyBox(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) : Object(isMoving, position, rotation, scale, velocity, color){
+SkyBox::SkyBox(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) : 
+	Object(isMoving, position, rotation, scale, velocity, color) {
 	this->displayListHandle = (GLuint) -1;
 } 
 
-const float PI = 3.14159265f;
 
 void SkyBox::render() {
 	if (this->displayListHandle == GLuint(-1)) {
@@ -49,6 +49,7 @@ void SkyBox::skySide() {
 	glEnable(GL_LIGHTING);
 }
 
+//the top is one color, as opposed to a gradient
 void SkyBox::skyTop() {
 	glDisable(GL_LIGHTING);
 	glPushMatrix();
@@ -122,7 +123,7 @@ void SkyBox::skyBox() {
 	glRotated(90, 0 , 1, 0);
 
 
-	// need something for the top
+	// need something different for the top
 	glPushMatrix();
 	glTranslated(0, 100, -100);
 	glScaled(1, 1, 2);
@@ -134,3 +135,4 @@ void SkyBox::skyBox() {
 	glPopMatrix();
 
 }
+

@@ -1,7 +1,7 @@
 
 #include "Duckie.h"
 
-
+//quadric object used to draw spheres and cylinders 
 static GLUquadric *q = gluNewQuadric();
 
 //Default constructor
@@ -51,7 +51,7 @@ void Duckie::render() {
     glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
     glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess);
 
-
+	//set the color of the body here, but not the eyes or beak
 	glColor3d(this->color.r, this->color.g, this->color.b);
 	if (this->displayListHandle == GLuint(-1)) {
 		this->displayListHandle = glGenLists(1);
@@ -90,11 +90,9 @@ void Duckie::render() {
 			//draw a tail
 			glPushMatrix();
 			glScaled(.5, .3, .5);
-			//glScaled(.8, .5, .6);
 			glTranslated(0, .8, -1.8);
 			glRotated(-145, 1, 0, 0);
 			gluCylinder(q, 1, 0, 1, 100, 100);
-
 			glPopMatrix();
 
 			// draw the eyes
@@ -112,7 +110,7 @@ void Duckie::render() {
 			gluSphere(q, 1, 100, 100);
 			glPopMatrix();
 
-			//pupils
+			// blue pupils
 			glPushMatrix();
 			glScaled(.05, .05, .05);
 			glColor3d(0, 0, 1);
@@ -151,29 +149,17 @@ void Duckie::render() {
 
 }
 
-//
-//void Duckie::setColor(vec3 color) {
-//	this->color.r = color.r;
-//	this->color.g = color.g;
-//	this->color.b = color.b;
-//}
+/*
+	The railgun provides a constant velocity to the duck
+	updatePositon() calculates a new position based on the 
+	current velocity. It also applies gravity to the velocity 
+	in the Y direction so the duck actually falls to the ground.
+	We also do checks to make sure the duck doesn't leave our world.
 
-//update the current position of the duck
-//based on its current velocity and acceleration
-//void Duckie::updatePosition(vec3 currentPosition, float timeStep) {
-//	this->position.z = this->velocity.x * timeStep + this->position.z;
-//	this->position.y = .5 * g * timeStep * timeStep + this->velocity.y * timeStep + this->position.y;
-//	if( this->position.y <= 0) {
-//		this->position.y = 0; // don't go under the world!
-//	}
-//	if (this->position.z == -200)
-//		this->position.z = -199;
-//}
-
-
+*/
 void Duckie::updatePosition(double timeStep, double gravity) {
 
-	
+	//x = x + vt
 	position.x += velocity.x * float(timeStep);
 	position.y += velocity.y * float(timeStep);
 	position.z += velocity.z * float(timeStep);
@@ -185,7 +171,6 @@ void Duckie::updatePosition(double timeStep, double gravity) {
 
 	if( this->position.y <= .5) {
 		this->position.y = .5; // don't go under the world!
-		//this->launched = false;
 	}
 
 	//dont leave the world
