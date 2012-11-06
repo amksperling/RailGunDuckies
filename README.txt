@@ -102,6 +102,7 @@
 	- 'r' will reset the game
 	- 'd' cycles difficulty level
 	- 'g' toggles "Ghost Mode"
+	- 't' cycles "Ghost Mode" colors
 	- 'v' cycles between the spectator camera modes
 	- '[' lowers gun power
 	- ']' raises gun power

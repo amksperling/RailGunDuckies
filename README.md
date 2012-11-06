@@ -83,6 +83,16 @@
 - even more camera modes: spectator modes that make watching automated mode more awesome.
 
 - caps lock support (the program still works if caps lock is on and you don't realize it!)
+
+- the balloons float up at different speeds and with increased value if the user turns on movement mode
+
+- the amount of lives you have left is represented in the top left of the screen
+
+- color of balloons reflects their value  
+
+- there are different colors of clear color for use in ghost mode 
+
+- balloons explode
    
 - Extra keys implemented:
 	- 'f' toggles fullscreen mode
@@ -91,7 +101,9 @@
 	- 'r' will reset the game
 	- 'd' cycles difficulty level
 	- 'g' toggles "Ghost Mode"
+	- 't' cycles "Ghost Mode" colors
 	- 'v' cycles between the spectator camera modes
 	- '[' lowers gun power
 	- ']' raises gun power
 	- arrow keys: move global camera
+	- left mouse button: fire
