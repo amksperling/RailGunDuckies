@@ -16,6 +16,9 @@ const int DEFAULT_POS_X = 10;
 const int DEFAULT_POS_Y = 10;
 const string DEFAULT_TITLE = "Rail Gun Duckies";
 
+//we store our modes in enums for easy access
+//with minimal memory hassles
+
 enum APP_MODES {
 	DUCK_BEAUTY,
 	RAILGUN_BEAUTY,
@@ -101,6 +104,8 @@ private:
 	int lightMode;
 
 	void setBasicLights();
+
+	//these are for planned features and are not implemented
 	void setSpotLights();
 	void setDayNight();
 	void setOtherLights();

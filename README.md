@@ -55,6 +55,8 @@
 	- The duck changes color each time it is fired.
 	
 - We used C++11 random distributions and random engines in order to generate the random positions for the balloons and the random colors for the duck. This is better than just using a c-style rand().
+
+- Extensive use of 'inline' functions help keep the code fast, but we're not sure if it really makes a difference. Let's assume it does.
   
 - We place many balloons at once (more than the minimum of one at a time).
  

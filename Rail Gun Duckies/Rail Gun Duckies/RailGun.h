@@ -23,13 +23,18 @@ public:
 	void render();
 
 
-
+	//rotation = yaw, x axis
 	double getRotationAngle() const;
+
+	//inclination = pitch, y axis
 	double getInclinationAngle() const;
+
+
 	inline double getGunPower() const { return this->gunPower; }
 
-	void increaseGunPower(double higher) { this->gunPower += higher; }
-	void decreaseGunPower(double lower) { this->gunPower -= lower; }
+	//the power of the gun is variable from 0 to 100
+	inline void increaseGunPower(double higher) { this->gunPower += higher; }
+	inline void decreaseGunPower(double lower) { this->gunPower -= lower; }
 
 	void setRotationAngle(double a);
 	void setInclinationAngle(double a);

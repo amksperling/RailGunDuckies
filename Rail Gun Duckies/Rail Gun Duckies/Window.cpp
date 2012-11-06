@@ -125,6 +125,8 @@ void Window::cycleCameraMode() {
 		this->cameraMode = MAIN;
 		break;
 
+	//if a spectator mode is enabled, and 'c' is pressed
+	// we reset to MAIN
 	default:
 		this->cameraMode = MAIN;
 	}
@@ -132,10 +134,6 @@ void Window::cycleCameraMode() {
 
 
 void Window::cycleSpectatorMode() {
-	//if (this->cameraMode != SPECTATE_LEFT) {
-	//	this->cameraMode = SPECTATE_LEFT;
-	//	return;
-	//}
 
 	switch (this->cameraMode) {
 	case SPECTATE_LEFT:
@@ -150,6 +148,8 @@ void Window::cycleSpectatorMode() {
 		this->cameraMode = SPECTATE_LEFT;
 		break;
 
+	//if a normal camera mode is enabled and 'v' is pressed
+	// we reset to SPECTATE_LEFT
 	default:
 		this->cameraMode = SPECTATE_LEFT;
 	}

@@ -150,7 +150,7 @@ void Duckie::render() {
 }
 
 /*
-	The railgun provides a constant velocity to the duck
+	The railgun provides a constant velocity to the duck.
 	updatePositon() calculates a new position based on the 
 	current velocity. It also applies gravity to the velocity 
 	in the Y direction so the duck actually falls to the ground.

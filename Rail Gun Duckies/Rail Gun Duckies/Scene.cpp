@@ -113,7 +113,7 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 
 	// camera stays in one position but looks at the position of the duck
 	case FLIGHT_FOLLOWER:
-		gluLookAt(0, 5, -100, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 1, 0);
+		gluLookAt(0, 5, -99, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 1, 0);
 		break;
 
 	// camera is always at the position of the duck and looks foward "through the duck's eyes"
@@ -128,15 +128,29 @@ void Scene::runGameMode(bool runForever, double timeStep, Window & w) {
 		break;
 
 	case SPECTATE_LEFT:
-		gluLookAt(80, 5, -50, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 1, 0);
+		gluLookAt(80, 5, -50, 
+			theDuck.getPosition().x, 
+			theDuck.getPosition().y,
+			theDuck.getPosition().z,
+			0, 1, 0);
 		break;
 
 	case SPECTATE_RIGHT:
-		gluLookAt(-80, 5, -50, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 1, 0);
+		gluLookAt(-80, 5, -50,
+			theDuck.getPosition().x,
+			theDuck.getPosition().y,
+			theDuck.getPosition().z,
+			0, 1, 0);
 		break;
 
 	case SPECTATE_FRONT:
-		gluLookAt(0/*theDuck.getPosition().x + 5*/, theDuck.getPosition().y + 5, theDuck.getPosition().z + 5, theDuck.getPosition().x, theDuck.getPosition().y, theDuck.getPosition().z, 0, 1, 0);
+		gluLookAt(0,
+			theDuck.getPosition().y + 5,
+			theDuck.getPosition().z + 5,
+			theDuck.getPosition().x,
+			theDuck.getPosition().y,
+			theDuck.getPosition().z,
+			0, 1, 0);
 		break;
 	}
 

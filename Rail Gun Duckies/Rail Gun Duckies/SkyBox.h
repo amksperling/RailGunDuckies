@@ -29,6 +29,9 @@ public:
 
 
 private:
+
+	//the box consists of 4 sky sides, the ground and the top
+	// so we need functions for all of them
 	void skySide();
 	void ground();
 	void skyBox();
