@@ -30,6 +30,7 @@ void SkyBox::render() {
 
 
 // draw one side of the sky box
+//its a gradeint color from dark blue to light blue
 // RGB Color values from http://www.tayloredmktg.com/rgb/
 void SkyBox::skySide() {
 	glDisable(GL_LIGHTING);
@@ -69,6 +70,7 @@ void SkyBox::skyTop() {
 }
 
 // draw the ground from -100 to 100
+// gradient from green to dark green
 void SkyBox::ground() {
 	glDisable(GL_LIGHTING);
 

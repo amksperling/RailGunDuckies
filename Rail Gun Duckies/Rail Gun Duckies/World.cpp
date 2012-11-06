@@ -2,7 +2,8 @@
 
 World::World() {}
 
-World::World(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) : Object(isMoving, position, rotation, scale, velocity, color)
+World::World(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) : 
+	Object(isMoving, position, rotation, scale, velocity, color)
 { } 
 
 const float PI = 3.14159265f;

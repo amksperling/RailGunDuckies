@@ -21,8 +21,8 @@ bool Scene::gameWon = false;
 static const double gravity = -32.2;
 static const double degToRad = 0.01745329251;
 static const double radToDeg = 57.2957795131;
-static const vec3 initialDuckPosition = vec3(0, 1.2, -94);
-static const vec3 initialGunPosition = vec3(0, .5, -93);
+static const vec3 initialDuckPosition = vec3(0, 1.3, -94);
+static const vec3 initialGunPosition = vec3(0, .5, -94);
 
 static default_random_engine randomEngine;
 
@@ -545,7 +545,7 @@ void Scene::automateGun() {
 	//compensate for rotation a little bit to provide added accuracy
 	if (targetRotation < 0)
 		targetRotation += 2;
-	else
+	else if (targetRotation > 0)
 		targetRotation -= 2;
 
 	// the inclination includes a slight offset (based on the distance to the target) to compensate 

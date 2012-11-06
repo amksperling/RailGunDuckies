@@ -11,7 +11,8 @@ Balloon::Balloon() {
 	
 }
 
-Balloon::Balloon(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) : Object(isMoving, position, rotation, scale, velocity, color)
+Balloon::Balloon(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) : 
+	Object(isMoving, position, rotation, scale, velocity, color)
 { } 
 
 Balloon::~Balloon() {
@@ -72,7 +73,7 @@ void Balloon::render() {
 		GLfloat anglePoints = 18;
 		GLfloat angleIncrement = 360/anglePoints;
 
-		GLfloat radialIncreasePerHeightIncrement = 0.02;
+		GLfloat radialIncreasePerHeightIncrement = 0.02f;
 
 		for(height = (GLfloat)-1.45f; height >=(GLfloat)-1.55f; height -=heightIncrement) {
 			for(angle = 0; angle < 360; angle+=angleIncrement){

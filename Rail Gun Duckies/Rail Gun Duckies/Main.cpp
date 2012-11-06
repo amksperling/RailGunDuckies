@@ -87,15 +87,21 @@ void displayGameText() {
 
 	//int/double to string conversion from http://www.cplusplus.com/articles/D9j2Nwbp/
 	//game status text
-	string score = "Score: " + static_cast<ostringstream*>( &(ostringstream() << s.getScore()) )->str();
-	string ducksRemaining = "Ducks Left: " + static_cast<ostringstream*>( &(ostringstream() << s.getDucksRemaining()) )->str();
-	string balloonsRemaining = "Balloons Left: " + static_cast<ostringstream*>( &(ostringstream() << s.getBalloonsRemaining()) )->str();
+	string score = "Score: " + 
+		static_cast<ostringstream*>( &(ostringstream() << s.getScore()) )->str();
+	string ducksRemaining = "Ducks Left: " + 
+		static_cast<ostringstream*>( &(ostringstream() << s.getDucksRemaining()) )->str();
+	string balloonsRemaining = "Balloons Left: " + 
+		static_cast<ostringstream*>( &(ostringstream() << s.getBalloonsRemaining()) )->str();
 
-	string gunPower = "Gun Power: " + static_cast<ostringstream*>( &(ostringstream() << s.getGunPower()) )->str();
+	string gunPower = "Gun Power: " + 
+		static_cast<ostringstream*>( &(ostringstream() << s.getGunPower()) )->str();
 
 	//notice use of setprecision() to limit decimal values
-	string gunRotation = "Gun Rotation: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(3) << s.getGunRotation()) )->str();
-	string gunInclination = "Gun Inclination: " + static_cast<ostringstream*>( &(ostringstream() << setprecision(2) << s.getGunInclination()) )->str();
+	string gunRotation = "Gun Rotation: " + 
+		static_cast<ostringstream*>( &(ostringstream() << setprecision(3) << s.getGunRotation()) )->str();
+	string gunInclination = "Gun Inclination: " + 
+		static_cast<ostringstream*>( &(ostringstream() << setprecision(2) << s.getGunInclination()) )->str();
 	
 	//more info text
 	string difficulty = "Difficulty: " + s.getDifficultyString();

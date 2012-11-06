@@ -1,3 +1,9 @@
+/*
+	Skybox is used to draw the bounding skybox for the game.
+	It's a 200x200 cube that uses gradient colors
+	to simulate added depth.
+*/
+
 #pragma once
 #include <stdio.h>
 #include <vector>

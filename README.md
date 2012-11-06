@@ -79,7 +79,7 @@
 
 - added a global camera to fully appreciate the world (control with arrow keys)
 
--caps lock support (the program still works if caps lock is on and you don't realize it!)
+- caps lock support (the program still works if caps lock is on and you don't realize it!)
    
 - Extra keys implemented:
 	- 'f' toggles fullscreen mode
