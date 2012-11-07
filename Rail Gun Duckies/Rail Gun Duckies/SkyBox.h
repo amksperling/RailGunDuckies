@@ -24,7 +24,7 @@ public:
 	SkyBox(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color);
 
 	void render();
-	inline GLuint getDisplayListHandle() { return this->displayListHandle; }
+	GLuint getDisplayListHandle() { return this->displayListHandle; }
 
 
 private:

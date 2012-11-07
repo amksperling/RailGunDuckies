@@ -22,25 +22,25 @@ public:
 	void render();
 
 	//launch angles are used to rotate the duck upon launch
-	inline double getLaunchRotation() const { return this->launchRotation; }
-	inline double getLaunchInclination() const { return this->launchInclination; }
+	double getLaunchRotation() const { return this->launchRotation; }
+	double getLaunchInclination() const { return this->launchInclination; }
 
 	//inline void setAcceleration(vec3 acceleration) { this->acceleration = acceleration; }
-	inline void setLaunched(bool launched) { this->launched = launched; }
-	inline void setHitBalloon(bool hitBalloon) { this->hitBalloon = hitBalloon; }
+	void setLaunched(bool launched) { this->launched = launched; }
+	void setHitBalloon(bool hitBalloon) { this->hitBalloon = hitBalloon; }
 
 	//only set launch angles if the duck is not launched!
-	inline void setLaunchRotation(double launchRotation) {  if(launched) return; this->launchRotation = launchRotation; }
-	inline void setLaunchInclination(double launchInclination) { if(launched) return; this->launchInclination = launchInclination; }
+	void setLaunchRotation(double launchRotation) {  if(launched) return; this->launchRotation = launchRotation; }
+	void setLaunchInclination(double launchInclination) { if(launched) return; this->launchInclination = launchInclination; }
 	
 	
-	inline bool isMoving() { return this->launched; }
-	inline bool hitABalloon() { return this->hitBalloon; }
+	bool isMoving() { return this->launched; }
+	bool hitABalloon() { return this->hitBalloon; }
 	
-	inline bool hitTheGround() { return this->getPosition().y <= .7; }
+	bool hitTheGround() { return this->getPosition().y <= .7; }
 	
 	//we have the ability to change the color of the duck
-	inline void setColor(vec3 color) { this->color = color; }
+	void setColor(vec3 color) { this->color = color; }
 
 private:
 	bool launched;

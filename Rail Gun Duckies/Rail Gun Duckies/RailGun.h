@@ -28,12 +28,12 @@ public:
 	//inclination = pitch, y axis
 	double getInclinationAngle() const;
 
-	inline double getGunPower() const { return this->gunPower; }
+	double getGunPower() const { return this->gunPower; }
 
 	//the power of the gun is variable from 0 to 100
-	inline void increaseGunPower(double higher) { this->gunPower += higher; }
-	inline void decreaseGunPower(double lower) { this->gunPower -= lower; }
-	inline void setGunPower(double input) { this->gunPower = input; }
+	void increaseGunPower(double higher) { this->gunPower += higher; }
+	void decreaseGunPower(double lower) { this->gunPower -= lower; }
+	void setGunPower(double input) { this->gunPower = input; }
 
 	void setRotationAngle(double a);
 	void setInclinationAngle(double a);

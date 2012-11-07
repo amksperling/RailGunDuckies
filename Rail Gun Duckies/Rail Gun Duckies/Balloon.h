@@ -25,8 +25,8 @@ public:
 
 	void render();  //display the balloon
 
-	inline void setPointValue(int value) { this->pointValue = value; }
-	inline int getPointValue() { return this->pointValue; }
+	void setPointValue(int value) { this->pointValue = value; }
+	int getPointValue() { return this->pointValue; }
 	
 
 private:

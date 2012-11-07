@@ -72,15 +72,15 @@ public:
 	bool checkForCollisionsBetweenBalloons (Balloon & b);
 
 	//inline getters for all instance variables
-	inline int getScore() const { return this->score; }
-	inline int getDifficulty() const { return this->difficulty; }
-	inline int getDucksRemaining() const { return this->ducksRemaining; }
-	inline int getBalloonsRemaining() const{ return this->balloonsRemaining; }
-	inline int getGunPower() const { return int(this->theGun.getGunPower()); }
-	inline double getGunInclination() const { return this->theGun.getInclinationAngle(); }
-	inline double getGunRotation() const { return this->theGun.getRotationAngle(); }
-	inline string getDifficultyString() const { return this->difficulty_string; }
-	inline vector<Balloon> & getBalloons() { return this->balloons; }
+	int getScore() const { return this->score; }
+	int getDifficulty() const { return this->difficulty; }
+	int getDucksRemaining() const { return this->ducksRemaining; }
+	int getBalloonsRemaining() const{ return this->balloonsRemaining; }
+	int getGunPower() const { return int(this->theGun.getGunPower()); }
+	double getGunInclination() const { return this->theGun.getInclinationAngle(); }
+	double getGunRotation() const { return this->theGun.getRotationAngle(); }
+	string getDifficultyString() const { return this->difficulty_string; }
+	vector<Balloon> & getBalloons() { return this->balloons; }
 	
 	
 private:

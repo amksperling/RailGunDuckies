@@ -25,11 +25,11 @@ public:
 
 	void render();  //display the diamond
 	
-	inline void setLifetime(int lifetime) { this->lifetime = lifetime; }
-	inline int getLifetime() { return this->lifetime; }
+	void setLifetime(int lifetime) { this->lifetime = lifetime; }
+	int getLifetime() { return this->lifetime; }
 
-	inline void setPointValue(int value) { this->pointValue = value; }
-	inline int getPointValue() { return this->pointValue; }
+	void setPointValue(int value) { this->pointValue = value; }
+	int getPointValue() { return this->pointValue; }
 
 private:
 	int lifetime;  //how long the diamonds will last before they are removed from the screen
