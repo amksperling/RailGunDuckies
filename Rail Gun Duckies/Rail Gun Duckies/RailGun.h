@@ -22,13 +22,11 @@ public:
 	
 	void render();
 
-
 	//rotation = yaw, x axis
 	double getRotationAngle() const;
 
 	//inclination = pitch, y axis
 	double getInclinationAngle() const;
-
 
 	inline double getGunPower() const { return this->gunPower; }
 

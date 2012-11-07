@@ -15,12 +15,9 @@ using namespace glm;
 class Duckie : public Object {
 
 public:
-
 	Duckie();
 	Duckie(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color);
 	~Duckie();
-	
-
 
 	void render();
 
@@ -44,10 +41,8 @@ public:
 	
 	//we have the ability to change the color of the duck
 	inline void setColor(vec3 color) { this->color = color; }
-	
 
 private:
-
 	bool launched;
 	bool hitBalloon;
 
@@ -59,9 +54,6 @@ private:
 	vec3 color;
 
 	vec3 position;
-	
 
 	GLuint displayListHandle;
-	
 };
-

@@ -47,12 +47,8 @@ enum CAMERA_MODES {
 class Window {
 
 public:
-
-
-
 	Window();
 	Window(int w, int h, int posX, int posY, bool fullScreen, string title);
-
 
 	/* These functions will toggle between the various modes
 	   of the program. If we implement more than one lighting
@@ -71,7 +67,6 @@ public:
 	void toggleLights();
 	void toggleGhostMode();
 
-	
 	inline void setPause(bool newPausedValue) { this->isPaused = newPausedValue; }
 	inline bool getPaused() { return this->isPaused; }
 
@@ -86,7 +81,6 @@ public:
 	inline int getHeight() const { return this->h; }
 
 private:
-
 	/* pretty much every variable used by glut can go here.
 	   We can use the glut functions to call our own window
 	   functions with the correct paramaters. */

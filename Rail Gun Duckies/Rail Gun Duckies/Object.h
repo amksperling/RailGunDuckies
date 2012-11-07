@@ -52,7 +52,6 @@ public:
 	inline vec4 getColor() { return this->color; }
 
 private:
-
 	bool shouldBeRemoved; //sets object for removal
 	bool isMoving;        //indicates object is moving
 	bool isBeautyModeModel; //indicates if the object is used for beauty mode
@@ -63,5 +62,4 @@ private:
 	vec3 scale;           //scales object to this size
 	vec3 velocity;        //velocity of object in units/time
 	vec4 color;           //color object should be rendered
-
 };

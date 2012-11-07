@@ -37,7 +37,6 @@ enum DIFFICULTY {
 class Scene {
 
 public:
-
 	Scene();
 
 	void setToBeautyMode(); //transition objects and positions to beauty mode
@@ -46,7 +45,6 @@ public:
 	//use these functions to switch between app modes
 	void runBeautyMode(int beautyMode);
 	void runGameMode(bool runForever, float timeStep, Window & w);
-
 
 	//fire the duck
 	void fire();
@@ -86,7 +84,6 @@ public:
 	
 	
 private:
-
 	vector<Balloon> balloons; // list of all balloons
 	Balloon aBalloon; //used for beauty mode
 
@@ -137,7 +134,6 @@ private:
 	string difficulty_string;
 
 	GLuint displayListHandle;
-	
 };
 
 //non class functions to generate random ints and doubles
