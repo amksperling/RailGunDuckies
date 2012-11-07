@@ -1,5 +1,5 @@
 #pragma once
-#include <gl/freeglut.h>
+#include <GL/freeglut.h>
 #include <stdio.h>
 #include <vector>
 #include <glm/glm.hpp>

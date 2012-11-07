@@ -37,16 +37,16 @@ static default_random_engine randomEngine;
 Scene::Scene() : displayListHandle(-1) { 
 	// order for input into function \/
 	// (bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) ; color not currently set up, so may be ignored
-	this->aBalloon = Balloon::Balloon(false, vec3(0, 2, 4), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	this->aBalloon = Balloon(false, vec3(0, 2, 4), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
 	this->aBalloon.setBeautyModeRotationVector(vec3(0, 0.8, 0.2)); //only balloon needs to update vector and speed as other objects use defaults
 	this->aBalloon.setBeautyModeRotationSpeed(60);
-	this->theDuck = Duckie::Duckie(false, vec3(0, 1.25, 7), vec3(0, 0, 0), vec3(2, 2, 2), vec3(0, 0, 0), vec4(1, 1, 0, 1));
-	this->lifeIndicatingDuck1 = Duckie::Duckie(false, vec3(7, 8.5, -94), vec3(0, -85, 0), vec3(.5, .5, .5), vec3(0, 0, 0), vec4(1, 1, 0, 1));
-	this->lifeIndicatingDuck2 = Duckie::Duckie(false, vec3(6, 8.5, -94), vec3(0, -85, 0), vec3(.5, .5, .5), vec3(0, 0, 0), vec4(1, 1, 0, 1));
-	this->lifeIndicatingDuck3 = Duckie::Duckie(false, vec3(5, 8.5, -94), vec3(0, -85, 0), vec3(.5, .5, .5), vec3(0, 0, 0), vec4(1, 1, 0, 1));
-	this->theGun = RailGun::RailGun(false, vec3(0, 1, 7), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	this->skyBox = SkyBox::SkyBox(false, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(0.0f, 0.0f, 0.0f, 1.0f));
-	this->theWorld = World::World(false, vec3(0, -2, 4), vec3(0, 0, 0), vec3(20, 20, 20), vec3(0, 0, 0), vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	this->theDuck = Duckie(false, vec3(0, 1.25, 7), vec3(0, 0, 0), vec3(2, 2, 2), vec3(0, 0, 0), vec4(1, 1, 0, 1));
+	this->lifeIndicatingDuck1 = Duckie(false, vec3(7, 8.5, -94), vec3(0, -85, 0), vec3(.5, .5, .5), vec3(0, 0, 0), vec4(1, 1, 0, 1));
+	this->lifeIndicatingDuck2 = Duckie(false, vec3(6, 8.5, -94), vec3(0, -85, 0), vec3(.5, .5, .5), vec3(0, 0, 0), vec4(1, 1, 0, 1));
+	this->lifeIndicatingDuck3 = Duckie(false, vec3(5, 8.5, -94), vec3(0, -85, 0), vec3(.5, .5, .5), vec3(0, 0, 0), vec4(1, 1, 0, 1));
+	this->theGun = RailGun(false, vec3(0, 1, 7), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	this->skyBox = SkyBox(false, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	this->theWorld = World(false, vec3(0, -2, 4), vec3(0, 0, 0), vec3(20, 20, 20), vec3(0, 0, 0), vec4(0.0f, 0.0f, 0.0f, 1.0f));
 	this->difficulty = NORMAL;
 	this->difficulty_string = "Normal";
 }
@@ -385,7 +385,7 @@ void Scene::placeBalloons() {
 	}
 
 	int xPosition, yPosition, zPosition;
-	Balloon b = Balloon::Balloon(false, vec3(0, 2, 4), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	Balloon b = Balloon(false, vec3(0, 2, 4), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
 	/* for each balloon wanted, generate a random position
 		and assign that position to the balloon after it is constructed.
 		Then add it to the balloon vector. */
@@ -495,19 +495,19 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 			if(distance <= duckRadius+balloonRadius) { //something was hit!
 				iter->setShouldBeRemoved(true);
 				double randomFlight =  genRandomDouble(0.1, 1.0);
-				Diamond d = Diamond::Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3), 
+				Diamond d = Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3), 
 				vec3(1 * randomFlight *5, 5, 1 * (1-randomFlight)*5), vec4(0.0f,0.0f,0.0f,0.0f), iter->getPointValue(), 500);
 				diamonds.push_back(d);
 				randomFlight =  genRandomDouble(0.1, 1.0);
-				d = Diamond::Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3), 
+				d = Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3), 
 				vec3(-1 * randomFlight *5, 5, 1 * (1-randomFlight)*5), vec4(0.0f,0.0f,0.0f,0.0f), iter->getPointValue(), 500);
 				diamonds.push_back(d);
 				randomFlight =  genRandomDouble(0.1, 1.0);
-				d = Diamond::Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3), 
+				d = Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3), 
 				vec3(1 * randomFlight *5, 5, -1 * (1-randomFlight)*5), vec4(0.0f,0.0f,0.0f,0.0f), iter->getPointValue(), 500);
 				diamonds.push_back(d);
 				randomFlight =  genRandomDouble(0.1, 1.0);
-				d = Diamond::Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3), 
+				d = Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3), 
 				vec3(-1 * randomFlight *5, 5, -1 * (1-randomFlight)*5), vec4(0.0f,0.0f,0.0f,0.0f), iter->getPointValue(), 500);
 				diamonds.push_back(d);
 				iter->setPosition(vec3(300, -300, 0)); //set to an unhittable position, will be cleared later
