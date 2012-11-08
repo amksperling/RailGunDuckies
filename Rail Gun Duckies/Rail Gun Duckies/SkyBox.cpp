@@ -1,4 +1,4 @@
-#include <gl/freeglut.h>
+#include <GL/freeglut.h>
 #include "SkyBox.h"
 
 GLuint SkyBox::displayListHandle;
