@@ -49,34 +49,34 @@ void Diamond::render() {
     GLfloat material_shininess_blue[] = { .25f * 128.0f };
 
 	if(this->pointValue >= 55){
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_gold);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_gold);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_gold);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_gold);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_gold);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_gold);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_gold);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_gold);
 	}
 	else if(this->pointValue >= 50){
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_silver);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_silver);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_silver);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_silver);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_silver);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_silver);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_silver);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_silver);
 	}
 	else if(this->pointValue % 3 == 0){
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_blue);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_blue);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_blue);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_blue);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_blue);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_blue);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_blue);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_blue);
 	}
 	else if(this->pointValue % 2 == 0){
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_green);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_green);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_green);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_green);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_green);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_green);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_green);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_green);
 	}
 	else{
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_red);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_red);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_red);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_red);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_red);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_red);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_red);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_red);
 	}
 
 	if (this->va_vertices.size() == 0)

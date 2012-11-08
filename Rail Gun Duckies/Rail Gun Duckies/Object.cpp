@@ -207,24 +207,23 @@ void Object::updateAndRender(float timeStep, bool shouldFall, bool shouldRender)
 			this->beautyModeRotationVector.y, this->beautyModeRotationVector.z);
 	}
 	else {
+		//x = x + vt
+		position.x += velocity.x * timeStep;
+		position.y += velocity.y * timeStep;
+		position.z += velocity.z * timeStep;
 
-	//x = x + vt
-	position.x += velocity.x * timeStep;
-	position.y += velocity.y * timeStep;
-	position.z += velocity.z * timeStep;
+		if(position.y >= 30){
+			position.y = -5;
+		}
 
-	if(position.y >= 30){
-		position.y = -5;
-	}
+		// add gravity to the y component of velocity
+		// v = v + gt
+		if(shouldFall && velocity.y != 0) velocity.y += gravity * timeStep;
 
-	// add gravity to the y component of velocity
-	// v = v + gt
-	if(shouldFall && velocity.y != 0) velocity.y += gravity * timeStep;
-
-	glTranslated(this->position.x, this->position.y, this->position.z);
-	glRotated(this->rotation.z, 0, 0, 1);
-	glRotated(this->rotation.y, 0, 1, 0);
-	glRotated(this->rotation.x, 1, 0, 0);
+		glTranslated(this->position.x, this->position.y, this->position.z);
+		glRotated(this->rotation.z, 0, 0, 1);
+		glRotated(this->rotation.y, 0, 1, 0);
+		glRotated(this->rotation.x, 1, 0, 0);
 	}
 	glScalef(this->scale.x, this->scale.y, this->scale.z);
 	if(shouldRender) this->render();

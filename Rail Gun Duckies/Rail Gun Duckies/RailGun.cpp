@@ -25,33 +25,33 @@ void RailGun::render() {
 		this->railgun_display_list = glGenLists(1);
 		glNewList(this->railgun_display_list, GL_COMPILE);
 		glDisable(GL_COLOR_MATERIAL);
-	//Unique color and alpha values for each component of light result in giving a unique look to the
-	//model. These values were chosen to simulate the appearance of a shiny, metal rail gun
-	GLfloat material_ambient[] = {(GLfloat).192, (GLfloat).192, (GLfloat)0.192, (GLfloat)1};
-	GLfloat material_diffuse[] = { (GLfloat).508, (GLfloat).508, (GLfloat)0.508, (GLfloat)1 };
-    GLfloat material_specular[] = { (GLfloat).503, (GLfloat).503, (GLfloat).503, (GLfloat)1 };
-    GLfloat material_shininess[] = { (GLfloat).4 * (GLfloat)128 };
+		//Unique color and alpha values for each component of light result in giving a unique look to the
+		//model. These values were chosen to simulate the appearance of a shiny, metal rail gun
+		GLfloat material_ambient[] = {(GLfloat).192, (GLfloat).192, (GLfloat)0.192, (GLfloat)1};
+		GLfloat material_diffuse[] = { (GLfloat).508, (GLfloat).508, (GLfloat)0.508, (GLfloat)1 };
+		GLfloat material_specular[] = { (GLfloat).503, (GLfloat).503, (GLfloat).503, (GLfloat)1 };
+		GLfloat material_shininess[] = { (GLfloat).4 * (GLfloat)128 };
 
-	glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess);
+		glMaterialfv(GL_FRONT, GL_AMBIENT, material_ambient);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
+		glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess);
 
-	//translate and draw each component of the rail gun
-	glTranslated(0, 0, 2.75);
-	Object::drawRect(1.0f,1.0f,0.5f,0.511f,0.535f,0.586f);
-	glTranslated(0, 0, -5.5); 
-	Object::drawRect(1.0f,1.0f,0.5f,0.511f,0.535f,0.586f);
-	glTranslated(-0.375f, 0.375f, 2.75f);
-	Object::drawRect(0.25f,0.25f,5.0f,0.511f,0.535f,0.586f);
-	glTranslated(0.75f, 0.0f, 0.0f);
-	Object::drawRect(0.25f,0.25f,5.0f,0.511f,0.535f,0.586f);
-	glTranslated(0.0f, -0.75f, 0.0f);
-	Object::drawRect(0.25f,0.25f,5.0f,0.511f,0.535f,0.586f);
-	glTranslated(-0.75f, 0.0f, 0.0f);
-	Object::drawRect(0.25f,0.25f,5.0f,0.511f,0.535f,0.586f);
-	glEnable(GL_COLOR_MATERIAL);
-	glEndList();
+		//translate and draw each component of the rail gun
+		glTranslated(0, 0, 2.75);
+		Object::drawRect(1.0f,1.0f,0.5f,0.511f,0.535f,0.586f);
+		glTranslated(0, 0, -5.5); 
+		Object::drawRect(1.0f,1.0f,0.5f,0.511f,0.535f,0.586f);
+		glTranslated(-0.375f, 0.375f, 2.75f);
+		Object::drawRect(0.25f,0.25f,5.0f,0.511f,0.535f,0.586f);
+		glTranslated(0.75f, 0.0f, 0.0f);
+		Object::drawRect(0.25f,0.25f,5.0f,0.511f,0.535f,0.586f);
+		glTranslated(0.0f, -0.75f, 0.0f);
+		Object::drawRect(0.25f,0.25f,5.0f,0.511f,0.535f,0.586f);
+		glTranslated(-0.75f, 0.0f, 0.0f);
+		Object::drawRect(0.25f,0.25f,5.0f,0.511f,0.535f,0.586f);
+		glEnable(GL_COLOR_MATERIAL);
+		glEndList();
 	}
 
 	glCallList(this->railgun_display_list);

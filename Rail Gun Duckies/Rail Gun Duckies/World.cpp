@@ -95,9 +95,9 @@ void World::render() {
 				
 				vec3 sum = glm::cross(two - va_vertices[GLuint(a)], one - va_vertices[GLuint(a)]);
 				if(a < (omegaPoints - 1) * phiPoints){
-				sum += glm::cross(three - va_vertices[GLuint(a)], two - va_vertices[GLuint(a)]);
-				sum += glm::cross(four - va_vertices[GLuint(a)], three - va_vertices[GLuint(a)]);
-				sum += glm::cross(five - va_vertices[GLuint(a)], four - va_vertices[GLuint(a)]);
+					sum += glm::cross(three - va_vertices[GLuint(a)], two - va_vertices[GLuint(a)]);
+					sum += glm::cross(four - va_vertices[GLuint(a)], three - va_vertices[GLuint(a)]);
+					sum += glm::cross(five - va_vertices[GLuint(a)], four - va_vertices[GLuint(a)]);
 				}
 				sum += glm::cross(six - va_vertices[GLuint(a)], five - va_vertices[GLuint(a)]);
 				sum += glm::cross(one - va_vertices[GLuint(a)], six - va_vertices[GLuint(a)]);
