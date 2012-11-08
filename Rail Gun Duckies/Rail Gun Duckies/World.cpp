@@ -2,14 +2,14 @@
 
 World::World() {}
 
-World::World(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) : 
+World::World(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) :
 	Object(isMoving, position, rotation, scale, velocity, color)
-{ } 
+{ }
 
 const float PI = 3.14159265f;
 
 void World::render() {
-	if (this->va_vertices.size() == 0) {	
+	if (this->va_vertices.size() == 0) {
 
 		GLfloat r;
 		GLfloat o;
@@ -33,16 +33,16 @@ void World::render() {
 
 		for(o = (GLfloat)0; o <=(GLfloat)90; o +=omegaIncrement) {
 			for(p = (GLfloat)0; p <(GLfloat) 360; p +=phiIncrement) {
-			
-				this->va_vertices.push_back(glm::vec3((r * sin(o*(PI/180))* cos(p*(PI/180))), 
+
+				this->va_vertices.push_back(glm::vec3((r * sin(o*(PI/180))* cos(p*(PI/180))),
 					(r * cos(o*(PI/180))), (r * sin(o*(PI/180))* sin(p*(PI/180)))));
 				this->va_colors.push_back(glm::vec4(0.0f,0.0f,1.0f,1.0f));
 			}
 		}
 
-		//The vertices are then grouped into triangles and have their normals calculated by normalizing 
+		//The vertices are then grouped into triangles and have their normals calculated by normalizing
 		//the result of taking the cross-product between the two sides of every triangle that the vertex is involved in
-		//and summing them. 
+		//and summing them.
 
 		//Iterates through the loop and connects the vertices into triangular shapes that blur together into the final shape
 		//the max index of the loop does not include the last row of points as each row constructs triangles with the row
@@ -92,7 +92,7 @@ void World::render() {
 					five = va_vertices[GLuint(a + phiPoints - 1)];
 					six = va_vertices[GLuint(a - 1)];
 				}
-				
+
 				vec3 sum = glm::cross(two - va_vertices[GLuint(a)], one - va_vertices[GLuint(a)]);
 				if(a < (omegaPoints - 1) * phiPoints){
 					sum += glm::cross(three - va_vertices[GLuint(a)], two - va_vertices[GLuint(a)]);
@@ -106,7 +106,7 @@ void World::render() {
 		}
 
 		//draw a square for the floor
-			
+
 		this->va_vertices.push_back(glm::vec3(-1, 0, 1));
 		this->va_colors.push_back(glm::vec4(0.004f,0.306f,0.0f,1.0f));
 		this->va_normals.push_back(glm::vec3(0,1,0));
@@ -122,13 +122,13 @@ void World::render() {
 		this->va_vertices.push_back(glm::vec3(1, 0, -1));
 		this->va_colors.push_back(glm::vec4(0.004f,0.306f,0.0f,1.0f));
 		this->va_normals.push_back(glm::vec3(0,1,0));
-		
+
 		//starting index of square points is after all hemisphere points
 		int startIndex = (int)omegaPoints * (int)phiPoints;
 
 		this->va_indices.push_back(glm::ivec3(startIndex,startIndex+1,startIndex+3));
 		this->va_indices.push_back(glm::ivec3(startIndex,startIndex + 3,startIndex+2));
-		
+
 	}
 
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -143,4 +143,4 @@ void World::render() {
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
-} 
+}

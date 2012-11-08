@@ -1,4 +1,4 @@
-/* Header file for a window manager class. 
+/* Header file for a window manager class.
    Kinda like a wrapper for glut for our own purposes.
    Not sure if it's totally necessary, but it can make
    our code look nicer in the end. */

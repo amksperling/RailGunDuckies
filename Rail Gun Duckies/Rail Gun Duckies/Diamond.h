@@ -9,7 +9,7 @@ using namespace std;
 using namespace glm;
 
 /*
-   The Diamond class is a subclass of Object. It contains properties and methods unique to the diamond class 
+   The Diamond class is a subclass of Object. It contains properties and methods unique to the diamond class
    as well as the method to construct and render a diamond.
 */
 
@@ -24,7 +24,7 @@ public:
 	~Diamond();
 
 	void render();  //display the diamond
-	
+
 	void setLifetime(int lifetime) { this->lifetime = lifetime; }
 	int getLifetime() { return this->lifetime; }
 

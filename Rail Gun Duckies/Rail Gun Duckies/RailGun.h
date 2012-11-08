@@ -9,7 +9,7 @@ using namespace std;
 using namespace glm;
 
 /*
-   The RailGun class is a subclass of Object. It contains properties and methods unique to the railgun class 
+   The RailGun class is a subclass of Object. It contains properties and methods unique to the railgun class
    as well as the method to construct and render a railgun.
 */
 
@@ -19,7 +19,7 @@ public:
 	RailGun();
 	RailGun(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color);
 	~RailGun();
-	
+
 	void render();
 
 	//rotation = yaw, x axis

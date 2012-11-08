@@ -7,11 +7,11 @@ vector<vec3> Diamond::va_normals;
 Diamond::Diamond() {
 }
 
-Diamond::Diamond(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color, int pointValue, int lifetime) : 
+Diamond::Diamond(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color, int pointValue, int lifetime) :
 	Object(isMoving, position, rotation, scale, velocity, color){
 		this->pointValue = pointValue;
 		this->lifetime = lifetime;
-} 
+}
 
 Diamond::~Diamond() {
 
@@ -91,7 +91,7 @@ void Diamond::render() {
 		this->va_indices.push_back(glm::ivec3(0,1,3));
 		this->va_indices.push_back(glm::ivec3(2,0,3));
 		this->va_indices.push_back(glm::ivec3(2,4,0));
-		this->va_indices.push_back(glm::ivec3(4,1,0)); 
+		this->va_indices.push_back(glm::ivec3(4,1,0));
 		this->va_indices.push_back(glm::ivec3(5,1,3));
 		this->va_indices.push_back(glm::ivec3(2,5,3));
 		this->va_indices.push_back(glm::ivec3(2,4,5));
@@ -118,4 +118,4 @@ void Diamond::render() {
 	glDisableClientState(GL_NORMAL_ARRAY);
 
 	glEnable(GL_COLOR_MATERIAL);
-} 
+}

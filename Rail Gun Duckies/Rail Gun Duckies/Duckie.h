@@ -6,7 +6,7 @@
 
 /*
 The Duckie class represents one Duckie object used in the Rail Gun Duckies
-game. The duck keeps track of its position, velocity, color, and other 
+game. The duck keeps track of its position, velocity, color, and other
 attributes needed for the game to work.
 */
 
@@ -32,13 +32,13 @@ public:
 	//only set launch angles if the duck is not launched!
 	void setLaunchRotation(double launchRotation) {  if(launched) return; this->launchRotation = launchRotation; }
 	void setLaunchInclination(double launchInclination) { if(launched) return; this->launchInclination = launchInclination; }
-	
-	
+
+
 	bool isMoving() { return this->launched; }
 	bool hitABalloon() { return this->hitBalloon; }
-	
+
 	bool hitTheGround() { return this->getPosition().y <= .7; }
-	
+
 	//we have the ability to change the color of the duck
 	void setColor(vec3 color) { this->color = color; }
 

@@ -10,7 +10,7 @@ RailGun::RailGun() : Object() {
 RailGun::RailGun(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) : Object(isMoving, position, rotation, scale, velocity, color) {
 	this->railgun_display_list = (GLuint) -1;
 	this->gunPower = 50;
-} 
+}
 
 RailGun::~RailGun() {
 
@@ -40,7 +40,7 @@ void RailGun::render() {
 		//translate and draw each component of the rail gun
 		glTranslated(0, 0, 2.75);
 		Object::drawRect(1.0f,1.0f,0.5f,0.511f,0.535f,0.586f);
-		glTranslated(0, 0, -5.5); 
+		glTranslated(0, 0, -5.5);
 		Object::drawRect(1.0f,1.0f,0.5f,0.511f,0.535f,0.586f);
 		glTranslated(-0.375f, 0.375f, 2.75f);
 		Object::drawRect(0.25f,0.25f,5.0f,0.511f,0.535f,0.586f);

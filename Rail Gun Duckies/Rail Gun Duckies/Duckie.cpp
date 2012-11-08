@@ -1,7 +1,7 @@
 
 #include "Duckie.h"
 
-//quadric object used to draw spheres and cylinders 
+//quadric object used to draw spheres and cylinders
 static GLUquadric *q = gluNewQuadric();
 
 //Default constructor
@@ -28,7 +28,7 @@ Duckie::~Duckie() {
 
 
 void Duckie::render() {
-		
+
 	//set up material parameters
 	//numbers from http://devernay.free.fr/cours/opengl/materials.html
 	//
@@ -60,7 +60,7 @@ void Duckie::render() {
 
 			glPushMatrix();
 			glScaled(1, .7, 1.2);
-			
+
 			gluSphere(q,1,100,100);
 			glPopMatrix();
 
@@ -132,12 +132,12 @@ void Duckie::render() {
 
 			glPopMatrix();
 		} //end if q
-		
+
 		else {
 			fprintf(stderr, "Couldn't initialize quadric"); //impossible else
 			exit(1);
 		}
-		
+
 		glEndList();
 	} // end if displayList == -1
 

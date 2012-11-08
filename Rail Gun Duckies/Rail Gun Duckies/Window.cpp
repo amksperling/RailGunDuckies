@@ -44,18 +44,18 @@ Window::Window(int w, int h, int posX, int posY, bool fullScreen, const string& 
 
 //Toggles full screen mode.
 void Window::toggleFullScreen() {
-	if (!this->isFullScreen) 
+	if (!this->isFullScreen)
 		glutFullScreen();
-	else 
+	else
 		glutReshapeWindow(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	this->isFullScreen = !this->isFullScreen;
 }
 
 // Toggle Wireframe mode
 void Window::toggleWireFrame() {
-	if (!this->isWireFrame) 
+	if (!this->isWireFrame)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	else 
+	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	this->isWireFrame = !this->isWireFrame;
 }

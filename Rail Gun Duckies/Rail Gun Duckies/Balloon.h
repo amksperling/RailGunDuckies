@@ -9,7 +9,7 @@ using namespace std;
 using namespace glm;
 
 /*
-   The Balloon class is a subclass of Object. It contains properties and methods unique to the balloon class 
+   The Balloon class is a subclass of Object. It contains properties and methods unique to the balloon class
    as well as the method to construct and render a balloon.
 */
 
@@ -27,7 +27,7 @@ public:
 
 	void setPointValue(int value) { this->pointValue = value; }
 	int getPointValue() { return this->pointValue; }
-	
+
 
 private:
 	static vector<vec3> va_vertices; //array used to hold the points in space used to define the shape of a balloon

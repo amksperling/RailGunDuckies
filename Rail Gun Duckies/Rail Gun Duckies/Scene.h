@@ -81,8 +81,8 @@ public:
 	double getGunRotation() const { return this->theGun.getRotationAngle(); }
 	const string& getDifficultyString() const { return this->difficulty_string; }
 	vector<Balloon> & getBalloons() { return this->balloons; }
-	
-	
+
+
 private:
 	vector<Balloon> balloons; // list of all balloons
 	Balloon aBalloon; //used for beauty mode
@@ -91,7 +91,7 @@ private:
 
 	//we only use one gun and one duck the whole time!
 	//save memory!
-	RailGun theGun; 
+	RailGun theGun;
 	Duckie theDuck;
 
 	//small duck models used to indicate lives left.
