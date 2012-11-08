@@ -56,7 +56,7 @@ void camera (void) {
 
 //function for displaying beauty mode text in an
 // orthographic projection. 
-void displayBeautyText(string text) {
+void displayBeautyText(const string& text) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, w->getWidth(), 0, w->getHeight(), 1, 10); // set ortho projection based on window size
@@ -201,7 +201,7 @@ void displayGameText() {
 
 //fnuction used in debugging to check for GL errors
 // prints any error to the console if one is found
-bool CheckGLErrors(string location) {
+bool CheckGLErrors(const string& location) {
 	bool error_found = false;
 	GLenum  error;
 	const GLubyte *errorString;

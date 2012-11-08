@@ -48,7 +48,7 @@ class Window {
 
 public:
 	Window();
-	Window(int w, int h, int posX, int posY, bool fullScreen, string title);
+	Window(int w, int h, int posX, int posY, bool fullScreen, const string& title);
 
 	/* These functions will toggle between the various modes
 	   of the program. If we implement more than one lighting

@@ -79,7 +79,7 @@ public:
 	int getGunPower() const { return int(this->theGun.getGunPower()); }
 	double getGunInclination() const { return this->theGun.getInclinationAngle(); }
 	double getGunRotation() const { return this->theGun.getRotationAngle(); }
-	string getDifficultyString() const { return this->difficulty_string; }
+	const string& getDifficultyString() const { return this->difficulty_string; }
 	vector<Balloon> & getBalloons() { return this->balloons; }
 	
 	

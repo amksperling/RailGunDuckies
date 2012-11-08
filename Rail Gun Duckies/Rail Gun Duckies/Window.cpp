@@ -24,7 +24,7 @@ Window::Window() {
 
 
 // Create a fully custimzable window all in one constructor!
-Window::Window(int w, int h, int posX, int posY, bool fullScreen, string title) {
+Window::Window(int w, int h, int posX, int posY, bool fullScreen, const string& title) {
 	glutInitWindowPosition(posX, posY);
 	glutInitWindowSize(w, h);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
