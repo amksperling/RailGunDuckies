@@ -1,4 +1,4 @@
-/* Header file for a window manager class. 
+/* Header file for a window manager class.
    Kinda like a wrapper for glut for our own purposes.
    Not sure if it's totally necessary, but it can make
    our code look nicer in the end. */
@@ -47,12 +47,8 @@ enum CAMERA_MODES {
 class Window {
 
 public:
-
-
-
 	Window();
-	Window(int w, int h, int posX, int posY, bool fullScreen, string title);
-
+	Window(int w, int h, int posX, int posY, bool fullScreen, const string& title);
 
 	/* These functions will toggle between the various modes
 	   of the program. If we implement more than one lighting
@@ -71,22 +67,20 @@ public:
 	void toggleLights();
 	void toggleGhostMode();
 
-	
-	inline void setPause(bool newPausedValue) { this->isPaused = newPausedValue; }
-	inline bool getPaused() { return this->isPaused; }
+	void setPause(bool newPausedValue) { this->isPaused = newPausedValue; }
+	bool getPaused() { return this->isPaused; }
 
 	void reshape(int w, int h);
 
-	inline int getSceneMode() const { return sceneMode; }
-	inline int getCameraMode() const { return cameraMode; }
-	inline int getLightMode() const { return lightMode; }
+	int getSceneMode() const { return sceneMode; }
+	int getCameraMode() const { return cameraMode; }
+	int getLightMode() const { return lightMode; }
 
-	inline double getAspect() const { return this->aspect; }
-	inline int getWidth() const { return this->w; }
-	inline int getHeight() const { return this->h; }
+	double getAspect() const { return this->aspect; }
+	int getWidth() const { return this->w; }
+	int getHeight() const { return this->h; }
 
 private:
-
 	/* pretty much every variable used by glut can go here.
 	   We can use the glut functions to call our own window
 	   functions with the correct paramaters. */

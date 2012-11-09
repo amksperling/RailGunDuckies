@@ -29,30 +29,29 @@ public:
 	void drawVecArrayFace(float w, float h, float r, float g, float b, Object &objectToModify);
 	void drawVecArrayCircle(int radialPoints, float radius, float r, float g, float b, Object &objectToModify);
 
-	inline void setShouldBeRemoved(bool shouldBeRemoved) { this->shouldBeRemoved = shouldBeRemoved; }
-	inline void setIsMoving(bool isMoving) { this->isMoving = isMoving; }
-	inline void setIsBeautyModeModel(bool isBeautyModeModel) { this->isBeautyModeModel = isBeautyModeModel; }
-	inline void setPosition(vec3 position) { this->position = position; }
-	inline void setRotation(vec3 rotation) { this->rotation = rotation; }
-	inline void setBeautyModeRotationVector(vec3 beautyModeRotationVector) { this->beautyModeRotationVector = beautyModeRotationVector; }
-	inline void setBeautyModeRotationSpeed(int beautyModeRotationSpeed) { this->beautyModeRotationSpeed = beautyModeRotationSpeed; }
-	inline void setScale(vec3 scale) { this->scale = scale; }
-	inline void setVelocity(vec3 velocity) { this->velocity = velocity; }
-	inline void setColor(vec4 color) { this->color = color; }
+	void setShouldBeRemoved(bool shouldBeRemoved) { this->shouldBeRemoved = shouldBeRemoved; }
+	void setIsMoving(bool isMoving) { this->isMoving = isMoving; }
+	void setIsBeautyModeModel(bool isBeautyModeModel) { this->isBeautyModeModel = isBeautyModeModel; }
+	void setPosition(vec3 position) { this->position = position; }
+	void setRotation(vec3 rotation) { this->rotation = rotation; }
+	void setBeautyModeRotationVector(vec3 beautyModeRotationVector) { this->beautyModeRotationVector = beautyModeRotationVector; }
+	void setBeautyModeRotationSpeed(int beautyModeRotationSpeed) { this->beautyModeRotationSpeed = beautyModeRotationSpeed; }
+	void setScale(vec3 scale) { this->scale = scale; }
+	void setVelocity(vec3 velocity) { this->velocity = velocity; }
+	void setColor(vec4 color) { this->color = color; }
 
-	inline bool getShouldBeRemoved() { return this->shouldBeRemoved; }
-	inline bool getIsMoving() { return this->isMoving; }
-	inline bool getIsBeautyModeModel() { return this->isBeautyModeModel; }
-	inline vec3 getPosition() { return this->position; }
-	inline vec3 getRotation() { return this->rotation; }
-	inline vec3 getBeautyModeRotationVector() { return this->beautyModeRotationVector; }
-	inline int  getBeautyModeRotationSpeed() { return this->beautyModeRotationSpeed; }
-	inline vec3 getScale() { return this->scale; }
-	inline vec3 getVelocity() { return this->velocity; }
-	inline vec4 getColor() { return this->color; }
+	bool getShouldBeRemoved() { return this->shouldBeRemoved; }
+	bool getIsMoving() { return this->isMoving; }
+	bool getIsBeautyModeModel() { return this->isBeautyModeModel; }
+	vec3 getPosition() { return this->position; }
+	vec3 getRotation() { return this->rotation; }
+	vec3 getBeautyModeRotationVector() { return this->beautyModeRotationVector; }
+	int  getBeautyModeRotationSpeed() { return this->beautyModeRotationSpeed; }
+	vec3 getScale() { return this->scale; }
+	vec3 getVelocity() { return this->velocity; }
+	vec4 getColor() { return this->color; }
 
 private:
-
 	bool shouldBeRemoved; //sets object for removal
 	bool isMoving;        //indicates object is moving
 	bool isBeautyModeModel; //indicates if the object is used for beauty mode
@@ -63,5 +62,4 @@ private:
 	vec3 scale;           //scales object to this size
 	vec3 velocity;        //velocity of object in units/time
 	vec4 color;           //color object should be rendered
-
 };

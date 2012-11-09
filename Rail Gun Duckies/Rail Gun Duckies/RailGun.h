@@ -9,7 +9,7 @@ using namespace std;
 using namespace glm;
 
 /*
-   The RailGun class is a subclass of Object. It contains properties and methods unique to the railgun class 
+   The RailGun class is a subclass of Object. It contains properties and methods unique to the railgun class
    as well as the method to construct and render a railgun.
 */
 
@@ -19,9 +19,8 @@ public:
 	RailGun();
 	RailGun(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color);
 	~RailGun();
-	
-	void render();
 
+	void render();
 
 	//rotation = yaw, x axis
 	double getRotationAngle() const;
@@ -29,13 +28,12 @@ public:
 	//inclination = pitch, y axis
 	double getInclinationAngle() const;
 
-
-	inline double getGunPower() const { return this->gunPower; }
+	double getGunPower() const { return this->gunPower; }
 
 	//the power of the gun is variable from 0 to 100
-	inline void increaseGunPower(double higher) { this->gunPower += higher; }
-	inline void decreaseGunPower(double lower) { this->gunPower -= lower; }
-	inline void setGunPower(double input) { this->gunPower = input; }
+	void increaseGunPower(double higher) { this->gunPower += higher; }
+	void decreaseGunPower(double lower) { this->gunPower -= lower; }
+	void setGunPower(double input) { this->gunPower = input; }
 
 	void setRotationAngle(double a);
 	void setInclinationAngle(double a);

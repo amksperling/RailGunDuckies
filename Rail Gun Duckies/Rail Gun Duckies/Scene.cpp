@@ -1,5 +1,5 @@
 #include "Scene.h"
-#include <stdio.h>  
+#include <stdio.h>
 #include <iostream>
 #include <sstream>
 
@@ -34,7 +34,7 @@ static const vec3 initialGunPosition = vec3(0, 1, -95);//vec3(0, 3, -99);
 static default_random_engine randomEngine;
 
 //This constructor initializes all object paramaters for our objects
-Scene::Scene() : displayListHandle(-1) { 
+Scene::Scene() : displayListHandle(-1) {
 	// order for input into function \/
 	// (bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) ; color not currently set up, so may be ignored
 	this->aBalloon = Balloon(false, vec3(0, 2, 4), vec3(0, 0, 0), vec3(1, 1, 1), vec3(0, 0, 0), vec4(1.0f, 0.0f, 0.0f, 1.0f));
@@ -78,7 +78,7 @@ void Scene::runBeautyMode(int beautyMode) {
 		transitionedFromGameMode = false;
 	}
 	float elapsed_time = (float)(float(glutGet(GLUT_ELAPSED_TIME)) / 1000.0);
-	
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -117,7 +117,7 @@ void Scene::runGameMode(bool runForever, float timeStep, Window & w) {
 	randomEngine.seed((unsigned long)time(nullptr)); // set random seed based on current time
 
 	glMatrixMode(GL_MODELVIEW);
-	
+
 	glLoadIdentity();
 
 	//set up camera based on the camera mode selected:
@@ -139,18 +139,18 @@ void Scene::runGameMode(bool runForever, float timeStep, Window & w) {
 
 	// camera is always at the position of the duck and looks foward "through the duck's eyes"
 	case FIRST_PERSON:
-		gluLookAt(theDuck.getPosition().x, 
-			theDuck.getPosition().y + .5, 
-			theDuck.getPosition().z, 
-			theDuck.getPosition().x, 
-			theDuck.getPosition().y, 
-			theDuck.getPosition().z + 10, 
+		gluLookAt(theDuck.getPosition().x,
+			theDuck.getPosition().y + .5,
+			theDuck.getPosition().z,
+			theDuck.getPosition().x,
+			theDuck.getPosition().y,
+			theDuck.getPosition().z + 10,
 			0, 1, 0);
 		break;
 
 	case SPECTATE_LEFT:
-		gluLookAt(80, 5, -50, 
-			theDuck.getPosition().x, 
+		gluLookAt(80, 5, -50,
+			theDuck.getPosition().x,
 			theDuck.getPosition().y,
 			theDuck.getPosition().z,
 			0, 1, 0);
@@ -180,7 +180,7 @@ void Scene::runGameMode(bool runForever, float timeStep, Window & w) {
 		if(ducksRemaining >=2) lifeIndicatingDuck2.updateAndRender(timeStep, false, true);
 		if(ducksRemaining >=3) lifeIndicatingDuck3.updateAndRender(timeStep,false, true);
 	}
-	
+
 	//gluLookAt(0, 5, -100, 0, 0, 50, 0, 1, 0);
 	this->skyBox.updateAndRender(timeStep, false, true);
 
@@ -213,7 +213,7 @@ void Scene::runGameMode(bool runForever, float timeStep, Window & w) {
 		automateGun();
 	this->theGun.setRotation(vec3(-theGun.getInclinationAngle(),-theGun.getRotationAngle(),0));
 	this->theGun.updateAndRender(timeStep, false, true);
-	
+
 	//push for duck
 	//set its initial position
 	if (!this->theDuck.isMoving()) {
@@ -265,7 +265,7 @@ void Scene::fire() {
 			gameOver = true;
 			resetGame();
 		}
-		else 
+		else
 			resetDuck();
 	}
 }
@@ -279,7 +279,7 @@ void Scene::moveRailGun(int x, int y, const Window & w) {
 	else futureXAngle = (((double)x - ((double)w.getWidth()/2))/((double)w.getWidth()/2)) * 90;
 
 	futureYAngle = ((double)w.getHeight() - (double)y)/((double)w.getHeight()) * 90;
-	
+
 	this->theGun.setRotationAngle(futureXAngle);
 	this->theGun.setInclinationAngle(futureYAngle);
 }
@@ -303,7 +303,7 @@ void Scene::resetDuck() {
 	//set the new color
 	vec3 newColor = vec3(newRed, newGreen, newBlue);
 	this->theDuck.setColor(newColor);
-	
+
 }
 
 
@@ -354,7 +354,7 @@ void Scene::placeBalloons() {
 	switch (this->getDifficulty()) {
 
 	case EASY:
-		
+
 		xLeft = -10;
 		xRight = 10;
 		yBottom = 3;
@@ -364,7 +364,7 @@ void Scene::placeBalloons() {
 		break;
 
 	case NORMAL:
-		
+
 		xLeft = -10;
 		xRight = 10;
 		yBottom = 3;
@@ -374,7 +374,7 @@ void Scene::placeBalloons() {
 		break;
 
 	case HARD:
-		
+
 		xLeft = -15;
 		xRight = 15;
 		yBottom = 3;
@@ -392,16 +392,16 @@ void Scene::placeBalloons() {
 
 	for (int i = 0; i < MAX_BALLOONS; ++i) {
 
-		//generate balloon positions based on difficulty level		
+		//generate balloon positions based on difficulty level
 		xPosition = genRandomInt(xLeft, xRight);
-		
+
 		yPosition = genRandomInt(yBottom, yTop);
 
 		zPosition = genRandomInt(zNear, zFar);
 
 		// set the position of the balloon and its point value based on the position
 		b.setPosition(vec3(xPosition, yPosition, zPosition));
-		
+
 		//set point value based on distance from the gun
 		//since all z positions are negative, the farther away + higher = more points
 		b.setPointValue(100 + zPosition + yPosition);
@@ -446,22 +446,22 @@ int genRandomInt(int low, int high) {
 //check for collissions between balloons
 bool Scene::checkForCollisionsBetweenBalloons(Balloon &b) {
 			//bounding sphere for balloon as tested in beauty mode
-			//glTranslated(0, -.25, 0); 
+			//glTranslated(0, -.25, 0);
 			//glutSolidSphere(1.3f, 20, 20);
 	double balloonRadiusOfInputBalloon = 1.3 * b.getScale().y;
 
 		for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
-			double balloonRadiusIterator = 1.3 * iter->getScale().y; 
-			double distance = glm::sqrt((b.getPosition().x - iter->getPosition().x) * 
-				(b.getPosition().x - iter->getPosition().x) 
-				+ ((b.getPosition().y - 0.25 * b.getScale().y) - 
-				(iter->getPosition().y - 0.25 * iter->getScale().y)) * 
-				((b.getPosition().y - 0.25 * b.getScale().y) - 
+			double balloonRadiusIterator = 1.3 * iter->getScale().y;
+			double distanceSq = (b.getPosition().x - iter->getPosition().x) *
+				(b.getPosition().x - iter->getPosition().x)
+				+ ((b.getPosition().y - 0.25 * b.getScale().y) -
+				(iter->getPosition().y - 0.25 * iter->getScale().y)) *
+				((b.getPosition().y - 0.25 * b.getScale().y) -
 				(iter->getPosition().y - 0.25  * iter->getScale().y))
-				+ (b.getPosition().z - iter->getPosition().z) * 
-				(b.getPosition().z  - iter->getPosition().z));
-			
-			if(distance <= balloonRadiusOfInputBalloon+balloonRadiusIterator) { 
+				+ (b.getPosition().z - iter->getPosition().z) *
+				(b.getPosition().z  - iter->getPosition().z);
+
+			if(distanceSq <= pow(balloonRadiusOfInputBalloon+balloonRadiusIterator, 2)) {
 				b.setPosition(vec3(300, -300, 0));
 				return true;
 			}
@@ -481,33 +481,33 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 	double balloonRadius = 1.3;
 
 		for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
-			balloonRadius = 1.3 * iter->getScale().y; 
-			double distance = glm::sqrt((theDuck.getPosition().x - iter->getPosition().x) * 
-				(theDuck.getPosition().x - iter->getPosition().x) 
-				+ ((theDuck.getPosition().y - 0.125 * theDuck.getScale().y) - 
-				(iter->getPosition().y - 0.25 * iter->getScale().y)) * 
-				((theDuck.getPosition().y - 0.125 * theDuck.getScale().y) - 
+			balloonRadius = 1.3 * iter->getScale().y;
+			double distanceSq = (theDuck.getPosition().x - iter->getPosition().x) *
+				(theDuck.getPosition().x - iter->getPosition().x)
+				+ ((theDuck.getPosition().y - 0.125 * theDuck.getScale().y) -
+				(iter->getPosition().y - 0.25 * iter->getScale().y)) *
+				((theDuck.getPosition().y - 0.125 * theDuck.getScale().y) -
 				(iter->getPosition().y - 0.25  * iter->getScale().y))
-				+ ((theDuck.getPosition().z - 0.13 * theDuck.getScale().z) - 
-				iter->getPosition().z) * ((theDuck.getPosition().z - 0.13 
-				* theDuck.getScale().z) - iter->getPosition().z));
-			
-			if(distance <= duckRadius+balloonRadius) { //something was hit!
+				+ ((theDuck.getPosition().z - 0.13 * theDuck.getScale().z) -
+				iter->getPosition().z) * ((theDuck.getPosition().z - 0.13
+				* theDuck.getScale().z) - iter->getPosition().z);
+
+			if(distanceSq <= pow(duckRadius+balloonRadius, 2)) { //something was hit!
 				iter->setShouldBeRemoved(true);
 				double randomFlight =  genRandomDouble(0.1, 1.0);
-				Diamond d = Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3), 
+				Diamond d = Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3),
 				vec3(1 * randomFlight *5, 5, 1 * (1-randomFlight)*5), vec4(0.0f,0.0f,0.0f,0.0f), iter->getPointValue(), 500);
 				diamonds.push_back(d);
 				randomFlight =  genRandomDouble(0.1, 1.0);
-				d = Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3), 
+				d = Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3),
 				vec3(-1 * randomFlight *5, 5, 1 * (1-randomFlight)*5), vec4(0.0f,0.0f,0.0f,0.0f), iter->getPointValue(), 500);
 				diamonds.push_back(d);
 				randomFlight =  genRandomDouble(0.1, 1.0);
-				d = Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3), 
+				d = Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3),
 				vec3(1 * randomFlight *5, 5, -1 * (1-randomFlight)*5), vec4(0.0f,0.0f,0.0f,0.0f), iter->getPointValue(), 500);
 				diamonds.push_back(d);
 				randomFlight =  genRandomDouble(0.1, 1.0);
-				d = Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3), 
+				d = Diamond(true, iter->getPosition(), vec3(0,0,0), vec3(.3, .3, .3),
 				vec3(-1 * randomFlight *5, 5, -1 * (1-randomFlight)*5), vec4(0.0f,0.0f,0.0f,0.0f), iter->getPointValue(), 500);
 				diamonds.push_back(d);
 				iter->setPosition(vec3(300, -300, 0)); //set to an unhittable position, will be cleared later
@@ -523,9 +523,9 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 					resetGame();
 					return; //return so we don't check collisions on an empty balloon vector
 				}
-				
+
 			}
-			
+
 		}
 
 		//nothing was hit and the duck hit the ground
@@ -537,23 +537,23 @@ void Scene::checkForCollisions(Window & w) {  //(Object movingItem, Object other
 				resetGame();
 			}
 		}
-	
+
 }
 
 
 void Scene::resetGame() {
 
-	if (!gameWon) {	
+	if (!gameWon) {
 		//only reset score on loss
 		this->score = 0;
 	}
-		
+
 	this->balloonsPlaced = false;
 	this->gameOver = false;
 	this->gameWon = false;
 	this->balloonsRemaining = MAX_BALLOONS;
 	this->ducksRemaining = MAX_DUCKS;
-	
+
 	this->theDuck.setColor(vec3(1, 1, 0));
 	resetDuck();
 
@@ -565,10 +565,10 @@ void Scene::resetGame() {
 }
 
 void Scene::displayBalloonPointValue(Balloon & b) {
-	
+
 	//get its point value and convert to a string
 	string pointValue = static_cast<ostringstream*>( &(ostringstream() << b.getPointValue()) )->str();
-	
+
 	glPushMatrix();
 	glTranslated(1, 1, 0); //translate a little so it appears centered over the balloon
 	glRotated(180, 0, 1, 0); // rotate so text isn't mirrored
@@ -588,45 +588,43 @@ void Scene::automateGun() {
 	vec3 closestTargetPosition = vec3(1000);
 
 	//find the distance from the gun to the target (without using pow()!)
-	double distanceToClosestTarget = sqrt(
-		(closestTargetPosition.x - initialGunPosition.x) * 
-		(closestTargetPosition.x - initialGunPosition.x) + 
-		(closestTargetPosition.y - initialGunPosition.y) * 
+	double distanceToClosestTargetSq =
+		(closestTargetPosition.x - initialGunPosition.x) *
+		(closestTargetPosition.x - initialGunPosition.x) +
+		(closestTargetPosition.y - initialGunPosition.y) *
 		(closestTargetPosition.y - initialGunPosition.y) +
-		(closestTargetPosition.z - initialGunPosition.z) * 
-		(closestTargetPosition.z - initialGunPosition.z)
-	);
+		(closestTargetPosition.z - initialGunPosition.z) *
+		(closestTargetPosition.z - initialGunPosition.z);
 
 	//find the closest balloon to the gun
 	for (auto iter = balloons.begin(); iter != balloons.end(); ++iter) {
 
 		//only check if it's in play
 		if (iter->getShouldBeRemoved() == false && iter->getPosition().y > 2 && iter->getPosition().y < 30) {
-			
+
 			//calculate the distance from gun to balloon
-			double balloonDistance = sqrt(
-				(iter->getPosition().x - initialGunPosition.x) * 
-				(iter->getPosition().x - initialGunPosition.x) + 
-				(iter->getPosition().y - initialGunPosition.y) * 
+			double balloonDistanceSq =
+				(iter->getPosition().x - initialGunPosition.x) *
+				(iter->getPosition().x - initialGunPosition.x) +
+				(iter->getPosition().y - initialGunPosition.y) *
 				(iter->getPosition().y - initialGunPosition.y) +
-				(iter->getPosition().z - initialGunPosition.z) * 
-				(iter->getPosition().z - initialGunPosition.z)
-			);
+				(iter->getPosition().z - initialGunPosition.z) *
+				(iter->getPosition().z - initialGunPosition.z);
 
 			//if the distance is less than the closest, then make it the closest
-			if (balloonDistance < distanceToClosestTarget) {
-				distanceToClosestTarget = balloonDistance;
+			if (balloonDistanceSq < distanceToClosestTargetSq) {
+				distanceToClosestTargetSq = balloonDistanceSq;
 				closestTargetPosition = iter->getPosition();
 			}
 		}
 	}
 
-	
 
 
-	//calculate the angles needed to hit. 
+
+	//calculate the angles needed to hit.
 	//using atan2 because I overheard Perry talking about it at the last BBQ
-	double targetRotation = -atan2((closestTargetPosition.x - initialGunPosition.x), 
+	double targetRotation = -atan2((closestTargetPosition.x - initialGunPosition.x),
 							(closestTargetPosition.z - initialGunPosition.z) ) * radToDeg;
 
 	//compensate for rotation a little bit to provide added accuracy
@@ -635,10 +633,11 @@ void Scene::automateGun() {
 	else if (targetRotation > 0)
 		targetRotation -= 2;
 
-	// the inclination includes a slight offset (based on the distance to the target) to compensate 
+	// the inclination includes a slight offset (based on the distance to the target) to compensate
 	//for the duck's drop over time.  its not perfect, but it works on most targets
-	double targetInclination = asin((closestTargetPosition.y - initialGunPosition.y) / 
-								distanceToClosestTarget) * radToDeg 
+	double distanceToClosestTarget = sqrt(distanceToClosestTargetSq);
+	double targetInclination = asin((closestTargetPosition.y - initialGunPosition.y) /
+								distanceToClosestTarget) * radToDeg
 								+ .3 * distanceToClosestTarget;
 
 	//move the gun into position

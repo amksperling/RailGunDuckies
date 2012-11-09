@@ -7,10 +7,10 @@ SkyBox::SkyBox() {
 	this->displayListHandle = (GLuint) -1;
 }
 
-SkyBox::SkyBox(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) : 
+SkyBox::SkyBox(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) :
 	Object(isMoving, position, rotation, scale, velocity, color) {
 	this->displayListHandle = (GLuint) -1;
-} 
+}
 
 
 void SkyBox::render() {
@@ -44,7 +44,7 @@ void SkyBox::skySide() {
 	glColor3ub(0, 0, 100);
 	glVertex2d(100, 0);
 	glVertex2d(-100, 0);
-	
+
 	glEnd();
 	glPopMatrix();
 	glEnable(GL_LIGHTING);
@@ -63,7 +63,7 @@ void SkyBox::skyTop() {
 	//glColor3ub(250, 250, 250);
 	glVertex2d(100, 0);
 	glVertex2d(-100, 0);
-	
+
 	glEnd();
 	glPopMatrix();
 	glEnable(GL_LIGHTING);
@@ -78,7 +78,7 @@ void SkyBox::ground() {
 	glTranslated(0, 0, -100);
 	glRotated(90, 1, 0, 0);
 	glBegin(GL_QUADS);
-	
+
 
 	glColor3ub(0, 100, 0);
 	glNormal3f(0, 1, 0);
@@ -88,7 +88,7 @@ void SkyBox::ground() {
 	glVertex2d(100, 200);
 	glColor3ub(0, 100, 0);
 	glVertex2d(100, 0);
-	
+
 	glEnd();
 
 	glPopMatrix();

@@ -10,10 +10,10 @@ Balloon::Balloon() {
 	this->pointValue = 0;
 }
 
-Balloon::Balloon(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) : 
+Balloon::Balloon(bool isMoving, vec3 position, vec3 rotation, vec3 scale, vec3 velocity, vec4 color) :
 	Object(isMoving, position, rotation, scale, velocity, color){
 	this->pointValue = 0;
-} 
+}
 
 Balloon::~Balloon() {
 
@@ -25,7 +25,7 @@ void Balloon:: render() {
 
 	//GL_CULL_FACE is left enabled as disabling it leads to bizarre ripple effects
 	glDisable(GL_COLOR_MATERIAL); //disabled, so that the color will be determined by the material specified below
-	GLboolean blendAlreadyEnabled; 
+	GLboolean blendAlreadyEnabled;
 	glGetBooleanv(GL_BLEND, &blendAlreadyEnabled); //checks if blending is already enable, to later restore the previous state
 	if(blendAlreadyEnabled) glBlendFunc(GL_ONE, GL_ONE);
 	else glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -59,34 +59,34 @@ void Balloon:: render() {
     GLfloat material_shininess_blue[] = { .25f * 128.0f };
 
 	if(this->pointValue >= 55){
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_gold);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_gold);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_gold);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_gold);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_gold);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_gold);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_gold);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_gold);
 	}
 	else if(this->pointValue >= 50){
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_silver);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_silver);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_silver);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_silver);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_silver);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_silver);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_silver);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_silver);
 	}
 	else if(this->pointValue % 3 == 0){
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_blue);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_blue);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_blue);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_blue);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_blue);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_blue);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_blue);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_blue);
 	}
 	else if(this->pointValue % 2 == 0){
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_green);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_green);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_green);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_green);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_green);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_green);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_green);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_green);
 	}
 	else{
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_red);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_red);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_red);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_red);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_ambient_red);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse_red);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_specular_red);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, material_shininess_red);
 	}
 
 	if (va_vertices.size() == 0) {
@@ -114,24 +114,24 @@ void Balloon:: render() {
 		GLfloat phiPoints = 120.0f;
 		GLfloat phiIncrement = 360/phiPoints;
 
-		//Source: http://electron9.phys.utk.edu/vectors/3dcoordinates.htm used to translate polar to 
+		//Source: http://electron9.phys.utk.edu/vectors/3dcoordinates.htm used to translate polar to
 		for(o = (GLfloat)0; o <=(GLfloat)180; o +=omegaIncrement) {
 			for(p = (GLfloat)0; p <(GLfloat) 360; p +=phiIncrement) {
-			
+
 				if(o < .5 * 180) r = (GLfloat) 1;
 				else r = (GLfloat) (1+ (1-cos((o-90)*(PI/180)))/2);
-			
-				this->va_vertices.push_back(glm::vec3((r * sin(o*(PI/180))* cos(p*(PI/180))), 
+
+				this->va_vertices.push_back(glm::vec3((r * sin(o*(PI/180))* cos(p*(PI/180))),
 					(r * cos(o*(PI/180))), (r * sin(o*(PI/180))* sin(p*(PI/180)))));
 			}
 		}
-	
+
 		GLfloat height;
 		GLfloat angle;
 		r = 0.0;
 		GLfloat heightPoints = 6.0;
 		GLfloat heightIncrement  = 0.1f/(heightPoints-1);
-		
+
 		//The value to increment between the points is determined by the desired space to fill over the number
 		//of points. In this case, a 1 is subtracted from the points, because 0 is counted as the first point
 		//and the loop runs until the value equals the desired size.
@@ -149,12 +149,12 @@ void Balloon:: render() {
 			}
 			r+=radialIncreasePerHeightIncrement;
 		}
-	
+
 		r = 1; //the radius is reset to 1 as it is used later
 
-		//The vertices are then grouped into triangles and have their normals calculated by normalizing 
+		//The vertices are then grouped into triangles and have their normals calculated by normalizing
 		//the result of taking the cross-product between the two sides of every triangle that the vertex is involved in
-		//and summing them. 
+		//and summing them.
 
 		GLfloat a;
 		GLfloat aMax = (omegaPoints - 1) * phiPoints;
@@ -207,7 +207,7 @@ void Balloon:: render() {
 					five = va_vertices[GLuint(a + phiPoints - 1)];
 					six = va_vertices[GLuint(a - 1)];
 				}
-				
+
 				vec3 sum = glm::cross(one - va_vertices[GLuint(a)], two - va_vertices[GLuint(a)]);
 				sum += glm::cross(two - va_vertices[GLuint(a)], three - va_vertices[GLuint(a)]);
 				sum += glm::cross(three - va_vertices[GLuint(a)], four - va_vertices[GLuint(a)]);
@@ -216,7 +216,7 @@ void Balloon:: render() {
 				sum += glm::cross(six - va_vertices[GLuint(a)], one - va_vertices[GLuint(a)]);
 				this->va_normals.push_back(glm::normalize(sum));
 			}
-		} 
+		}
 
 		//The preceding loop did not address the final row of normals as it did not need to loop through the final
 	    //row to specify vertices. This loop fills in the rest of the normals as they are easily predicted due to the

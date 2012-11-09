@@ -37,7 +37,6 @@ enum DIFFICULTY {
 class Scene {
 
 public:
-
 	Scene();
 
 	void setToBeautyMode(); //transition objects and positions to beauty mode
@@ -46,7 +45,6 @@ public:
 	//use these functions to switch between app modes
 	void runBeautyMode(int beautyMode);
 	void runGameMode(bool runForever, float timeStep, Window & w);
-
 
 	//fire the duck
 	void fire();
@@ -74,19 +72,18 @@ public:
 	bool checkForCollisionsBetweenBalloons (Balloon & b);
 
 	//inline getters for all instance variables
-	inline int getScore() const { return this->score; }
-	inline int getDifficulty() const { return this->difficulty; }
-	inline int getDucksRemaining() const { return this->ducksRemaining; }
-	inline int getBalloonsRemaining() const{ return this->balloonsRemaining; }
-	inline int getGunPower() const { return int(this->theGun.getGunPower()); }
-	inline double getGunInclination() const { return this->theGun.getInclinationAngle(); }
-	inline double getGunRotation() const { return this->theGun.getRotationAngle(); }
-	inline string getDifficultyString() const { return this->difficulty_string; }
-	inline vector<Balloon> & getBalloons() { return this->balloons; }
-	
-	
-private:
+	int getScore() const { return this->score; }
+	int getDifficulty() const { return this->difficulty; }
+	int getDucksRemaining() const { return this->ducksRemaining; }
+	int getBalloonsRemaining() const{ return this->balloonsRemaining; }
+	int getGunPower() const { return int(this->theGun.getGunPower()); }
+	double getGunInclination() const { return this->theGun.getInclinationAngle(); }
+	double getGunRotation() const { return this->theGun.getRotationAngle(); }
+	const string& getDifficultyString() const { return this->difficulty_string; }
+	vector<Balloon> & getBalloons() { return this->balloons; }
 
+
+private:
 	vector<Balloon> balloons; // list of all balloons
 	Balloon aBalloon; //used for beauty mode
 
@@ -94,7 +91,7 @@ private:
 
 	//we only use one gun and one duck the whole time!
 	//save memory!
-	RailGun theGun; 
+	RailGun theGun;
 	Duckie theDuck;
 
 	//small duck models used to indicate lives left.
@@ -137,7 +134,6 @@ private:
 	string difficulty_string;
 
 	GLuint displayListHandle;
-	
 };
 
 //non class functions to generate random ints and doubles

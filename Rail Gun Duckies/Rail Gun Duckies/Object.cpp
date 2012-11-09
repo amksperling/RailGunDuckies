@@ -1,6 +1,6 @@
 #include "Object.h"
 
-#include <stdio.h>  
+#include <stdio.h>
 #include <iostream>
 #include <sstream> //Checka
 #include <vector>
@@ -158,7 +158,7 @@ void Object::drawVecArrayFace(float w, float h, float r, float g, float b, Objec
 		this->va_vertices.push_back(glm::vec3(0.5, 0, -0.5));
 		this->va_colors.push_back(glm::vec4(r, g, b, 1.0f));
 		this->va_normals.push_back(glm::vec3(0,0,1));
-		
+
 
 		this->va_indices.push_back(glm::ivec3(startIndex,startIndex+1,startIndex+3));
 		this->va_indices.push_back(glm::ivec3(startIndex,startIndex + 3,startIndex+2)); */
@@ -187,7 +187,7 @@ void Object::drawVecArrayCircle(int radialPoints, float radius, float r, float g
 		this->va_vertices.push_back(glm::vec3(1, 0, -1));
 		this->va_colors.push_back(glm::vec4(r, g, b, 1.0f));
 		this->va_normals.push_back(glm::vec3(0,1,0));
-		
+
 		int startIndex = (int)omegaPoints * (int)phiPoints;
 
 		this->va_indices.push_back(glm::ivec3(startIndex,startIndex+1,startIndex+3));
@@ -203,30 +203,29 @@ void Object::updateAndRender(float timeStep, bool shouldFall, bool shouldRender)
 	//if its a beauty mode object then move it to position and rotate according to beauty mode style
 	if(this->isBeautyModeModel) {
 		glTranslated(this->position.x, this->position.y, this->position.z);
-		glRotated(timeStep * this->beautyModeRotationSpeed, this->beautyModeRotationVector.x, 
+		glRotated(timeStep * this->beautyModeRotationSpeed, this->beautyModeRotationVector.x,
 			this->beautyModeRotationVector.y, this->beautyModeRotationVector.z);
 	}
 	else {
+		//x = x + vt
+		position.x += velocity.x * timeStep;
+		position.y += velocity.y * timeStep;
+		position.z += velocity.z * timeStep;
 
-	//x = x + vt
-	position.x += velocity.x * timeStep;
-	position.y += velocity.y * timeStep;
-	position.z += velocity.z * timeStep;
+		if(position.y >= 30){
+			position.y = -5;
+		}
 
-	if(position.y >= 30){
-		position.y = -5;
-	}
+		// add gravity to the y component of velocity
+		// v = v + gt
+		if(shouldFall && velocity.y != 0) velocity.y += gravity * timeStep;
 
-	// add gravity to the y component of velocity
-	// v = v + gt
-	if(shouldFall && velocity.y != 0) velocity.y += gravity * timeStep;
-
-	glTranslated(this->position.x, this->position.y, this->position.z);
-	glRotated(this->rotation.z, 0, 0, 1);
-	glRotated(this->rotation.y, 0, 1, 0);
-	glRotated(this->rotation.x, 1, 0, 0);
+		glTranslated(this->position.x, this->position.y, this->position.z);
+		glRotated(this->rotation.z, 0, 0, 1);
+		glRotated(this->rotation.y, 0, 1, 0);
+		glRotated(this->rotation.x, 1, 0, 0);
 	}
 	glScalef(this->scale.x, this->scale.y, this->scale.z);
 	if(shouldRender) this->render();
 	glPopMatrix();
-} 
+}

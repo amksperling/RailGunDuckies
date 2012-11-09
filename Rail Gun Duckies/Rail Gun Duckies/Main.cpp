@@ -2,11 +2,11 @@
 	It uses a Window and Scene object to handle
 	all freeglut callbacks and run the program properly.
 
-*/ 
+*/
 #include <GL/freeglut.h>
 #include "Window.h"
 #include "Scene.h"
-#include <stdio.h>  
+#include <stdio.h>
 #include <iostream>
 #include <sstream> //Checka
 #include <vector>
@@ -44,9 +44,9 @@ static float xpos = 0, ypos = 0, zpos = 0, xrot = 0, yrot = 0, zrot = 0.0, angle
 //camera function for controlling a global camera:
 // controlled with the arrow keys
 void camera (void) {
-    glRotatef(xrot,1.0,0.0,0.0);  //rotate our camera on teh 
+    glRotatef(xrot,1.0,0.0,0.0);  //rotate our camera on teh
 									//x-axis (left and right)
-    glRotatef(yrot,0.0,1.0,0.0);  //rotate our camera on the 
+    glRotatef(yrot,0.0,1.0,0.0);  //rotate our camera on the
 									//	y-axis (up and down)
 	glRotatef(zrot, 0, 0, 1);
     glTranslated(-xpos,-ypos,-zpos); //translate the screen
@@ -55,8 +55,8 @@ void camera (void) {
 
 
 //function for displaying beauty mode text in an
-// orthographic projection. 
-void displayBeautyText(string text) {
+// orthographic projection.
+void displayBeautyText(const string& text) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, w->getWidth(), 0, w->getHeight(), 1, 10); // set ortho projection based on window size
@@ -94,22 +94,22 @@ void displayGameText() {
 
 	//int/double to string conversion from http://www.cplusplus.com/articles/D9j2Nwbp/
 	//game status text
-	string score = "Score: " + 
+	string score = "Score: " +
 		static_cast<ostringstream*>( &(ostringstream() << s.getScore()) )->str();
-	string ducksRemaining = "Ducks Left: " + 
+	string ducksRemaining = "Ducks Left: " +
 		static_cast<ostringstream*>( &(ostringstream() << s.getDucksRemaining()) )->str();
-	string balloonsRemaining = "Balloons Left: " + 
+	string balloonsRemaining = "Balloons Left: " +
 		static_cast<ostringstream*>( &(ostringstream() << s.getBalloonsRemaining()) )->str();
 
-	string gunPower = "Gun Power: " + 
+	string gunPower = "Gun Power: " +
 		static_cast<ostringstream*>( &(ostringstream() << s.getGunPower()) )->str();
 
 	//notice use of setprecision() to limit decimal values
-	string gunRotation = "Gun Rotation: " + 
+	string gunRotation = "Gun Rotation: " +
 		static_cast<ostringstream*>( &(ostringstream() << setprecision(3) << s.getGunRotation()) )->str();
-	string gunInclination = "Gun Inclination: " + 
+	string gunInclination = "Gun Inclination: " +
 		static_cast<ostringstream*>( &(ostringstream() << setprecision(2) << s.getGunInclination()) )->str();
-	
+
 	//more info text
 	string difficulty = "Difficulty: " + s.getDifficultyString();
 	string automated = "AUTOMATED";
@@ -201,13 +201,13 @@ void displayGameText() {
 
 //fnuction used in debugging to check for GL errors
 // prints any error to the console if one is found
-bool CheckGLErrors(string location) {
+bool CheckGLErrors(const string& location) {
 	bool error_found = false;
 	GLenum  error;
 	const GLubyte *errorString;
 	while ((error = glGetError()) != GL_NO_ERROR) {
 		cout <<"\n";
-		cout <<location; 
+		cout <<location;
 		error_found = true;
 		errorString = gluErrorString(error);
 		cout << errorString;
@@ -246,13 +246,13 @@ void SwitchingDisplayFunc() {
 	CheckGLErrors("Beginning of Display Function:");
 
 	timeSinceStart = float(glutGet(GLUT_ELAPSED_TIME)) / 1000.0f;
-	
+
 	timeStep = timeSinceStart - oldTimeSinceStart;
 	if(w->getPaused()) timeStep = 0;
 	oldTimeSinceStart = timeSinceStart;
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+
 	glClearColor(ghostModeColorRed, ghostModeColorGreen, ghostModeColorBlue, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -320,7 +320,7 @@ void SwitchingDisplayFunc() {
 void ReshapeFunc(int width, int height) {
 	//our window manager class handles this
 	w->reshape(width, height);
-	
+
 }
 
 
@@ -330,12 +330,12 @@ void ReshapeFunc(int width, int height) {
 //see the README for full information on implemented functions
 void KeyboardFunc(unsigned char key, int x, int y) {
 	switch (key) {
-	
+
 	case 'F':
 	case 'f':
 		w->toggleFullScreen();
 		break;
-		
+
 	case 'W':
 	case 'w':
 		w->toggleWireFrame();
@@ -362,7 +362,7 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 		break;
 
 	case 'P':
-	case 'p': 
+	case 'p':
 		//paused = !paused;
 		if (w->getPaused())
 			w->setPause(false);
@@ -378,12 +378,12 @@ void KeyboardFunc(unsigned char key, int x, int y) {
 	case 'T':
 	case 't':
 		if(ghostModeColorRed && !ghostModeColorGreen && ghostModeColorBlue) ghostModeColorRed = 0;
-		else if(!ghostModeColorRed && !ghostModeColorGreen && ghostModeColorBlue) ghostModeColorBlue = 0; 
-		else if(!ghostModeColorRed && !ghostModeColorGreen && !ghostModeColorBlue) ghostModeColorGreen = 1; 
-		else if(!ghostModeColorRed && ghostModeColorGreen && !ghostModeColorBlue) ghostModeColorBlue = 1; 
+		else if(!ghostModeColorRed && !ghostModeColorGreen && ghostModeColorBlue) ghostModeColorBlue = 0;
+		else if(!ghostModeColorRed && !ghostModeColorGreen && !ghostModeColorBlue) ghostModeColorGreen = 1;
+		else if(!ghostModeColorRed && ghostModeColorGreen && !ghostModeColorBlue) ghostModeColorBlue = 1;
 		else if(!ghostModeColorRed && ghostModeColorGreen && ghostModeColorBlue){
-			ghostModeColorRed = 1; 
-		    ghostModeColorGreen = 0; 
+			ghostModeColorRed = 1;
+		    ghostModeColorGreen = 0;
 		}
 		break;
 
@@ -431,13 +431,13 @@ void SpecialFunc(int key, int x, int y) {
 	//	w->cycleLightingMode();
 	//	break;
 
-	//useing arrow keys to control global camera 
+	//useing arrow keys to control global camera
 	case GLUT_KEY_LEFT:
 		if (yrot > -15)
 			yrot -= 1;
 		break;
 
-	case GLUT_KEY_RIGHT: 
+	case GLUT_KEY_RIGHT:
 		if (yrot < 15)
 			yrot += 1;
 		break;
@@ -451,13 +451,13 @@ void SpecialFunc(int key, int x, int y) {
 		if (xrot > -15)
 			xrot -= 1;
 		break;
-	
+
 	default: break;
 	}
 }
 
 //we dont even use the timer function,
-// because we call glutPostRedisplay() at the end of 
+// because we call glutPostRedisplay() at the end of
 // our display function
 void TimerFunc(int value) {
 	glutTimerFunc(GLuint(period), TimerFunc, value);
